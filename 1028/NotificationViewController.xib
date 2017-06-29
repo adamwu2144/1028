@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16A323" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="NotificationViewController">
+            <connections>
+                <outlet property="tableView" destination="1b0-qQ-0e8" id="TuW-tv-qpO"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="1b0-qQ-0e8">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <connections>
+                        <outlet property="dataSource" destination="-1" id="cms-FN-uJd"/>
+                        <outlet property="delegate" destination="-1" id="eed-w2-Cz8"/>
+                    </connections>
+                </tableView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="foS-LA-MLr">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="通知推播" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="815-aA-WUU">
+                            <rect key="frame" x="143.5" y="12.5" width="89.5" height="26.5"/>
+                            <fontDescription key="fontDescription" type="system" weight="medium" pointSize="22"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="50" id="254-wc-rw0"/>
+                        <constraint firstItem="815-aA-WUU" firstAttribute="centerY" secondItem="foS-LA-MLr" secondAttribute="centerY" id="Cxm-YW-0Vk"/>
+                        <constraint firstItem="815-aA-WUU" firstAttribute="centerX" secondItem="foS-LA-MLr" secondAttribute="centerX" id="dA8-8R-YWO"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="foS-LA-MLr" secondAttribute="trailing" id="61Y-RA-asD"/>
+                <constraint firstItem="1b0-qQ-0e8" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="72C-TC-GCC"/>
+                <constraint firstAttribute="bottom" secondItem="1b0-qQ-0e8" secondAttribute="bottom" id="DXx-s3-4oh"/>
+                <constraint firstAttribute="trailing" secondItem="1b0-qQ-0e8" secondAttribute="trailing" id="WVX-fR-9Mc"/>
+                <constraint firstItem="foS-LA-MLr" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="YGA-av-pmO"/>
+                <constraint firstItem="1b0-qQ-0e8" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="jyT-py-ctO"/>
+                <constraint firstItem="foS-LA-MLr" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="mrM-WI-MXh"/>
+            </constraints>
+        </view>
+    </objects>
+</document>

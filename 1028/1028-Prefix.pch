@@ -1,0 +1,41 @@
+//
+//  1028-Prefix.pch
+//  1028
+//
+//  Created by fg on 2017/5/25.
+//  Copyright © 2017年 fg. All rights reserved.
+//
+
+#ifndef _028_Prefix_pch
+#define _028_Prefix_pch
+
+// Include any system framework and library headers here that should be included in all compilation units.
+// You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.
+
+#endif /* _028_Prefix_pch */
+
+
+#ifdef __OBJC__
+#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
+#import "AppDelegate.h"
+#import "ApiBuilder.h"
+#import "MyManager.h"
+#endif
+
+#define SCREEN_WIDTH ([UIScreen mainScreen].bounds.size.width)
+#define SCREEN_HEIGHT ([UIScreen mainScreen].bounds.size.height)
+#define IOS_VERSION [[UIDevice currentDevice].systemVersion doubleValue]
+#define PublicAppDelegate ((AppDelegate *)[[UIApplication sharedApplication] delegate])
+#define USER_DATA @"userJWT"
+#define USER_FB_TOKEN @"userFBToken"
+#define USER_ATTESTATION @"attestation"
+#define USER_ATTESTATION_TIME @"attestationTime"
+#define USER_ATTESTATION_NUMBER @"attestationNumber"
+#define USER_ATTESTATION_TIMEOUT 300
+#define DEBUG 1
+#define DEFAULT_COLOR [UIColor colorWithRed:240.0/255.0 green:145.0/255.0 blue:146.0/255.0 alpha:1.0f]
+#define DEFAULT_GARY_COLOR [UIColor colorWithRed:153.0/255.0 green:153.0/255.0 blue:153.0/255.0 alpha:1.0f]
+#define TITLE_KEY_ONE_COLOR [UIColor colorWithRed:255.0/255.0 green:170.0/255.0 blue:188.0/255.0 alpha:1.0f]
+#define TITLE_KEY_TWO_COLOR [UIColor colorWithRed:240.0/255.0 green:42.0/255.0 blue:113.0/255.0 alpha:1.0f]
+#define TITLE_KEY_THREE_COLOR [UIColor colorWithRed:255.0/255.0 green:119.0/255.0 blue:119.0/255.0 alpha:1.0f]

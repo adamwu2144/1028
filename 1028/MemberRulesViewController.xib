@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16A323" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MemberRulesViewController">
+            <connections>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+                <outlet property="webView" destination="t4J-Bm-DFu" id="1uk-6S-TzA"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="t4J-Bm-DFu" customClass="MyWebView">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="606.5"/>
+                    <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                </webView>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="i20-NR-uXv">
+                    <rect key="frame" x="0.0" y="606.5" width="188" height="60.5"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                    <state key="normal" title="取消">
+                        <color key="titleColor" red="0.94117647058823528" green="0.56862745098039214" blue="0.5725490196078431" alpha="1" colorSpace="calibratedRGB"/>
+                    </state>
+                    <connections>
+                        <action selector="BtnClicked:" destination="-1" eventType="touchUpInside" id="NmO-ly-9GI"/>
+                    </connections>
+                </button>
+                <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WNI-bM-KFY">
+                    <rect key="frame" x="187.5" y="606.5" width="187.5" height="60.5"/>
+                    <color key="backgroundColor" red="0.94117647058823528" green="0.56862745098039214" blue="0.5725490196078431" alpha="1" colorSpace="calibratedRGB"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                    <state key="normal" title="同意">
+                        <color key="titleColor" red="0.96078431369999995" green="0.96078431369999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
+                    </state>
+                    <connections>
+                        <action selector="BtnClicked:" destination="-1" eventType="touchUpInside" id="YXT-9E-Mjg"/>
+                    </connections>
+                </button>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="t4J-Bm-DFu" secondAttribute="trailing" id="0Pc-gj-cHf"/>
+                <constraint firstItem="WNI-bM-KFY" firstAttribute="leading" secondItem="i20-NR-uXv" secondAttribute="trailing" id="0VP-r8-IF1"/>
+                <constraint firstItem="WNI-bM-KFY" firstAttribute="centerY" secondItem="i20-NR-uXv" secondAttribute="centerY" id="4x5-g3-212"/>
+                <constraint firstItem="i20-NR-uXv" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="6qk-Dl-FZJ"/>
+                <constraint firstItem="i20-NR-uXv" firstAttribute="height" secondItem="t4J-Bm-DFu" secondAttribute="height" multiplier="0.1" id="KyL-PC-2Oe"/>
+                <constraint firstAttribute="bottom" secondItem="i20-NR-uXv" secondAttribute="bottom" id="Pn2-3t-lGQ"/>
+                <constraint firstAttribute="trailing" secondItem="WNI-bM-KFY" secondAttribute="trailing" id="Pw6-LQ-BJY"/>
+                <constraint firstItem="t4J-Bm-DFu" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="U46-Ht-0gd"/>
+                <constraint firstItem="i20-NR-uXv" firstAttribute="top" secondItem="t4J-Bm-DFu" secondAttribute="bottom" id="dnu-nl-pch"/>
+                <constraint firstItem="WNI-bM-KFY" firstAttribute="width" secondItem="i20-NR-uXv" secondAttribute="width" id="e0a-kV-wY2"/>
+                <constraint firstItem="t4J-Bm-DFu" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="q0a-TF-ctW"/>
+                <constraint firstItem="WNI-bM-KFY" firstAttribute="height" secondItem="i20-NR-uXv" secondAttribute="height" id="qYo-Hb-N50"/>
+            </constraints>
+            <point key="canvasLocation" x="33.5" y="53.5"/>
+        </view>
+    </objects>
+</document>

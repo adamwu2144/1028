@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16A323" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ExchangeCell" rowHeight="175" id="KGk-i7-Jjw" customClass="ExchangeCell">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="175"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="174.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="iZk-fH-RzZ">
+                        <rect key="frame" x="10" y="12" width="145" height="145"/>
+                        <constraints>
+                            <constraint firstAttribute="width" secondItem="iZk-fH-RzZ" secondAttribute="height" multiplier="1:1" id="1lC-p7-caj"/>
+                            <constraint firstAttribute="width" constant="145" id="F4X-Ol-BcF"/>
+                            <constraint firstAttribute="height" constant="145" id="dD3-lP-Rfr"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="W3F-F9-sQG">
+                        <rect key="frame" x="165" y="12" width="147" height="41"/>
+                        <string key="text">雪紡柔光粉蕊
+(兩色任選)</string>
+                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="兌換點數 200" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hd4-Bj-cPD">
+                        <rect key="frame" x="164.5" y="68" width="147.5" height="21"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="S9G-fx-Ts4">
+                        <rect key="frame" x="164.5" y="121.5" width="147.5" height="40"/>
+                        <color key="backgroundColor" red="0.94117647058823528" green="0.56862745098039214" blue="0.5725490196078431" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="40" id="rlw-9a-guT"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
+                        <state key="normal" title="立即兌換">
+                            <color key="titleColor" red="0.96078431369999995" green="0.96078431369999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
+                        </state>
+                    </button>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nan-j0-Ska">
+                        <rect key="frame" x="15" y="171.5" width="290" height="1"/>
+                        <color key="backgroundColor" red="0.59215686274509804" green="0.59215686274509804" blue="0.59215686274509804" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="1" id="hsG-G8-TLX"/>
+                        </constraints>
+                    </view>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="iZk-fH-RzZ" firstAttribute="top" relation="greaterThanOrEqual" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="3hH-uF-1RZ"/>
+                    <constraint firstAttribute="bottom" secondItem="nan-j0-Ska" secondAttribute="bottom" constant="2" id="7Lp-eO-fHl"/>
+                    <constraint firstAttribute="trailing" secondItem="nan-j0-Ska" secondAttribute="trailing" constant="15" id="AS6-9X-6eP"/>
+                    <constraint firstItem="W3F-F9-sQG" firstAttribute="leading" secondItem="iZk-fH-RzZ" secondAttribute="trailing" constant="10" id="HSh-oM-DTb"/>
+                    <constraint firstItem="S9G-fx-Ts4" firstAttribute="top" relation="greaterThanOrEqual" secondItem="hd4-Bj-cPD" secondAttribute="bottom" constant="5" id="IS8-nr-MEb"/>
+                    <constraint firstItem="W3F-F9-sQG" firstAttribute="top" secondItem="iZk-fH-RzZ" secondAttribute="top" id="NuE-dS-j8Q"/>
+                    <constraint firstItem="nan-j0-Ska" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="Q92-9e-HYv"/>
+                    <constraint firstItem="hd4-Bj-cPD" firstAttribute="leading" secondItem="W3F-F9-sQG" secondAttribute="leading" id="Z3s-k2-x91"/>
+                    <constraint firstItem="nan-j0-Ska" firstAttribute="top" secondItem="S9G-fx-Ts4" secondAttribute="bottom" constant="10" id="mQs-ww-5dq"/>
+                    <constraint firstItem="iZk-fH-RzZ" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="pQp-Oh-wKo"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="W3F-F9-sQG" secondAttribute="trailing" id="pT1-gZ-rRJ"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="hd4-Bj-cPD" secondAttribute="trailing" id="qoB-II-1EJ"/>
+                    <constraint firstItem="S9G-fx-Ts4" firstAttribute="leading" secondItem="hd4-Bj-cPD" secondAttribute="leading" id="qpm-8D-nRO"/>
+                    <constraint firstItem="nan-j0-Ska" firstAttribute="top" secondItem="iZk-fH-RzZ" secondAttribute="bottom" constant="14.5" id="rWc-ag-9N2"/>
+                    <constraint firstItem="S9G-fx-Ts4" firstAttribute="trailing" secondItem="hd4-Bj-cPD" secondAttribute="trailing" id="sha-oF-e9f"/>
+                    <constraint firstItem="hd4-Bj-cPD" firstAttribute="top" secondItem="W3F-F9-sQG" secondAttribute="bottom" constant="15" id="wKJ-YC-ynV"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="exchangeButton" destination="S9G-fx-Ts4" id="ust-Ft-wnk"/>
+                <outlet property="productExchangePoints" destination="hd4-Bj-cPD" id="t4f-dA-KlA"/>
+                <outlet property="productImageView" destination="iZk-fH-RzZ" id="5l7-ad-7rc"/>
+                <outlet property="productTitle" destination="W3F-F9-sQG" id="ffp-iX-ovd"/>
+            </connections>
+            <point key="canvasLocation" x="34" y="119.5"/>
+        </tableViewCell>
+    </objects>
+</document>
