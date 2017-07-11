@@ -10,7 +10,7 @@
 
 @interface GiftRceiptClass : NSObject
 
-@property (nonatomic, strong) NSString *rceiptID;
+@property (nonatomic, strong) NSNumber *rceipt_point;
 @property (nonatomic, strong) NSString *rceiptDescription;
 @property (nonatomic, strong) NSString *created_at;
 

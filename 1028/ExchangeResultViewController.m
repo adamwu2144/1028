@@ -66,6 +66,11 @@
         self.exchangeStatusLabel.textColor = [UIColor whiteColor];
         self.exchangeStatusLabel.text = message;
     }
+    
+    [[MyManager shareManager] getUserDataWithJWT:nil WithComplete:^(BOOL status, int statusCode) {
+        
+    }];
+    
     [MBProgressHUD hideHUDForView:self.view animated:YES];
 }
 

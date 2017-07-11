@@ -221,12 +221,29 @@
     if (self.activityArray != nil) {
         TaskClass *Mytask = [self.activityArray objectAtIndex:indexPath.row];
         taskCell.taskTitle.text = Mytask.title;
-        if (Mytask.taskCompleted == nil) {
+        if (Mytask.taskStatus == nil) {
             taskCell.taskStatus.text = @"";
         }
         else{
-            taskCell.taskStatus.text = [Mytask.taskCompleted boolValue] ? @"已完成":@"未完成" ;
-            taskCell.taskStatus.textColor = [Mytask.taskCompleted boolValue] ? DEFAULT_GARY_COLOR:DEFAULT_COLOR;
+            taskCell.taskStatus.text = Mytask.taskStatusText;
+            switch ([Mytask.taskStatus intValue]) {
+                case 1:
+                    taskCell.taskStatus.textColor = DEFAULT_COLOR;
+                    break;
+                case 2:
+                    taskCell.taskStatus.textColor = DEFAULT_GARY_COLOR;
+                    break;
+                case 3:
+                    taskCell.taskStatus.textColor = DEFAULT_GARY_COLOR;
+                    break;
+                case 4:
+                    taskCell.taskStatus.textColor = DEFAULT_COLOR;
+                    break;
+                default:
+                    break;
+            }
+//            taskCell.taskStatus.text = [Mytask.taskCompleted boolValue] ? @"已完成":@"未完成" ;
+//            taskCell.taskStatus.textColor = [Mytask.taskCompleted boolValue] ? DEFAULT_GARY_COLOR:DEFAULT_COLOR;
         }
         [taskCell.taskImageView sd_setImageWithURL:[NSURL URLWithString:Mytask.image]];
     }
@@ -354,10 +371,11 @@
 }
 
 -(void)doRefreshTaskContent:(TaskClass *)taskClass{
+    
     NSInteger objIndex = [self.activityArray indexOfObject:taskClass];
     
     TaskClass *tak = [self.activityArray objectAtIndex:objIndex];
-    NSLog(@"activityArray = %@",tak.taskCompleted);
+    NSLog(@"activityArray = %@",tak.taskStatus);
     
     NSArray *indexPathArray = [NSArray arrayWithObject:[NSIndexPath indexPathForRow:objIndex inSection:0]];
     
@@ -371,7 +389,11 @@
         
     for (TaskClass *tmp in self.activityArray) {
         if (tmp.taskid == notiTaskClass.taskid) {
-            tmp.taskCompleted = notiTaskClass.taskCompleted;
+            tmp.taskStatus = notiTaskClass.taskStatus;
+            
+            if ([notiTaskClass.taskStatus intValue] == 2) {
+                tmp.taskStatusText = @"已完成";
+            }
             
             //更新TaskView
             long taskNaviCount = (unsigned long)[PublicAppDelegate.mainTabBarController.taskNavi.viewControllers count];
@@ -385,7 +407,11 @@
                         
                         for (TaskClass *tmp in taskViewController.activityArray) {
                             if (tmp.taskid == notiTaskClass.taskid) {
-                                tmp.taskCompleted = notiTaskClass.taskCompleted;
+                                tmp.taskStatus = notiTaskClass.taskStatus;
+                                
+                                if ([notiTaskClass.taskStatus intValue] == 2) {
+                                    tmp.taskStatusText = @"已完成";
+                                }
                                 
                                 NSInteger objIndex = [taskViewController.activityArray indexOfObject:tmp];
                                 
@@ -405,7 +431,10 @@
                 if ([[currentNavi.viewControllers objectAtIndex:2-1] isKindOfClass:[ActivityDetailViewController class]]) {
                     ActivityDetailViewController *activityDetailViewController = (ActivityDetailViewController *)[currentNavi.viewControllers objectAtIndex:2-1];
                     if ([activityDetailViewController isViewLoaded]) {
-                        activityDetailViewController.activityDetailClass.task_completed = notiTaskClass.taskCompleted;
+                        activityDetailViewController.activityDetailClass.task_status = notiTaskClass.taskStatus;
+                        if ([notiTaskClass.taskStatus intValue] == 2) {
+                            activityDetailViewController.activityDetailClass.task_status_text = @"已經完成活動";
+                        }
                     }
                 }
             }

@@ -122,8 +122,13 @@
     return api;
 }
 
-+(NSString *)getGiftRceiptPage:(int)page{
-    NSString *api = [self apiBuilder:API_URL isSecure:true  ,@"/", VERSION_CODE , @"/pointHistories/",[NSString stringWithFormat:@"%d",page],nil];
++(NSString *)getGiftRceiptInComingPage:(int)page{
+    NSString *api = [self apiBuilder:API_URL isSecure:true  ,@"/", VERSION_CODE , @"/pointHistories/incoming/",[NSString stringWithFormat:@"%d",page],nil];
+    return api;
+}
+
++(NSString *)getGiftRceiptOutGoingPage:(int)page{
+    NSString *api = [self apiBuilder:API_URL isSecure:true  ,@"/", VERSION_CODE , @"/pointHistories/outgoing/",[NSString stringWithFormat:@"%d",page],nil];
     return api;
 }
 
@@ -171,8 +176,8 @@
     return api;
 }
 
-+(NSString *)getBonusList{
-    NSString *api = @"https://app.1028.tw/webview/bonuslist";
++(NSString *)getPointsExchangeRules{
+    NSString *api = @"https://app.1028.tw/webview/bonusrule";
     return api;
 }
 

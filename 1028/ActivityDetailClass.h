@@ -23,7 +23,6 @@ typedef enum ActivityType {
 @property(nonatomic, strong)NSNumber *task_type;
 @property(nonatomic, strong)NSString *task_started;
 @property(nonatomic, strong)NSString *task_ended;
-@property(nonatomic, strong)NSNumber *task_completed;
 @property(nonatomic, strong)NSNumber *task_status;
 @property(nonatomic, strong)NSString *task_status_text;
 

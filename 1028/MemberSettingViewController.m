@@ -112,7 +112,28 @@
     self.memberName.text = [[MyManager shareManager] memberData].user_name;
     
     NSTextAttachment *imageAttachment = [[NSTextAttachment alloc] init];
-    imageAttachment.image = [UIImage imageNamed:@"iconLoop_m.png"];
+    
+    switch ([[[MyManager shareManager] memberData].titleKey intValue]) {
+        case 1:
+            imageAttachment.image = [UIImage imageNamed:@"iconBabe"];
+            self.memberLevel.textColor = TITLE_KEY_ONE_COLOR;
+            self.memberLevel.layer.borderColor = TITLE_KEY_ONE_COLOR.CGColor;
+            
+            break;
+        case 2:
+            imageAttachment.image = [UIImage imageNamed:@"iconGirl"];
+            self.memberLevel.textColor = TITLE_KEY_TWO_COLOR;
+            self.memberLevel.layer.borderColor = TITLE_KEY_TWO_COLOR.CGColor;
+            break;
+        case 3:
+            imageAttachment.image = [UIImage imageNamed:@"iconLady"];
+            self.memberLevel.textColor = TITLE_KEY_THREE_COLOR;
+            self.memberLevel.layer.borderColor = TITLE_KEY_THREE_COLOR.CGColor;
+            break;
+        default:
+            break;
+    }
+    
     CGFloat imageOffsetY = 0.0;
     imageAttachment.bounds = CGRectMake(-5, imageOffsetY, imageAttachment.image.size.width, imageAttachment.image.size.height);
     NSAttributedString *attachmentString = [NSAttributedString attributedStringWithAttachment:imageAttachment];

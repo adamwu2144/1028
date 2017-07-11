@@ -21,7 +21,6 @@
     activityDetailClass.task_type = [dict objectForKey:@"type"];
     activityDetailClass.task_started = [dict objectForKey:@"started_at"];
     activityDetailClass.task_ended = [dict objectForKey:@"ended_at"];
-    activityDetailClass.task_completed = [dict objectForKey:@"completed"];
     activityDetailClass.task_status = [dict objectForKey:@"status"]; //1:活動中; 2:活動關閉; 3:活動尚未開始
     activityDetailClass.task_status_text = [dict objectForKey:@"status_text"];
 

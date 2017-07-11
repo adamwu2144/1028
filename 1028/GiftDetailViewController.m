@@ -23,6 +23,8 @@
     MyWebViewController *myWebViewController;
     NSMutableArray *rceiotArray;
     int Page;
+    NSString *requestURL;
+    int previousClicked;
 }
 
 @end
@@ -43,23 +45,38 @@
         
         [self.navigationItem setTitleView:logoImage];
     }
+    [self setData];
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     Page = 1;
-    
+    previousClicked = 1;
+
     [self initTableView];
+    [self initCusBtn];
     [self getRceiptList];
     [self setData];
     
-//    [self.myWebView setRequestWithURL:[ApiBuilder getBonusList]];
+    [self.webView setRequestWithURL:[ApiBuilder getPointsExchangeRules]];
     
 }
 
--(void)initTableView{
+-(void)initCusBtn{
+    [self.pointsDetail.layer setCornerRadius:15.0f];
     
+    [self.pointsExchange.layer setCornerRadius:15.0f];
+    [self.pointsExchange.layer setBorderColor:DEFAULT_COLOR.CGColor];
+    [self.pointsExchange.layer setBorderWidth:1.0f];
+    
+    [self.pointsRules.layer setCornerRadius:15.0f];
+    [self.pointsRules.layer setBorderColor:DEFAULT_COLOR.CGColor];
+    [self.pointsRules.layer setBorderWidth:1.0f];
+}
+
+-(void)initTableView{
+
     rceiotArray = [[NSMutableArray alloc] init];
     
     [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
@@ -68,7 +85,7 @@
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     UIImageView *image = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"bk"]];
     [self.tableView setBackgroundView:image];
-    [self.tableView setContentInset:UIEdgeInsetsMake(145, 0, 0, 0)];
+    [self.tableView setContentInset:UIEdgeInsetsMake(180, 0, 0, 0)];
     
     MJRefreshAutoNormalFooter *footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(getRceiptList)];
     [footer setTitle:@"點擊或上拉載入更多…" forState:MJRefreshStateIdle];
@@ -77,13 +94,25 @@
     footer.stateLabel.textColor = [UIColor lightGrayColor];
     
     _tableView.footer = footer;
-    [_tableView.footer endRefreshing];}
+    [_tableView.footer endRefreshing];
+}
 
 -(void)getRceiptList{
 
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
 
-    [[MyManager shareManager] requestWithMethod:GET WithPath:[ApiBuilder getGiftRceiptPage:Page] WithParams:nil WithSuccessBlock:^(NSDictionary *dic) {
+    switch (previousClicked) {
+        case 1:
+            requestURL = [ApiBuilder getGiftRceiptInComingPage:Page];
+            break;
+        case 2:
+            requestURL = [ApiBuilder getGiftRceiptOutGoingPage:Page];
+            break;
+        default:
+            break;
+    }
+    
+    [[MyManager shareManager] requestWithMethod:GET WithPath:requestURL WithParams:nil WithSuccessBlock:^(NSDictionary *dic) {
         NSArray *array = [dic objectForKey:@"items"];
         
         if ([array count] > 0) {
@@ -93,6 +122,7 @@
             [self.tableView reloadData];
         }
         else{
+            [self.tableView reloadData];
             [self.tableView.footer noticeNoMoreData];
         }
         
@@ -182,12 +212,53 @@
     // Dispose of any resources that can be recreated.
 }
 
--(BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType{
-    return NO;
+-(void)btnsetDefault{
+    [self.pointsDetail.layer setBorderColor:DEFAULT_COLOR.CGColor];
+    [self.pointsDetail.layer setBorderWidth:1.0f];
+    [self.pointsDetail setBackgroundColor:[UIColor whiteColor]];
+    [self.pointsDetail setTitleColor:DEFAULT_COLOR forState:UIControlStateNormal];
+    
+    [self.pointsExchange.layer setBorderColor:DEFAULT_COLOR.CGColor];
+    [self.pointsExchange.layer setBorderWidth:1.0f];
+    [self.pointsExchange setBackgroundColor:[UIColor whiteColor]];
+    [self.pointsExchange setTitleColor:DEFAULT_COLOR forState:UIControlStateNormal];
+    
+    [self.pointsRules.layer setBorderColor:DEFAULT_COLOR.CGColor];
+    [self.pointsRules.layer setBorderWidth:1.0f];
+    [self.pointsRules setBackgroundColor:[UIColor whiteColor]];
+    [self.pointsRules setTitleColor:DEFAULT_COLOR forState:UIControlStateNormal];
+    
+    [self.webView setHidden:YES];
+    
+    Page = 1;
+    
+    [rceiotArray removeAllObjects];
 }
 
--(void)webViewDidFinishLoad:(UIWebView *)webView{
+- (IBAction)btnClicked:(id)sender {
+    
+    UIButton *selectBtn = (UIButton *)sender;
 
+    if (previousClicked == selectBtn.tag) {
+        return;
+    }
+    
+    [self btnsetDefault];
+    [selectBtn setBackgroundColor:DEFAULT_COLOR];
+    [selectBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    
+    if ([selectBtn.titleLabel.text isEqualToString:@"規則"]) {
+        [self.webView setHidden:NO];
+        previousClicked = 3;
+    }
+    else if([selectBtn.titleLabel.text isEqualToString:@"獲得"]){
+        previousClicked = 1;
+        [self getRceiptList];
+    }
+    else{
+        previousClicked = 2;
+        [self getRceiptList];
+    }
 }
 
 - (IBAction)membeUsePointBtnClicked:(id)sender {
@@ -244,13 +315,18 @@
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     
     NSLog(@"[rceiotArray count] = %lu",(unsigned long)[rceiotArray count]);
-    return [rceiotArray count]+1;
+    
+    if ([rceiotArray count] == 0) {
+        return 1;
+    }
+    else{
+        return [rceiotArray count];
+    }
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
     NSString *cellIdentifier = @"GiftRceiptCell";
-    
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     
@@ -262,22 +338,39 @@
     
     GiftRceiptCell *giftRceiptCell = (GiftRceiptCell *)cell;
 
-    if (indexPath.row == 0) {
-        NSTextAttachment *imageAttachment = [[NSTextAttachment alloc] init];
-        imageAttachment.image = [UIImage imageNamed:@"iconLoop_m.png"];
-        CGFloat imageOffsetY = 0.0;
-        imageAttachment.bounds = CGRectMake(-5, imageOffsetY, imageAttachment.image.size.width, imageAttachment.image.size.height);
-        NSAttributedString *attachmentString = [NSAttributedString attributedStringWithAttachment:imageAttachment];
-        NSMutableAttributedString *completeText= [[NSMutableAttributedString alloc] initWithString:@"我的 "];
-        [completeText appendAttributedString:attachmentString];
-        NSMutableAttributedString *textAfterIcon= [[NSMutableAttributedString alloc] initWithString:@" 點數明細"];
-        [completeText appendAttributedString:textAfterIcon];
-        giftRceiptCell.contentLabel.attributedText = completeText;
+    if ([rceiotArray count] == 0) {
+//        NSTextAttachment *imageAttachment = [[NSTextAttachment alloc] init];
+//        imageAttachment.image = [UIImage imageNamed:@"iconLoop_m.png"];
+//        CGFloat imageOffsetY = 0.0;
+//        imageAttachment.bounds = CGRectMake(-5, imageOffsetY, imageAttachment.image.size.width, imageAttachment.image.size.height);
+//        NSAttributedString *attachmentString = [NSAttributedString attributedStringWithAttachment:imageAttachment];
+//        NSMutableAttributedString *completeText= [[NSMutableAttributedString alloc] initWithString:@"我的 "];
+//        [completeText appendAttributedString:attachmentString];
+//        NSMutableAttributedString *textAfterIcon= [[NSMutableAttributedString alloc] initWithString:@" 點數明細"];
+//        [completeText appendAttributedString:textAfterIcon];
+//        giftRceiptCell.contentLabel.attributedText = completeText;
+        giftRceiptCell.contentLabel.text = @"目前無資料";
     }
     else{
-        GiftRceiptClass *giftRceiptClass = [rceiotArray objectAtIndex:indexPath.row-1];
-        NSString *replaceStr = [NSString stringWithFormat:@"● %@",giftRceiptClass.rceiptDescription];
-        giftRceiptCell.contentLabel.text = replaceStr;
+        GiftRceiptClass *giftRceiptClass = [rceiotArray objectAtIndex:indexPath.row];
+        
+        NSString *plusORminusPoint = nil;
+        if ([[giftRceiptClass.rceipt_point stringValue] hasPrefix:@"-"]) {
+            plusORminusPoint = @"扣除了";
+            NSString *tmp = [[giftRceiptClass.rceipt_point stringValue] stringByReplacingOccurrencesOfString:@"-" withString:@""];
+            giftRceiptClass.rceipt_point = [NSNumber numberWithInt:[tmp intValue]];
+        }
+        else{
+            plusORminusPoint = @"獲得了";
+        }
+        
+        NSString *replaceStr = [NSString stringWithFormat:@"%@ %@。%@%@點",giftRceiptClass.created_at,giftRceiptClass.rceiptDescription,plusORminusPoint,giftRceiptClass.rceipt_point];
+        NSMutableAttributedString *rceiptString = [[NSMutableAttributedString alloc] initWithString:replaceStr];
+        
+        long Startlength = giftRceiptClass.created_at.length+giftRceiptClass.rceiptDescription.length+plusORminusPoint.length+2; //+2是1個空格,1個句號
+        [rceiptString addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithRed:240.0/255.0 green:145.0/255.0 blue:146.0/255.0 alpha:1.0]range:NSMakeRange(Startlength,[giftRceiptClass.rceipt_point stringValue].length)];
+        
+        giftRceiptCell.contentLabel.attributedText = rceiptString;
     }
     
     if(indexPath.row %2 == 0 ){

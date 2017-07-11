@@ -16,10 +16,11 @@
     instance.taskid = [dict objectForKey:@"id"];
     instance.title = [dict objectForKey:@"title"];
     instance.image = [dict objectForKey:@"image"];
-    instance.taskCompleted = [dict objectForKey:@"completed"];
+    instance.taskStatus = [dict objectForKey:@"status"];
     instance.taskType = [dict objectForKey:@"type"];
     instance.backgroundColor = [[dict objectForKey:@"background_color"] stringByReplacingOccurrencesOfString:@"#" withString:@""];
     instance.content = [dict objectForKey:@"content"];
+    instance.taskStatusText = [dict objectForKey:@"status_text"];
 
     [self validateData:instance];
     
@@ -32,7 +33,7 @@
     for (int i = 0 ; i < [array count]; i++) {
         NSDictionary *tmpDict = [array objectAtIndex:i];
         
-        TaskClass *class = [TaskClass initWithDictionary:tmpDict];
+        __strong TaskClass *class = [TaskClass initWithDictionary:tmpDict];
 //        class.image = @"https://upload.wikimedia.org/wikipedia/commons/thumb/e/e5/View_from_Hotel_Ohla%2C_Barcelona%2C_Spain_%2831183960414%29.jpg/320px-View_from_Hotel_Ohla%2C_Barcelona%2C_Spain_%2831183960414%29.jpg";
         [nsma addObject:class];
     }
@@ -45,11 +46,11 @@
     if([instance.taskid isKindOfClass:[NSNull class]]) instance.taskid = @"";
     if([instance.title isKindOfClass:[NSNull class]]) instance.title = @"";
     if([instance.image isKindOfClass:[NSNull class]]) instance.image = @"";
-    if([instance.taskCompleted isKindOfClass:[NSNull class]]) instance.taskCompleted = @0;
+    if([instance.taskStatus isKindOfClass:[NSNull class]]) instance.taskStatus = @0;
     if([instance.taskType isKindOfClass:[NSNull class]]) instance.taskType = @0;
     if([instance.backgroundColor isKindOfClass:[NSNull class]]) instance.backgroundColor = @"";
     if([instance.content isKindOfClass:[NSNull class]]) instance.content = @"";
-
+    if([instance.taskStatusText isKindOfClass:[NSNull class]]) instance.taskStatusText = @"";
 
 }
 

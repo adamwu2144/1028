@@ -12,6 +12,7 @@
 #import "MemberRegisterData.h"
 #import "NotificationViewController.h"
 #import "MBProgressHUD.h"
+#import "MyManager.h"
 
 @interface SuperMainViewController ()<NotificationViewControllerDelegate>
 
@@ -113,6 +114,25 @@
     // Dispose of any resources that can be recreated.
 }
 
+
+-(void)showVaildMessageWithTitle:(NSString *)title content:(NSString *)message{
+    UIAlertController *alertController = [UIAlertController
+                                          alertControllerWithTitle:title
+                                          message:message
+                                          preferredStyle:UIAlertControllerStyleAlert];
+    
+    alertController.view.tintColor = [UIColor colorWithRed:240.0/255.0 green:145.0/255.0 blue:146.0/255.0 alpha:1.0f];
+    
+    UIAlertAction *confirmAction = [UIAlertAction actionWithTitle:@"確定" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        
+        [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+    }];
+    
+    [alertController addAction:confirmAction];
+    
+    [self presentViewController:alertController animated:YES completion:nil];
+}
+
 #pragma mark - Open drawer button
 
 -(void)moreHandler:(UIButton *)sender{
@@ -132,6 +152,10 @@
 -(void)buttonPress:(UIButton *)sender{
 //    MessageCenterViewController *messageCenterViewController = [[MessageCenterViewController alloc] initWithNibName:@"MessageCenterViewController" bundle:nil];
 //    [self.navigationController pushViewController:messageCenterViewController animated:YES];
+    
+    if (![[MyManager shareManager] loginStatus]) {
+        [self showVaildMessageWithTitle:@"尚未登入" content:@"請登入"];
+    }
     
     NotificationViewController *notificationViewController = [[NotificationViewController alloc] initWithNibName:@"NotificationViewController" bundle:nil];
     notificationViewController.delegate = self;

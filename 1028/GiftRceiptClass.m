@@ -13,9 +13,14 @@
 +(GiftRceiptClass *)initWithDictionary:(NSDictionary *)dict
 {
     GiftRceiptClass *instance = [[GiftRceiptClass alloc] init];
-    instance.rceiptID = [dict objectForKey:@"id"];
+    instance.rceipt_point = [dict objectForKey:@"transaction_point"];
     instance.rceiptDescription = [dict objectForKey:@"description"];
-    instance.created_at = [dict objectForKey:@"created_at"];
+    
+    NSArray *filterDashArray = [[dict objectForKey:@"created_at"] componentsSeparatedByString:@"-"];
+    NSArray *filterSpaceArray = [[filterDashArray objectAtIndex:2] componentsSeparatedByString:@" "];
+
+    NSString *date = [NSString stringWithFormat:@"%@/%@",[filterDashArray objectAtIndex:1],[filterSpaceArray objectAtIndex:0]];
+    instance.created_at = date;
     
     [self validateData:instance];
     
@@ -37,7 +42,7 @@
 
 +(void) validateData:(GiftRceiptClass *)instance
 {
-    if([instance.rceiptID isKindOfClass:[NSNull class]]) instance.rceiptID = @"";
+    if([instance.rceipt_point isKindOfClass:[NSNull class]]) instance.rceipt_point = @0;
     if([instance.rceiptDescription isKindOfClass:[NSNull class]]) instance.rceiptDescription = @"";
     if([instance.created_at isKindOfClass:[NSNull class]]) instance.created_at = @"";
 }

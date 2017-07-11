@@ -194,11 +194,11 @@
 #pragma mark - Table view delegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.section == self.previousRow) {
+//    if (indexPath.section == self.previousRow) {
         // Close the drawer without no further actions on the center view controller
-        [self.drawer close];
-    }
-    else {
+//        [self.drawer close];
+//    }
+//    else {
 //                [self.drawer reloadCenterViewControllerUsingBlock:^(){
 //        typeof(self) __weak weakSelf = self;
 //
@@ -370,8 +370,8 @@
                 break;
         }
         
-    }
-    self.previousRow = indexPath.row;
+//    }
+//    self.previousRow = indexPath.row;
 }
 
 -(void)setNaviCancelBtn:(UIViewController *)viewController{

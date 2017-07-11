@@ -44,7 +44,8 @@
 
 +(NSString *)getUpdateUserAvatar;
 
-+(NSString *)getGiftRceiptPage:(int)page;
++(NSString *)getGiftRceiptInComingPage:(int)page;
++(NSString *)getGiftRceiptOutGoingPage:(int)page;
 
 +(NSString *)getProductList;
 +(NSString *)getProductDetail:(int)productID;
@@ -57,7 +58,7 @@
 +(NSString *)getContract;
 +(NSString *)getContractMember;
 +(NSString *)getContractPerson;
-+(NSString *)getBonusList;
++(NSString *)getPointsExchangeRules;
 +(NSString *)getBounsExchange;
 +(NSString *)getMsgList;
 +(NSString *)getConnect;

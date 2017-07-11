@@ -445,7 +445,6 @@
 
 - (IBAction)regusterButtonClicked:(id)sender {
     
-    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     if(0){
         NSMutableDictionary *tmp = [[NSMutableDictionary alloc] init];
 
@@ -545,6 +544,8 @@
             
             NSParameterAssert(registerParam);
     
+            [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+
             [[MyManager shareManager] requestWithMethod:POST WithPath:[ApiBuilder getCreateNewUser] WithParams:registerParam WithSuccessBlock:^(NSDictionary *dic) {
                 
                 [[MyManager shareManager] saveUserInfoToKeyChain:dic];
@@ -554,7 +555,8 @@
                 [self.navigationController pushViewController:attestationCheckViewController animated:YES];
                 
             } WithFailurBlock:^(NSError *error, int statusCode) {
-                
+                [MBProgressHUD hideHUDForView:self.view animated:YES];
+
                 NSData *errorData = error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey];
                 NSDictionary *serializedData = [NSJSONSerialization JSONObjectWithData:errorData options:kNilOptions error:nil];
                 NSString *message = [serializedData objectForKey:@"message"];
@@ -600,6 +602,7 @@
 }
 
 -(void)showVaildMessageWithTitle:(NSString *)title content:(NSString *)message{
+    
     UIAlertController *alertController = [UIAlertController
                                           alertControllerWithTitle:title
                                           message:message
@@ -608,6 +611,9 @@
     alertController.view.tintColor = [UIColor redColor];
     
     UIAlertAction *confirmAction = [UIAlertAction actionWithTitle:@"確定" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        
+        
+        
     }];
     
     [alertController addAction:confirmAction];

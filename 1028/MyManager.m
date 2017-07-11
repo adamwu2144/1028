@@ -14,6 +14,7 @@
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
 #import "LoginViewController.h"
+#import "AttestationCheckViewController.h"
 
 #define TIMEOUT 10
 
@@ -467,6 +468,7 @@
 }
 
 -(void)logOut{
+    
     self.memberData = nil;
     [self delUserData];
     [self delUserFBData];

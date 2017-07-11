@@ -21,6 +21,7 @@
 #import "ActivityDetailViewController.h"
 #import "ICSNavigationController.h"
 #import "ActivityDetailClass.h"
+#import "AttestationCheckViewController.h"
 
 @interface TaskViewController ()<MyManagerDelegate,ActivityDetailViewControllerDelegate>{
     MemberData *myMemberData;
@@ -36,6 +37,7 @@
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     self.navigationItem.rightBarButtonItem.badgeValue = [[[MyManager shareManager] memberData].notification stringValue];
+    [self setDataWithoutTask];
 }
 
 -(void)viewWillLayoutSubviews{
@@ -86,23 +88,48 @@
     else{
         
         if([[MyManager shareManager] loadUserInfoFromKeyChaninWithKey:@"jwt"]) {
-            [[MyManager shareManager] getUserDataWithJWT:nil WithComplete:^(BOOL status, int code) {
-                if(status){
-                    [self setData];
-                }
-                else{
-//                    if(code == 103 || code == 102){
-//                        self.loginViewController = [[LoginViewController alloc] initWithNibName:@"LoginViewController" bundle:nil];
-//                        UINavigationController *loginNavi = [[UINavigationController alloc] initWithRootViewController:self.loginViewController];
-//                        [self presentViewController:loginNavi animated:YES completion:nil];
-//                    }
-//                    if (code == 106) {
-//                        self.loginViewController = [[LoginViewController alloc] initWithNibName:@"LoginViewController" bundle:nil];
-//                        UINavigationController *loginNavi = [[UINavigationController alloc] initWithRootViewController:self.loginViewController];
-//                        [self presentViewController:loginNavi animated:YES completion:nil];
-//                    }
-                }
+            
+            NSDictionary *parameters = @{@"token":[[MyManager shareManager] loadUserFBTokenFromKeyChaninWithKey]};
+
+            [[MyManager shareManager] requestWithMethod:POST WithPath:[ApiBuilder getLogin] WithParams:parameters WithSuccessBlock:^(NSDictionary *dic) {
+                
+                [[MyManager shareManager] getUserDataWithJWT:nil WithComplete:^(BOOL status, int code) {
+                    
+                    if ([[dic objectForKey:@"code"] intValue] == 202) {
+                        [MBProgressHUD hideHUDForView:PublicAppDelegate.window.rootViewController.view animated:YES];
+
+                        AttestationCheckViewController *attestationCheckViewController = [[AttestationCheckViewController alloc] initWithNibName:@"AttestationCheckViewController" bundle:nil];
+                        ICSNavigationController *navi = [[ICSNavigationController alloc] initWithRootViewController:attestationCheckViewController];
+                        [self presentViewController:navi animated:YES completion:nil];
+                    }
+                    else{
+                        if(status){
+                            [self setData];
+                        }
+                        else{
+                            //                    if(code == 103 || code == 102){
+                            //                        self.loginViewController = [[LoginViewController alloc] initWithNibName:@"LoginViewController" bundle:nil];
+                            //                        UINavigationController *loginNavi = [[UINavigationController alloc] initWithRootViewController:self.loginViewController];
+                            //                        [self presentViewController:loginNavi animated:YES completion:nil];
+                            //                    }
+                            //                    if (code == 106) {
+                            //                        self.loginViewController = [[LoginViewController alloc] initWithNibName:@"LoginViewController" bundle:nil];
+                            //                        UINavigationController *loginNavi = [[UINavigationController alloc] initWithRootViewController:self.loginViewController];
+                            //                        [self presentViewController:loginNavi animated:YES completion:nil];
+                            //                    }
+                        }
+
+                    }
+                    
+
+                }];
+                
+                
+            } WithFailurBlock:^(NSError *error, int statusCode) {
+                //TODO:fb token error
             }];
+
+
         }
         else{
             self.loginViewController = [[LoginViewController alloc] initWithNibName:@"LoginViewController" bundle:nil];
@@ -200,6 +227,7 @@
         }
         [self.memberImageView sd_setImageWithURL:[NSURL URLWithString:myMemberData.avatar] placeholderImage:tempPic];
         
+        [self.memberLevel setHidden:NO];
         [self getTaskData];
         
     }
@@ -209,8 +237,8 @@
         
         UIFont *font = [UIFont systemFontOfSize:23];
         
-        [pointString addAttribute:NSFontAttributeName value:font range:NSMakeRange(5,tmpPoint.length)];
-        [pointString addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithRed:240.0/255.0 green:145.0/255.0 blue:146.0/255.0 alpha:1.0]range:NSMakeRange(5,tmpPoint.length)];
+        [pointString addAttribute:NSFontAttributeName value:font range:NSMakeRange(6,tmpPoint.length)];
+        [pointString addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithRed:240.0/255.0 green:145.0/255.0 blue:146.0/255.0 alpha:1.0]range:NSMakeRange(6,tmpPoint.length)];
         [self.memberImageView setImage:[UIImage imageNamed:@"girl"]];
         self.memberName.text = @"訪客";
         self.memberPoint.attributedText = pointString;
@@ -221,16 +249,93 @@
         [self getGuestData];
 
     }
+
+}
+
+-(void)setDataWithoutTask{
+    myMemberData = [[MyManager shareManager] memberData];
     
-    [MBProgressHUD hideHUDForView:PublicAppDelegate.window.rootViewController.view animated:YES];
-
-
+    BOOL status = [[MyManager shareManager] loginStatus];
+    
+    if (status) {
+        NSMutableAttributedString *pointString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"可兌換點數：%@ 點",myMemberData.points]];
+        
+        UIFont *font = [UIFont systemFontOfSize:24.0f weight:5.0f];
+        
+        [pointString addAttribute:NSFontAttributeName value:font range:NSMakeRange(6, [myMemberData.points stringValue].length)];
+        [pointString addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithRed:240.0/255.0 green:145.0/255.0 blue:146.0/255.0 alpha:1.0]range:NSMakeRange(6,[myMemberData.points stringValue].length)];
+        self.memberPoint.attributedText = pointString;
+        
+        self.memberName.text = myMemberData.user_name;
+        
+        NSTextAttachment *imageAttachment = [[NSTextAttachment alloc] init];
+        
+        switch ([myMemberData.titleKey intValue]) {
+            case 1:
+                imageAttachment.image = [UIImage imageNamed:@"iconBabe"];
+                self.memberLevel.textColor = TITLE_KEY_ONE_COLOR;
+                self.memberLevel.layer.borderColor = TITLE_KEY_ONE_COLOR.CGColor;
+                
+                break;
+            case 2:
+                imageAttachment.image = [UIImage imageNamed:@"iconGirl"];
+                self.memberLevel.textColor = TITLE_KEY_TWO_COLOR;
+                self.memberLevel.layer.borderColor = TITLE_KEY_TWO_COLOR.CGColor;
+                break;
+            case 3:
+                imageAttachment.image = [UIImage imageNamed:@"iconLady"];
+                self.memberLevel.textColor = TITLE_KEY_THREE_COLOR;
+                self.memberLevel.layer.borderColor = TITLE_KEY_THREE_COLOR.CGColor;
+                break;
+            default:
+                break;
+        }
+        CGFloat imageOffsetY = 0.0;
+        imageAttachment.bounds = CGRectMake(-5, imageOffsetY, imageAttachment.image.size.width, imageAttachment.image.size.height);
+        NSAttributedString *attachmentString = [NSAttributedString attributedStringWithAttachment:imageAttachment];
+        NSMutableAttributedString *completeText= [[NSMutableAttributedString alloc] initWithString:@" "];
+        [completeText appendAttributedString:attachmentString];
+        NSMutableAttributedString *textAfterIcon= [[NSMutableAttributedString alloc] initWithString:myMemberData.title];
+        [completeText appendAttributedString:textAfterIcon];
+        self.memberLevel.textAlignment=NSTextAlignmentCenter;
+        self.memberLevel.attributedText=completeText;
+        self.memberLevelWidth.constant = self.memberLevel.intrinsicContentSize.width+20;
+        
+        self.navigationItem.rightBarButtonItem.badgeValue = [myMemberData.notification stringValue];
+        
+        [self.memberImageView sd_setImageWithURL:[NSURL URLWithString:myMemberData.avatar] placeholderImage:nil];
+        
+        UIImage *tempPic = nil;
+        if ([myMemberData.gender intValue]== 1) {
+            tempPic = [UIImage imageNamed:@"man"];
+        }
+        else{
+            tempPic = [UIImage imageNamed:@"girl"];
+        }
+        [self.memberImageView sd_setImageWithURL:[NSURL URLWithString:myMemberData.avatar] placeholderImage:tempPic];
+        
+        [self.memberLevel setHidden:NO];
+        
+    }
+    else{
+        NSString *tmpPoint = @"0";
+        NSMutableAttributedString *pointString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"可兌換點數：%@ 點",tmpPoint]];
+        
+        UIFont *font = [UIFont systemFontOfSize:23];
+        
+        [pointString addAttribute:NSFontAttributeName value:font range:NSMakeRange(6,tmpPoint.length)];
+        [pointString addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithRed:240.0/255.0 green:145.0/255.0 blue:146.0/255.0 alpha:1.0]range:NSMakeRange(6,tmpPoint.length)];
+        [self.memberImageView setImage:[UIImage imageNamed:@"girl"]];
+        self.memberName.text = @"訪客";
+        self.memberPoint.attributedText = pointString;
+        self.memberLevel.text = @"尚未登入";
+        [self.memberLevel setHidden:YES];
+        self.navigationItem.rightBarButtonItem.badgeValue = @"";
+    }
 }
 
 -(void)getTaskData{
     
-    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-
     [[MyManager shareManager] requestWithMethod:GET WithPath:[ApiBuilder getEventsFromTask] WithParams:nil WithSuccessBlock:^(NSDictionary *dic) {
         
         [self.activityArray removeAllObjects];
@@ -238,15 +343,13 @@
         
         [self.taskTableView reloadData];
         [self hideRefreshControl];
-        [MBProgressHUD hideHUDForView:self.view animated:YES];
+        [MBProgressHUD hideHUDForView:PublicAppDelegate.window.rootViewController.view animated:YES];
     } WithFailurBlock:^(NSError *error, int statusCode) {
         
     }];
 }
 
 -(void)getGuestData{
-    
-    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     
     [[MyManager shareManager] requestWithMethod:GET WithPath:[ApiBuilder getGuestEventsFromTask] WithParams:nil WithSuccessBlock:^(NSDictionary *dic) {
         
@@ -255,7 +358,7 @@
         
         [self.taskTableView reloadData];
         [self hideRefreshControl];
-        [MBProgressHUD hideHUDForView:self.view animated:YES];
+        [MBProgressHUD hideHUDForView:PublicAppDelegate.window.rootViewController.view animated:YES];
     } WithFailurBlock:^(NSError *error, int statusCode) {
         NSData *errorData = error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey];
         NSDictionary *serializedData = [NSJSONSerialization JSONObjectWithData:errorData options:kNilOptions error:nil];
@@ -315,12 +418,29 @@
         [taskCell.taskImageView sd_setImageWithURL:[NSURL URLWithString:taskClass.image]];
         taskCell.taskTitle.text = taskClass.title;
         
-        if (taskClass.taskCompleted == nil) {
+        if (taskClass.taskStatus == nil) {
             taskCell.taskStatus.text = @"";
         }
         else{
-            taskCell.taskStatus.text = [taskClass.taskCompleted boolValue] ? @"已完成":@"未完成" ;
-            taskCell.taskStatus.textColor = [taskClass.taskCompleted boolValue] ? DEFAULT_GARY_COLOR:DEFAULT_COLOR;
+            taskCell.taskStatus.text = taskClass.taskStatusText;
+            switch ([taskClass.taskStatus intValue]) {
+                case 1:
+                    taskCell.taskStatus.textColor = DEFAULT_COLOR;
+                    break;
+                case 2:
+                    taskCell.taskStatus.textColor = DEFAULT_GARY_COLOR;
+                    break;
+                case 3:
+                    taskCell.taskStatus.textColor = DEFAULT_GARY_COLOR;
+                    break;
+                case 4:
+                    taskCell.taskStatus.textColor = DEFAULT_COLOR;
+                    break;
+                default:
+                    break;
+            }
+//            taskCell.taskStatus.text = [taskClass.taskCompleted boolValue] ? @"已完成":@"未完成" ;
+//            taskCell.taskStatus.textColor = [taskClass.taskCompleted boolValue] ? DEFAULT_GARY_COLOR:DEFAULT_COLOR;
         }
         
     }
@@ -426,10 +546,13 @@
 #pragma mark - ActivityDeatilViewControllerDelegate
 
 -(void)doRefreshTaskContent:(TaskClass *)taskClass{
+    
+    NSLog(@"activityArray = %@",_activityArray);
+    
     NSInteger objIndex = [self.activityArray indexOfObject:taskClass];
     
     TaskClass *tak = [self.activityArray objectAtIndex:objIndex];
-    NSLog(@"activityArray = %@",tak.taskCompleted);
+    NSLog(@"activityArray = %@",tak.taskStatus);
     
     NSArray *indexPathArray = [NSArray arrayWithObject:[NSIndexPath indexPathForRow:objIndex inSection:0]];
     
@@ -446,7 +569,11 @@
     for (TaskClass *tmp in self.activityArray) {
         if (tmp.taskid == notiTaskClass.taskid) {
             //更新自己
-            tmp.taskCompleted = notiTaskClass.taskCompleted;
+            tmp.taskStatus = notiTaskClass.taskStatus;
+            
+            if ([notiTaskClass.taskStatus intValue] == 2) {
+                tmp.taskStatusText = @"已完成";
+            }
             
             //更新BeaconView
             long beaconNaviCount = (unsigned long)[PublicAppDelegate.mainTabBarController.beaconNavi.viewControllers count];
@@ -459,8 +586,11 @@
                     if ([beaconViewController isViewLoaded]) {
                         for (TaskClass *tmp in beaconViewController.activityArray) {
                             if (tmp.taskid == notiTaskClass.taskid) {
-                                tmp.taskCompleted = notiTaskClass.taskCompleted;
+                                tmp.taskStatus = notiTaskClass.taskStatus;
             
+                                if ([notiTaskClass.taskStatus intValue] == 2) {
+                                    tmp.taskStatusText = @"已完成";
+                                }
                                 NSInteger objIndex = [beaconViewController.activityArray indexOfObject:tmp];
     
                                 NSArray *indexPathArray = [NSArray arrayWithObject:[NSIndexPath indexPathForRow:objIndex inSection:0]];
@@ -478,7 +608,10 @@
                 if ([[currentNavi.viewControllers objectAtIndex:2-1] isKindOfClass:[ActivityDetailViewController class]]) {
                     ActivityDetailViewController *activityDetailViewController = (ActivityDetailViewController *)[currentNavi.viewControllers objectAtIndex:2-1];
                     if ([activityDetailViewController isViewLoaded]) {
-                        activityDetailViewController.activityDetailClass.task_completed = notiTaskClass.taskCompleted;
+                        activityDetailViewController.activityDetailClass.task_status = notiTaskClass.taskStatus;
+                        if ([notiTaskClass.taskStatus intValue] == 2) {
+                            activityDetailViewController.activityDetailClass.task_status_text = @"已經完成活動";
+                        }
                     }
                 }
             }
@@ -502,7 +635,7 @@
     for (TaskClass *tmp in self.activityArray) {
         if (tmp.taskid == notiTaskClass.taskid) {
             //更新自己
-            tmp.taskCompleted = notiTaskClass.taskCompleted;
+            tmp.taskStatus = notiTaskClass.taskStatus;
             
             //更新BarcodeView
             long barcodeNaviCount = (unsigned long)[PublicAppDelegate.mainTabBarController.barcodeNavi.viewControllers count];
@@ -515,7 +648,7 @@
                     if ([barcodeViewController isViewLoaded]) {
                         for (TaskClass *tmp in barcodeViewController.activityArray) {
                             if (tmp.taskid == notiTaskClass.taskid) {
-                                tmp.taskCompleted = notiTaskClass.taskCompleted;
+                                tmp.taskStatus = notiTaskClass.taskStatus;
                                 
                                 NSInteger objIndex = [barcodeViewController.activityArray indexOfObject:tmp];
                                 
@@ -534,7 +667,7 @@
                 if ([[currentNavi.viewControllers objectAtIndex:2-1] isKindOfClass:[ActivityDetailViewController class]]) {
                     ActivityDetailViewController *activityDetailViewController = (ActivityDetailViewController *)[currentNavi.viewControllers objectAtIndex:2-1];
                     if ([activityDetailViewController isViewLoaded]) {
-                        activityDetailViewController.activityDetailClass.task_completed = notiTaskClass.taskCompleted;
+                        activityDetailViewController.activityDetailClass.task_status = notiTaskClass.taskStatus;
                     }
                 }
             }

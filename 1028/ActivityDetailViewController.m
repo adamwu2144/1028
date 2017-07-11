@@ -36,6 +36,7 @@
 -(void)willMoveToParentViewController:(UIViewController *)parent{
     if (parent == NULL) {
         if ([self.delegate respondsToSelector:@selector(doRefreshTaskContent:)]) {
+            NSLog(@"myTaskClass des = %@",myTaskClass.description);
             [self.delegate doRefreshTaskContent:myTaskClass];
         }
     }
@@ -44,6 +45,8 @@
 -(id)initWithActivityTaskClass:(TaskClass *)taskClass{
     self = [super init];
     if (self) {
+        NSLog(@"taskClass des = %@",taskClass.description);
+
         myTask_id = [taskClass.taskid intValue];
         name = taskClass.title;
         myTaskClass = taskClass;
@@ -194,7 +197,10 @@
 //            
 //        }
         
-        myTaskClass.taskCompleted = self.activityDetailClass.task_completed;
+        myTaskClass.taskStatus = self.activityDetailClass.task_status;
+        if ([self.activityDetailClass.task_status intValue] == 2) {
+            myTaskClass.taskStatusText = @"已完成";
+        }
         
         if ([self.activityDetailClass.task_type intValue] == ActivityTypeForBeacon) {
             [[NSNotificationCenter defaultCenter] postNotificationName:@"BeaconTaskDidChangeNotification" object:myTaskClass];
@@ -228,15 +234,9 @@
 
 - (IBAction)handleBtnClick:(id)sender {
 
-    if ([self.activityDetailClass.task_status intValue] == 2 || [self.activityDetailClass.task_status intValue] == 3) {
+    if ([self.activityDetailClass.task_status intValue] == 2 || [self.activityDetailClass.task_status intValue] == 3 || [self.activityDetailClass.task_status intValue] == 4) {
         NSLog(@"%@",self.activityDetailClass.task_status_text);
         [self showVaildMessageWithTitle:@"提醒" content:self.activityDetailClass.task_status_text];
-        return;
-    }
-    
-    if([self.activityDetailClass.task_completed intValue]){
-        [self showVaildMessageWithTitle:@"提醒" content:@"您已經參加過活動喔"];
-        NSLog(@"已完成");
         return;
     }
     
@@ -307,11 +307,18 @@
 //        self.activityImageView.frame = CGRectMake(-(width * f - width) / 2, yOffset, width * f, totalOffset);
 //    }
 
+-(void)refreshMemberData{
+    [[MyManager shareManager] getUserDataWithJWT:nil WithComplete:^(BOOL status, int statusCode) {
+        
+    }];
+}
+
 #pragma mark - ShakeViewControllerDelegate
 
 -(void)doRefreshContent{
     isRefreshParaentContent = YES;
     [self initData];
+    [self refreshMemberData];
 }
 
 #pragma mark - MCScannerViewControllerDelegate
@@ -319,5 +326,6 @@
 -(void)doRefreshContentFromQRCode{
     isRefreshParaentContent = YES;
     [self initData];
+    [self refreshMemberData];
 }
 @end

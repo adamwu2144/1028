@@ -119,6 +119,21 @@
 //            [self.navigationController pushViewController:memberSettingViewController animated:YES];
 //
 //        }
+        if (tmp.drawerState == ICSDrawerControllerStateOpen) {
+            [((AppDelegate *)[[UIApplication sharedApplication] delegate]).drawer close];
+            
+            double delayInSeconds = 0.5;
+            dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
+            
+            dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+                MemberSettingViewController *memberSettingViewController = [[MemberSettingViewController alloc] initWithNibName:@"MemberSettingViewController" bundle:nil];
+                [self.navigationController pushViewController:memberSettingViewController animated:YES];
+                
+            });
+        }else if(tmp.drawerState == ICSDrawerControllerStateClosed){
+            MemberSettingViewController *memberSettingViewController = [[MemberSettingViewController alloc] initWithNibName:@"MemberSettingViewController" bundle:nil];
+            [self.navigationController pushViewController:memberSettingViewController animated:YES];
+        }
     }
     else if(CGRectContainsPoint(self.settingView.frame,aPoint)){
         

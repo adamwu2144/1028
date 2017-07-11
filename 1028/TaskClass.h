@@ -13,11 +13,11 @@
 @property (nonatomic, strong) NSString *taskid;
 @property (nonatomic, strong) NSString *title;
 @property (nonatomic, strong) NSString *image;
-@property (nonatomic, strong) NSNumber *taskCompleted;
+@property (nonatomic, strong) NSNumber *taskStatus;
 @property (nonatomic, strong) NSNumber *taskType;
 @property (nonatomic, strong) NSString *backgroundColor;
 @property (nonatomic, strong) NSString *content;
-
+@property (nonatomic, strong) NSString *taskStatusText;
 
 +(NSMutableArray *)initWithArray:(NSArray *)array;
 
