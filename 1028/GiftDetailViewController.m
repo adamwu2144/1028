@@ -25,6 +25,7 @@
     int Page;
     NSString *requestURL;
     int previousClicked;
+    BOOL updateUserData;
 }
 
 @end
@@ -32,8 +33,8 @@
 @implementation GiftDetailViewController{
 }
 
--(void)viewDidDisappear:(BOOL)animated{
-    [super viewDidDisappear:animated];
+-(void)dealloc{
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"UserDataDidChangeNotification" object:nil];
 }
 
 -(void)viewWillAppear:(BOOL)animated{
@@ -45,7 +46,13 @@
         
         [self.navigationItem setTitleView:logoImage];
     }
-    [self setData];
+    
+    if (updateUserData) {
+        updateUserData = NO;
+        [self btnsetDefault];
+        [self getRceiptList];
+        [self setData];
+    }
 }
 
 - (void)viewDidLoad {
@@ -53,6 +60,8 @@
     // Do any additional setup after loading the view from its nib.
     Page = 1;
     previousClicked = 1;
+    updateUserData = NO;
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userDataDidChange:) name:@"UserDataDidChangeNotification" object:nil];
 
     [self initTableView];
     [self initCusBtn];
@@ -85,7 +94,7 @@
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     UIImageView *image = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"bk"]];
     [self.tableView setBackgroundView:image];
-    [self.tableView setContentInset:UIEdgeInsetsMake(180, 0, 0, 0)];
+    [self.tableView setContentInset:UIEdgeInsetsMake(0, 0, 0, 0)];
     
     MJRefreshAutoNormalFooter *footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(getRceiptList)];
     [footer setTitle:@"點擊或上拉載入更多…" forState:MJRefreshStateIdle];
@@ -122,7 +131,6 @@
             [self.tableView reloadData];
         }
         else{
-            [self.tableView reloadData];
             [self.tableView.footer noticeNoMoreData];
         }
         
@@ -238,7 +246,7 @@
 - (IBAction)btnClicked:(id)sender {
     
     UIButton *selectBtn = (UIButton *)sender;
-
+    
     if (previousClicked == selectBtn.tag) {
         return;
     }
@@ -251,7 +259,7 @@
         [self.webView setHidden:NO];
         previousClicked = 3;
     }
-    else if([selectBtn.titleLabel.text isEqualToString:@"獲得"]){
+    else if([selectBtn.titleLabel.text isEqualToString:@"集點"]){
         previousClicked = 1;
         [self getRceiptList];
     }
@@ -284,7 +292,7 @@
 
 -(void)setNaviCancelBtn:(UIViewController *)viewController{
     UIButton *cancelBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [cancelBtn setFrame:CGRectMake(0, 20, 25, 25)];
+    [cancelBtn setFrame:CGRectMake(0, 0, 35, 35)];
     [cancelBtn addTarget:self action:@selector(cancelHandler:) forControlEvents:UIControlEventTouchUpInside];
     [cancelBtn setBackgroundImage:[UIImage imageNamed:@"ic_arrow_white"] forState:UIControlStateNormal];
     UIBarButtonItem *cancelItem = [[UIBarButtonItem alloc] initWithCustomView:cancelBtn];
@@ -355,30 +363,70 @@
         GiftRceiptClass *giftRceiptClass = [rceiotArray objectAtIndex:indexPath.row];
         
         NSString *plusORminusPoint = nil;
+        NSString *replaceStr = nil;
+        NSLog(@"[[giftRceiptClass.rceipt_point stringValue]--%@",[giftRceiptClass.rceipt_point stringValue]);
         if ([[giftRceiptClass.rceipt_point stringValue] hasPrefix:@"-"]) {
             plusORminusPoint = @"扣除了";
             NSString *tmp = [[giftRceiptClass.rceipt_point stringValue] stringByReplacingOccurrencesOfString:@"-" withString:@""];
-            giftRceiptClass.rceipt_point = [NSNumber numberWithInt:[tmp intValue]];
+            replaceStr = [NSString stringWithFormat:@"%@ %@。%@%@點",giftRceiptClass.created_at,giftRceiptClass.rceiptDescription,plusORminusPoint,tmp];
         }
         else{
             plusORminusPoint = @"獲得了";
+            replaceStr = [NSString stringWithFormat:@"%@ %@。%@%@點",giftRceiptClass.created_at,giftRceiptClass.rceiptDescription,plusORminusPoint,giftRceiptClass.rceipt_point];
+
         }
         
-        NSString *replaceStr = [NSString stringWithFormat:@"%@ %@。%@%@點",giftRceiptClass.created_at,giftRceiptClass.rceiptDescription,plusORminusPoint,giftRceiptClass.rceipt_point];
         NSMutableAttributedString *rceiptString = [[NSMutableAttributedString alloc] initWithString:replaceStr];
         
         long Startlength = giftRceiptClass.created_at.length+giftRceiptClass.rceiptDescription.length+plusORminusPoint.length+2; //+2是1個空格,1個句號
-        [rceiptString addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithRed:240.0/255.0 green:145.0/255.0 blue:146.0/255.0 alpha:1.0]range:NSMakeRange(Startlength,[giftRceiptClass.rceipt_point stringValue].length)];
+        if ([[giftRceiptClass.rceipt_point stringValue] hasPrefix:@"-"]) {
+            [rceiptString addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithRed:240.0/255.0 green:145.0/255.0 blue:146.0/255.0 alpha:1.0]range:NSMakeRange(Startlength,[giftRceiptClass.rceipt_point stringValue].length-1)];
+        }
+        else{
+            [rceiptString addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithRed:240.0/255.0 green:145.0/255.0 blue:146.0/255.0 alpha:1.0]range:NSMakeRange(Startlength,[giftRceiptClass.rceipt_point stringValue].length)];
+        }
+
         
         giftRceiptCell.contentLabel.attributedText = rceiptString;
     }
     
-    if(indexPath.row %2 == 0 ){
+    [giftRceiptCell.contentView setBackgroundColor:[UIColor whiteColor]];
+
+    if(indexPath.row %2 == 1 ){
         [giftRceiptCell.contentView setBackgroundColor:[UIColor colorWithRed:239.0/255.0 green:239.0/255.0 blue:239.0/255.0 alpha:1.0f]];
     }
 
     
     return cell;
+}
+
+-(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    //put your values, this is part of my code
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 45)];
+    [view setBackgroundColor:[UIColor colorWithRed:239.0/255.0 green:239.0/255.0 blue:239.0/255.0 alpha:1.0f]];
+    UILabel *lbl = [[UILabel alloc] initWithFrame:CGRectMake(15, 15, self.view.bounds.size.width, 20)];
+    [lbl setFont:[UIFont systemFontOfSize:18]];
+    [lbl setTextColor:[UIColor blackColor]];
+    [view addSubview:lbl];
+    
+    NSTextAttachment *imageAttachment = [[NSTextAttachment alloc] init];
+    imageAttachment.image = [UIImage imageNamed:@"iconLoop_m.png"];
+    CGFloat imageOffsetY = 0.0;
+    imageAttachment.bounds = CGRectMake(0, imageOffsetY, imageAttachment.image.size.width, imageAttachment.image.size.height);
+    NSAttributedString *attachmentString = [NSAttributedString attributedStringWithAttachment:imageAttachment];
+    NSMutableAttributedString *completeText= [[NSMutableAttributedString alloc] initWithString:@"我的 "];
+    [completeText appendAttributedString:attachmentString];
+    NSMutableAttributedString *textAfterIcon= [[NSMutableAttributedString alloc] initWithString:@" 點數明細"];
+    [completeText appendAttributedString:textAfterIcon];
+    [lbl setAttributedText:completeText];
+    
+    return view;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return 45;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -404,5 +452,11 @@
     
 }
 
+#pragma mark UserDataDidChangeNotification
+
+-(void)userDataDidChange:(NSNotification *)notificaion{
+    updateUserData = YES;
+    
+}
 
 @end

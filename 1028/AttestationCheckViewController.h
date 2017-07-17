@@ -13,9 +13,14 @@
 @property (strong, nonatomic) IBOutlet UIButton *resetBtn;
 @property (strong, nonatomic) IBOutlet TextFieldNoMenu *AttestationTextField;
 @property (strong, nonatomic) IBOutlet UIButton *resendBtn;
+@property (strong, nonatomic) IBOutlet UIView *successView;
+@property (strong, nonatomic) IBOutlet UIButton *goTaskBtn;
+@property (strong, nonatomic) IBOutlet UIImageView *warningImageView;
+@property (strong, nonatomic) IBOutlet UILabel *warningLabel;
 - (IBAction)ConfirmBtnClicked:(id)sender;
 - (IBAction)resetBtnClicked:(id)sender;
 - (IBAction)resendBtnClicked:(id)sender;
+- (IBAction)goTaskBtnClicked:(id)sender;
 
 
 @end

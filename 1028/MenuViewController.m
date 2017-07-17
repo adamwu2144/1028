@@ -376,7 +376,7 @@
 
 -(void)setNaviCancelBtn:(UIViewController *)viewController{
     UIButton *cancelBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [cancelBtn setFrame:CGRectMake(0, 20, 25, 25)];
+    [cancelBtn setFrame:CGRectMake(0, 0, 35, 35)];
     [cancelBtn addTarget:self action:@selector(cancelHandler:) forControlEvents:UIControlEventTouchUpInside];
     [cancelBtn setBackgroundImage:[UIImage imageNamed:@"ic_arrow_white"] forState:UIControlStateNormal];
     UIBarButtonItem *cancelItem = [[UIBarButtonItem alloc] initWithCustomView:cancelBtn];
@@ -411,7 +411,7 @@
                                           message:message
                                           preferredStyle:UIAlertControllerStyleAlert];
     
-    alertController.view.tintColor = [UIColor colorWithRed:240.0/255.0 green:145.0/255.0 blue:146.0/255.0 alpha:1.0f];
+    alertController.view.tintColor = DEFAULT_COLOR;
     
     UIAlertAction *confirmAction = [UIAlertAction actionWithTitle:@"確定" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         

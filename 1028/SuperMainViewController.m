@@ -121,7 +121,7 @@
                                           message:message
                                           preferredStyle:UIAlertControllerStyleAlert];
     
-    alertController.view.tintColor = [UIColor colorWithRed:240.0/255.0 green:145.0/255.0 blue:146.0/255.0 alpha:1.0f];
+    alertController.view.tintColor = DEFAULT_COLOR;
     
     UIAlertAction *confirmAction = [UIAlertAction actionWithTitle:@"確定" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         

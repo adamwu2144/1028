@@ -14,7 +14,7 @@
 @property (nonatomic, strong) NSString *title;
 @property (nonatomic, strong) NSString *image;
 @property (nonatomic, strong) NSNumber *taskStatus;
-@property (nonatomic, strong) NSNumber *taskType;
+@property (nonatomic, strong) NSNumber *taskType; //任務間判斷 是活動還是訊息
 @property (nonatomic, strong) NSString *backgroundColor;
 @property (nonatomic, strong) NSString *content;
 @property (nonatomic, strong) NSString *taskStatusText;

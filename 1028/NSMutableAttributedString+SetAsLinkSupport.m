@@ -15,7 +15,8 @@
     NSRange foundRange = [self.mutableString rangeOfString:textToFind];
     if (foundRange.location != NSNotFound) {
         [self addAttribute:NSLinkAttributeName value:linkURL range:foundRange];
-        [self addAttribute:NSForegroundColorAttributeName value:[UIColor redColor] range:foundRange];
+        [self addAttribute:NSForegroundColorAttributeName value:[UIColor purpleColor] range:foundRange];
+
         return YES;
     }
     return NO;

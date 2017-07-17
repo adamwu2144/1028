@@ -268,43 +268,73 @@
 }
 
 -(void)saveUserFBTokenToKeyChain:(NSString *)token{
-    NSMutableDictionary *userFBToken = [[NSMutableDictionary alloc] init];
-    [userFBToken setValue:token forKey:@"fbToken"];
-    
-    [FGKeychain delete:USER_FB_TOKEN];
-    
-    [FGKeychain save:USER_FB_TOKEN data:userFBToken];
+//    NSMutableDictionary *userFBToken = [[NSMutableDictionary alloc] init];
+//    [userFBToken setValue:token forKey:@"fbToken"];
+//    
+//    [FGKeychain delete:USER_FB_TOKEN];
+//    
+//    [FGKeychain save:USER_FB_TOKEN data:userFBToken];
+    NSLog(@"======saveUserFBTokenToKeyChain======");
+    [[NSUserDefaults standardUserDefaults] setObject:token forKey:USER_FB_TOKEN];
 
 }
 
 -(void)delUserFBData{
-    [FGKeychain delete:USER_FB_TOKEN];
+//    [FGKeychain delete:USER_FB_TOKEN];
+    NSLog(@"======delUserFBData======");
+    NSLog(@"%@", [NSThread callStackSymbols]);
+    if([[NSUserDefaults standardUserDefaults] objectForKey:USER_FB_TOKEN] != nil){
+        [[NSUserDefaults standardUserDefaults] removeObjectForKey:USER_FB_TOKEN];
+    }
 }
 
 -(NSString *)loadUserFBTokenFromKeyChaninWithKey{
-    return [[FGKeychain load:USER_FB_TOKEN] objectForKey:@"fbToken"];
+    NSLog(@"======loadUserFBTokenFromKeyChaninWithKey======");
+
+    NSString *fbtoken = [[NSUserDefaults standardUserDefaults] objectForKey:USER_FB_TOKEN];
+    return fbtoken;
+//    return [[FGKeychain load:USER_FB_TOKEN] objectForKey:@"fbToken"];
 }
 
 -(void)saveUserInfoToKeyChain:(NSDictionary *)aData{
+//    NSMutableDictionary *userInfo = [[NSMutableDictionary alloc] init];
+//    
+//    [userInfo setValue:[[aData objectForKey:@"items"] objectForKey:@"jwt"] forKey:@"jwt"];
+    
+//    NSLog(@"key userinfo = %@", userInfo);
+//    
+//    //先刪除
+//    [FGKeychain delete:USER_DATA];
+//    //再存
+//    [FGKeychain save:USER_DATA data:userInfo];
+    NSLog(@"======saveUserInfoToKeyChain:aData:======");
+
     NSMutableDictionary *userInfo = [[NSMutableDictionary alloc] init];
     
     [userInfo setValue:[[aData objectForKey:@"items"] objectForKey:@"jwt"] forKey:@"jwt"];
     
-    NSLog(@"key userinfo = %@", userInfo);
+    if([[NSUserDefaults standardUserDefaults] objectForKey:USER_DATA] != nil){
+        [[NSUserDefaults standardUserDefaults] removeObjectForKey:USER_DATA];
+    };
     
-    //先刪除
-    [FGKeychain delete:USER_DATA];
-    //再存
-    [FGKeychain save:USER_DATA data:userInfo];
+    [[NSUserDefaults standardUserDefaults] setObject:userInfo forKey:USER_DATA];
 
 }
 
 -(void)delUserData{
-    [FGKeychain delete:USER_DATA];
+//    [FGKeychain delete:USER_DATA];
+    NSLog(@"======delUserData======");
+
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:USER_DATA];
 }
 
 -(NSString *)loadUserInfoFromKeyChaninWithKey:(NSString *)key{
-    return [[FGKeychain load:USER_DATA] objectForKey:key];
+    NSLog(@"======loadUserInfoFromKeyChaninWithKey:key:======");
+
+    NSMutableDictionary *userInfo = [[NSUserDefaults standardUserDefaults] objectForKey:USER_DATA];
+    NSString *jwt = [userInfo objectForKey:key];
+    return jwt;
+//    return [[FGKeychain load:USER_DATA] objectForKey:key];
 }
 
 -(void)getUserDataWithJWT:(NSDictionary *)jwtDic WithComplete:(complete)complete{
@@ -324,6 +354,8 @@
         if (responseObject) {
             self.memberData = [[MemberData alloc] initWithDictionary:[responseObject objectForKey:@"items"]];
             self.loginStatus = YES;
+            //更新使用者資料通知所有畫面出現要更新
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"UserDataDidChangeNotification" object:nil];
             complete(YES, 200);
         }
     } failure:^(NSURLSessionTask *operation, NSError *error) {
@@ -406,7 +438,7 @@
                                           message:message
                                           preferredStyle:UIAlertControllerStyleAlert];
     
-    alertController.view.tintColor = [UIColor redColor];
+    alertController.view.tintColor = DEFAULT_COLOR;
     
     UIAlertAction *confirmAction = [UIAlertAction actionWithTitle:@"確定" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
     }];

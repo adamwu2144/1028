@@ -121,10 +121,10 @@
     genderArray = [[NSMutableArray alloc] initWithObjects:@"男", @"女", nil];
     
     _toolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 30)];
-    _toolbar.backgroundColor = [UIColor grayColor];
+    _toolbar.backgroundColor = DEFAULT_LIGHT_GARY_COLOR;
     
     UIButton *doneBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 40, 20)];
-    [doneBtn setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
+    [doneBtn setTitleColor:DEFAULT_COLOR forState:UIControlStateNormal];
     [doneBtn setTitle:@"完成" forState:UIControlStateNormal];
     [doneBtn.titleLabel setFont:[UIFont boldSystemFontOfSize:17.0f]];
     [doneBtn addTarget:self action:@selector(doneBtn:) forControlEvents:UIControlEventTouchUpInside];

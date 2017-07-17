@@ -26,6 +26,7 @@
 @interface TaskViewController ()<MyManagerDelegate,ActivityDetailViewControllerDelegate>{
     MemberData *myMemberData;
     int Page;
+    BOOL updateUserData;
 }
 
 @property(strong, nonatomic)LoginViewController *loginViewController;
@@ -37,7 +38,10 @@
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     self.navigationItem.rightBarButtonItem.badgeValue = [[[MyManager shareManager] memberData].notification stringValue];
-    [self setDataWithoutTask];
+    if (updateUserData) {
+        updateUserData = NO;
+        [self setDataWithoutTask];
+    }
 }
 
 -(void)viewWillLayoutSubviews{
@@ -65,10 +69,12 @@
     
     [MBProgressHUD showHUDAddedTo:PublicAppDelegate.window.rootViewController.view animated:YES];
 
-    NSLog(@"TaskViewDidLoad");
+    updateUserData = NO;
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(dataDidChange:) name:@"BeaconTaskDidChangeNotification" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(dataDidChangeFromBeacon:) name:@"BeaconTaskDidChangeNotification" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(dataDidChangeFromQRCode:) name:@"QRCodeTaskDidChangeNotification" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userDataDidChange:) name:@"UserDataDidChangeNotification" object:nil];
+
 
     _cellHeights = [[NSMutableDictionary alloc] init];
     Page = 1;
@@ -127,6 +133,11 @@
                 
             } WithFailurBlock:^(NSError *error, int statusCode) {
                 //TODO:fb token error
+                if (statusCode == 422) {
+                    self.loginViewController = [[LoginViewController alloc] initWithNibName:@"LoginViewController" bundle:nil];
+                    UINavigationController *loginNavi = [[UINavigationController alloc] initWithRootViewController:self.loginViewController];
+                    [self presentViewController:loginNavi animated:YES completion:nil];
+                }
             }];
 
 
@@ -235,10 +246,10 @@
         NSString *tmpPoint = @"0";
         NSMutableAttributedString *pointString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"可兌換點數：%@ 點",tmpPoint]];
         
-        UIFont *font = [UIFont systemFontOfSize:23];
+        UIFont *font = [UIFont systemFontOfSize:24.0f weight:5.0f];
         
         [pointString addAttribute:NSFontAttributeName value:font range:NSMakeRange(6,tmpPoint.length)];
-        [pointString addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithRed:240.0/255.0 green:145.0/255.0 blue:146.0/255.0 alpha:1.0]range:NSMakeRange(6,tmpPoint.length)];
+        [pointString addAttribute:NSForegroundColorAttributeName value:DEFAULT_COLOR range:NSMakeRange(6,tmpPoint.length)];
         [self.memberImageView setImage:[UIImage imageNamed:@"girl"]];
         self.memberName.text = @"訪客";
         self.memberPoint.attributedText = pointString;
@@ -321,7 +332,7 @@
         NSString *tmpPoint = @"0";
         NSMutableAttributedString *pointString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"可兌換點數：%@ 點",tmpPoint]];
         
-        UIFont *font = [UIFont systemFontOfSize:23];
+        UIFont *font = [UIFont systemFontOfSize:24.0f weight:5.0f];
         
         [pointString addAttribute:NSFontAttributeName value:font range:NSMakeRange(6,tmpPoint.length)];
         [pointString addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithRed:240.0/255.0 green:145.0/255.0 blue:146.0/255.0 alpha:1.0]range:NSMakeRange(6,tmpPoint.length)];
@@ -426,15 +437,20 @@
             switch ([taskClass.taskStatus intValue]) {
                 case 1:
                     taskCell.taskStatus.textColor = DEFAULT_COLOR;
+                    taskCell.taskTitle.textColor = [UIColor blackColor];
                     break;
                 case 2:
                     taskCell.taskStatus.textColor = DEFAULT_GARY_COLOR;
+                    taskCell.taskTitle.textColor = DEFAULT_GARY_COLOR;
+                    [taskCell.completeMark setHidden:NO];
                     break;
                 case 3:
                     taskCell.taskStatus.textColor = DEFAULT_GARY_COLOR;
+                    taskCell.taskTitle.textColor = DEFAULT_GARY_COLOR;
                     break;
                 case 4:
                     taskCell.taskStatus.textColor = DEFAULT_COLOR;
+                    taskCell.taskTitle.textColor = [UIColor blackColor];
                     break;
                 default:
                     break;
@@ -523,7 +539,7 @@
                                           message:message
                                           preferredStyle:UIAlertControllerStyleAlert];
     
-    alertController.view.tintColor = [UIColor colorWithRed:240.0/255.0 green:145.0/255.0 blue:146.0/255.0 alpha:1.0f];
+    alertController.view.tintColor = DEFAULT_COLOR;
     
     UIAlertAction *confirmAction = [UIAlertAction actionWithTitle:@"確定" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         
@@ -562,18 +578,18 @@
 
 #pragma mark - BeaconTaskDidChangeNotification
 
--(void)dataDidChange:(NSNotification *)notifi{
+-(void)dataDidChangeFromBeacon:(NSNotification *)notifi{
 
     TaskClass *notiTaskClass = (TaskClass *)notifi.object;
         
     for (TaskClass *tmp in self.activityArray) {
         if (tmp.taskid == notiTaskClass.taskid) {
-            //更新自己
-            tmp.taskStatus = notiTaskClass.taskStatus;
-            
-            if ([notiTaskClass.taskStatus intValue] == 2) {
-                tmp.taskStatusText = @"已完成";
-            }
+//            //更新自己
+//            tmp.taskStatus = notiTaskClass.taskStatus;
+//            
+//            if ([notiTaskClass.taskStatus intValue] == 2) {
+//                tmp.taskStatusText = @"已完成";
+//            }
             
             //更新BeaconView
             long beaconNaviCount = (unsigned long)[PublicAppDelegate.mainTabBarController.beaconNavi.viewControllers count];
@@ -634,8 +650,8 @@
     
     for (TaskClass *tmp in self.activityArray) {
         if (tmp.taskid == notiTaskClass.taskid) {
-            //更新自己
-            tmp.taskStatus = notiTaskClass.taskStatus;
+//            //更新自己
+//            tmp.taskStatus = notiTaskClass.taskStatus;
             
             //更新BarcodeView
             long barcodeNaviCount = (unsigned long)[PublicAppDelegate.mainTabBarController.barcodeNavi.viewControllers count];
@@ -681,6 +697,10 @@
             break;
         }
     }
+}
+
+-(void)userDataDidChange:(NSNotification *)notifi{
+    updateUserData =YES;
 }
 
 

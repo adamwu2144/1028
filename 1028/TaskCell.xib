@@ -17,7 +17,7 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="188"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="187.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="320" height="188"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="hGJ-ER-kxo">
@@ -59,6 +59,13 @@
                             <constraint firstItem="8AK-VV-0M2" firstAttribute="centerY" secondItem="gyn-eP-6yw" secondAttribute="centerY" id="u7N-af-AD0"/>
                         </constraints>
                     </view>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="completeMark" translatesAutoresizingMaskIntoConstraints="NO" id="1dj-5X-Xx2">
+                        <rect key="frame" x="0.0" y="0.0" width="45" height="45"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="45" id="WPV-kq-WeM"/>
+                            <constraint firstAttribute="width" secondItem="1dj-5X-Xx2" secondAttribute="height" multiplier="1:1" id="by7-Ly-voj"/>
+                        </constraints>
+                    </imageView>
                 </subviews>
                 <constraints>
                     <constraint firstItem="hGJ-ER-kxo" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="3Ll-e3-cRR"/>
@@ -68,7 +75,9 @@
                     <constraint firstItem="hGJ-ER-kxo" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="Lbh-uB-jjI"/>
                     <constraint firstAttribute="bottomMargin" secondItem="hGJ-ER-kxo" secondAttribute="bottom" constant="51" id="M8h-jf-Dai"/>
                     <constraint firstItem="Xg4-53-k7b" firstAttribute="top" secondItem="E2l-JZ-s12" secondAttribute="bottom" id="Otr-eT-xCs"/>
+                    <constraint firstItem="1dj-5X-Xx2" firstAttribute="leading" secondItem="hGJ-ER-kxo" secondAttribute="leading" id="gBD-uu-azf"/>
                     <constraint firstItem="Xg4-53-k7b" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="h5H-dO-Cr9"/>
+                    <constraint firstItem="1dj-5X-Xx2" firstAttribute="top" secondItem="hGJ-ER-kxo" secondAttribute="top" id="hkH-RQ-JEb"/>
                     <constraint firstAttribute="trailing" secondItem="hGJ-ER-kxo" secondAttribute="trailing" id="otk-cb-IWS"/>
                     <constraint firstItem="hGJ-ER-kxo" firstAttribute="width" secondItem="H2p-sc-9uM" secondAttribute="width" id="t2H-2o-m7O"/>
                     <constraint firstAttribute="trailing" secondItem="Xg4-53-k7b" secondAttribute="trailing" id="tgu-V5-50H"/>
@@ -78,6 +87,7 @@
                 <constraint firstAttribute="bottom" secondItem="Xg4-53-k7b" secondAttribute="bottom" id="tu9-FC-NIO"/>
             </constraints>
             <connections>
+                <outlet property="completeMark" destination="1dj-5X-Xx2" id="6ls-Py-2D1"/>
                 <outlet property="taskImageView" destination="hGJ-ER-kxo" id="7q1-cu-1iJ"/>
                 <outlet property="taskStatus" destination="8AK-VV-0M2" id="Da8-at-AGy"/>
                 <outlet property="taskTitle" destination="gyn-eP-6yw" id="iPR-Jh-Z5V"/>
@@ -86,4 +96,7 @@
             <point key="canvasLocation" x="34" y="167"/>
         </tableViewCell>
     </objects>
+    <resources>
+        <image name="completeMark" width="45" height="45"/>
+    </resources>
 </document>

@@ -12,6 +12,7 @@
 @implementation TaskCell
 
 -(void)prepareForReuse{
+    [self.completeMark setHidden:YES];
     self.taskTitle.text = @"";
     self.taskStatus.text = @"";
     [self.taskImageView setImage:nil];
@@ -25,6 +26,7 @@
     
     self.titleBGView.layer.shadowOpacity = 0.4f;
     self.titleBGView.layer.masksToBounds = NO;
+    [self.completeMark setHidden:YES];
     
 }
 

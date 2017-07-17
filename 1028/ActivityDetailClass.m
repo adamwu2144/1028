@@ -18,12 +18,12 @@
     activityDetailClass.task_title = [dict objectForKey:@"title"];
     activityDetailClass.task_description = [dict objectForKey:@"description"];
     activityDetailClass.task_image = [dict objectForKey:@"image"];
-    activityDetailClass.task_type = [dict objectForKey:@"type"];
+    activityDetailClass.task_type = [dict objectForKey:@"event_type"];
     activityDetailClass.task_started = [dict objectForKey:@"started_at"];
     activityDetailClass.task_ended = [dict objectForKey:@"ended_at"];
     activityDetailClass.task_status = [dict objectForKey:@"status"]; //1:活動中; 2:活動關閉; 3:活動尚未開始
     activityDetailClass.task_status_text = [dict objectForKey:@"status_text"];
-
+    activityDetailClass.result_url = [dict objectForKey:@"result_url"];
     
     return activityDetailClass;
 }

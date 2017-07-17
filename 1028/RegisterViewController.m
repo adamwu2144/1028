@@ -34,6 +34,13 @@
 
 @implementation RegisterViewController
 
+-(void)viewWillLayoutSubviews{
+    [super viewWillLayoutSubviews];
+
+    NSLog(@"height = %f",self.checkTextView.intrinsicContentSize.height);
+    self.textFieldContentHeight.constant = self.checkTextView.intrinsicContentSize.height;
+}
+
 -(instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil fbid:(NSString *)fbid{
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
@@ -43,8 +50,9 @@
     return self;
 }
 
--(void)viewWillAppear:(BOOL)animated{
-    [super viewWillAppear:animated];
+-(void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardOnScreen:) name:UIKeyboardWillShowNotification object:nil];
     
     self.navigationController.navigationBarHidden = NO;
     UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:nil];
@@ -66,11 +74,6 @@
     [self getCity];
 }
 
--(void)viewDidAppear:(BOOL)animated{
-    [super viewDidAppear:animated];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardOnScreen:) name:UIKeyboardWillShowNotification object:nil];
-}
-
 -(void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardDidShowNotification object:nil];
@@ -78,7 +81,6 @@
 
 -(void)initView{
         
-    self.regusterScrollView.backgroundColor = [UIColor colorWithRed:239.0/255.0 green:239.0/255.0 blue:239.0/255/0 alpha:1.0f];
     self.checkTextView.backgroundColor = self.regusterScrollView.backgroundColor;
     
     tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissKeyboard)];
@@ -103,10 +105,10 @@
     [_datePicker addTarget:self action:@selector(datePickerChange:) forControlEvents:UIControlEventValueChanged];
 
     self.toolBar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 30)];
-    self.toolBar.backgroundColor = [UIColor grayColor];
+    self.toolBar.backgroundColor = DEFAULT_LIGHT_GARY_COLOR;
     
     UIButton *doneBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 40, 20)];
-    [doneBtn setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
+    [doneBtn setTitleColor:DEFAULT_COLOR forState:UIControlStateNormal];
     [doneBtn setTitle:@"完成" forState:UIControlStateNormal];
     [doneBtn.titleLabel setFont:[UIFont boldSystemFontOfSize:17.0f]];
     [doneBtn addTarget:self action:@selector(doneBtn:) forControlEvents:UIControlEventTouchUpInside];
@@ -138,6 +140,9 @@
     self.regionField.delegate = self;
     self.regionField.inputView = self.pickerView;
     self.regionField.inputAccessoryView = self.toolBar;
+    _regionField.layer.borderColor = UIColor.whiteColor.CGColor;
+    _regionField.layer.borderWidth = 1;
+    _regionField.layer.masksToBounds = true;
     
     self.addressField.tag = 2;
     self.addressField.delegate = self;
@@ -161,16 +166,21 @@
     [self.checkButton addTarget:self action:@selector(checkBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
     [self.checkButton setSelected:NO];
     
-    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:@"您已詳讀並接受會員條款與個人資料保護政策"];
+    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:@"您已詳讀並接受 會員條款 與 個人資料保護 政策"];
     [attributedString setAsLink:@"會員條款" linkURL:[ApiBuilder getContractMember]];
-    [attributedString setAsLink:@"個人資料保護政策" linkURL:[ApiBuilder getContractPerson]];
-    
+    [attributedString setAsLink:@"個人資料保護" linkURL:[ApiBuilder getContractPerson]];
+    NSRange range = NSMakeRange(0, attributedString.length);
+    [attributedString addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:16.0f] range:range];
+
     self.checkTextView.attributedText = attributedString;
     self.checkTextView.selectable = YES;
     self.checkTextView.editable = NO;
     self.checkTextView.delegate = self;
     
-    [self.registerMobileButton.layer setCornerRadius:20];
+    NSDictionary *linkAttributes = @{NSForegroundColorAttributeName:DEFAULT_COLOR};
+    [self.checkTextView setLinkTextAttributes:linkAttributes];
+    
+    [self.registerMobileButton.layer setCornerRadius:25];
 }
 
 -(void)getCity{
@@ -608,7 +618,7 @@
                                           message:message
                                           preferredStyle:UIAlertControllerStyleAlert];
     
-    alertController.view.tintColor = [UIColor redColor];
+    alertController.view.tintColor = DEFAULT_COLOR;
     
     UIAlertAction *confirmAction = [UIAlertAction actionWithTitle:@"確定" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         

@@ -30,10 +30,25 @@
     return self;
 }
 
+- (IBAction)closeBtnClicked:(id)sender {
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+
+    UIImageView *logoImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"logo_s"]];
+    [logoImage setFrame:CGRectMake(0, 0, 120, 33)];
+    logoImage.contentMode = UIViewContentModeScaleAspectFit;
+    
+    [self.navigationItem setTitleView:logoImage];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     status = NO;
-    [self.exchangeStatusView.layer setCornerRadius:self.exchangeStatusView.frame.size.height/2];
+    [self.closeBtn.layer setCornerRadius:20.0];
+    [self.exchangeStatusView setHidden:YES];
     [self.productImage sd_setImageWithURL:[NSURL URLWithString:myExchangeClass.productImage]];
     self.productTitle.text = myExchangeClass.productTitle;
     
@@ -56,6 +71,8 @@
         [self.exchangeStatusView.layer setBorderColor:DEFAULT_COLOR.CGColor];
         [self.exchangeStatusView.layer setBorderWidth:1.0f];
         self.exchangeStatusLabel.textColor = DEFAULT_COLOR;
+        [self.exchangeStatusView.layer setCornerRadius:32];
+        [self.exchangeStatusView setHidden:NO];
         self.exchangeStatusLabel.text = message;
     }
     else{
@@ -64,6 +81,8 @@
         [self.exchangeStatusView.layer setBorderColor:DEFAULT_GARY_COLOR.CGColor];
         [self.exchangeStatusView.layer setBorderWidth:0.0f];
         self.exchangeStatusLabel.textColor = [UIColor whiteColor];
+        [self.exchangeStatusView.layer setCornerRadius:40];
+        [self.exchangeStatusView setHidden:NO];
         self.exchangeStatusLabel.text = message;
     }
     
@@ -81,6 +100,9 @@
         if (dic) {
             status = YES;
             [self initCusView:@"兌換成功"];
+            [[MyManager shareManager] getUserDataWithJWT:nil WithComplete:^(BOOL status, int statusCode) {
+                
+            }];
         }
     } WithFailurBlock:^(NSError *error, int statusCode) {
         NSData *errorData = error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey];

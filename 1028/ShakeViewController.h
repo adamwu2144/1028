@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "MyWebView.h"
+#import "ActivityDetailClass.h"
 
 @protocol ShakeViewControllerDelegate <NSObject>
 
@@ -22,6 +23,6 @@
 
 @property (nonatomic,weak) id <ShakeViewControllerDelegate> delegate;
 
--(instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil withTaskID:(NSNumber *)aTaskID;
+-(instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil withTask:(ActivityDetailClass *)aTask withBeacon:(BOOL)aBeacon;
 -(void)checkLocationPremission;
 @end

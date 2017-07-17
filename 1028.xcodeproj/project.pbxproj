@@ -109,6 +109,7 @@
 		C56A8B071EA5A7A00075E946 /* ICSColorsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C56A8B061EA5A7A00075E946 /* ICSColorsViewController.m */; };
 		C56DA2861EFD0900006AE4D1 /* ExchangeResultViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C56DA2841EFD0900006AE4D1 /* ExchangeResultViewController.m */; };
 		C56DA2871EFD0900006AE4D1 /* ExchangeResultViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C56DA2851EFD0900006AE4D1 /* ExchangeResultViewController.xib */; };
+		C573866E1F14B464009C5EFE /* TTTAttributedLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = C573866D1F14B464009C5EFE /* TTTAttributedLabel.m */; };
 		C57B29E31EF8FB5800014835 /* MemberRulesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C57B29E11EF8FB5800014835 /* MemberRulesViewController.m */; };
 		C57B29E41EF8FB5800014835 /* MemberRulesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C57B29E21EF8FB5800014835 /* MemberRulesViewController.xib */; };
 		C581DA011EB98FF200E60FD1 /* ProductViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C581D9FF1EB98FF200E60FD1 /* ProductViewController.m */; };
@@ -359,6 +360,8 @@
 		C56DA2831EFD0900006AE4D1 /* ExchangeResultViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExchangeResultViewController.h; sourceTree = "<group>"; };
 		C56DA2841EFD0900006AE4D1 /* ExchangeResultViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExchangeResultViewController.m; sourceTree = "<group>"; };
 		C56DA2851EFD0900006AE4D1 /* ExchangeResultViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ExchangeResultViewController.xib; sourceTree = "<group>"; };
+		C573866C1F14B464009C5EFE /* TTTAttributedLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TTTAttributedLabel.h; path = Framework/TTTAttributedLabel/TTTAttributedLabel.h; sourceTree = SOURCE_ROOT; };
+		C573866D1F14B464009C5EFE /* TTTAttributedLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TTTAttributedLabel.m; path = Framework/TTTAttributedLabel/TTTAttributedLabel.m; sourceTree = SOURCE_ROOT; };
 		C57B29E01EF8FB5800014835 /* MemberRulesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MemberRulesViewController.h; sourceTree = "<group>"; };
 		C57B29E11EF8FB5800014835 /* MemberRulesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MemberRulesViewController.m; sourceTree = "<group>"; };
 		C57B29E21EF8FB5800014835 /* MemberRulesViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MemberRulesViewController.xib; sourceTree = "<group>"; };
@@ -384,6 +387,7 @@
 		C58AAA4F1ED2E56B00843963 /* AddressCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AddressCell.h; path = 1028/AddressCell.h; sourceTree = "<group>"; };
 		C58AAA501ED2E56B00843963 /* AddressCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AddressCell.m; path = 1028/AddressCell.m; sourceTree = "<group>"; };
 		C58AAA511ED2E56B00843963 /* AddressCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = AddressCell.xib; path = 1028/AddressCell.xib; sourceTree = "<group>"; };
+		C593A4BD1F1CA63E0001F365 /* SafariServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SafariServices.framework; path = System/Library/Frameworks/SafariServices.framework; sourceTree = SDKROOT; };
 		C5A0368F1F00E6B00061DD5D /* NotificationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotificationViewController.h; sourceTree = "<group>"; };
 		C5A036901F00E6B00061DD5D /* NotificationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NotificationViewController.m; sourceTree = "<group>"; };
 		C5A036911F00E6B00061DD5D /* NotificationViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NotificationViewController.xib; sourceTree = "<group>"; };
@@ -540,6 +544,8 @@
 				C555FB371ED584AB0085640E /* UIDevice+NTNUExtensions.m */,
 				C5539B101ED6E52500D56214 /* NSMutableAttributedString+SetAsLinkSupport.h */,
 				C5539B111ED6E52500D56214 /* NSMutableAttributedString+SetAsLinkSupport.m */,
+				C573866C1F14B464009C5EFE /* TTTAttributedLabel.h */,
+				C573866D1F14B464009C5EFE /* TTTAttributedLabel.m */,
 			);
 			name = category;
 			sourceTree = "<group>";
@@ -829,6 +835,7 @@
 		C5D6E4BC1EA61438006A7CF1 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C593A4BD1F1CA63E0001F365 /* SafariServices.framework */,
 				C5BB43E81EA7406800FF1623 /* AVOSCloud.framework */,
 				C5BB43E91EA7406800FF1623 /* AVOSCloudIM.framework */,
 				C5BB43E41EA7400600FF1623 /* AVOSCloud-iOS.framework */,
@@ -1223,6 +1230,7 @@
 				C515604F1EF7B32000900C71 /* ExchangeClass.m in Sources */,
 				C555FB2A1ED527F10085640E /* LoginViewController.m in Sources */,
 				C5E1E3CC1EF11A7000A9860B /* MJRefreshFooter.m in Sources */,
+				C573866E1F14B464009C5EFE /* TTTAttributedLabel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

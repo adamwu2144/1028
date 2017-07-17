@@ -29,7 +29,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    [self initNavi];
     [self initTableView];
     [self getProduct];
 }
@@ -37,6 +37,17 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+
+-(void)initNavi{
+    UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:nil];
+    [self.navigationItem setBackBarButtonItem:backButtonItem];
+    UIImageView *logoImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"logo_s"]];
+    [logoImage setFrame:CGRectMake(0, 0, 120, 33)];
+    logoImage.contentMode = UIViewContentModeScaleAspectFit;
+    
+    [self.navigationItem setTitleView:logoImage];
 }
 
 -(void)initTableView{
@@ -101,7 +112,8 @@
         
         NSMutableAttributedString *pointString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"兌換點數 %@",[exchangeClass.productPoints stringValue]]];
 
-        UIFont *font = [UIFont systemFontOfSize:23];
+        UIFont *font = [UIFont systemFontOfSize:24.0f weight:5.0f];
+
         [pointString addAttribute:NSFontAttributeName value:font range:NSMakeRange(5,[exchangeClass.productPoints stringValue].length)];
         [pointString addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithRed:240.0/255.0 green:145.0/255.0 blue:146.0/255.0 alpha:1.0]range:NSMakeRange(5,[exchangeClass.productPoints stringValue].length)];
         

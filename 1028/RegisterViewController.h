@@ -22,6 +22,7 @@
 @property (strong, nonatomic) IBOutlet UIButton *checkButton;
 @property (strong, nonatomic) IBOutlet UITextView *checkTextView;
 @property (strong, nonatomic) IBOutlet UIButton *registerMobileButton;
+@property (strong, nonatomic) IBOutlet NSLayoutConstraint *textFieldContentHeight;
 
 @property (strong, nonatomic) UIPickerView *pickerView;
 @property (strong, nonatomic) UIDatePicker *datePicker;

@@ -16,7 +16,9 @@
 @property (strong, nonatomic) IBOutlet UIImageView *productImage;
 @property (strong, nonatomic) IBOutlet UILabel *productTitle;
 @property (strong, nonatomic) IBOutlet UILabel *exchangePointsLabel;
+@property (strong, nonatomic) IBOutlet UIButton *closeBtn;
 
 -(instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil withExchangeClass:(ExchangeClass *)exchangeClass;
+- (IBAction)closeBtnClicked:(id)sender;
 
 @end

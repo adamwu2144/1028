@@ -47,24 +47,24 @@
                                     </constraints>
                                 </imageView>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Vincent" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Zk4-R9-823">
-                                    <rect key="frame" x="148" y="26" width="79" height="28"/>
-                                    <fontDescription key="fontDescription" type="system" pointSize="23"/>
+                                    <rect key="frame" x="146.5" y="26" width="81.5" height="29"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="幼幼班會員" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WBG-ZN-tsz">
-                                    <rect key="frame" x="148" y="64" width="212" height="21"/>
+                                    <rect key="frame" x="146.5" y="65" width="213.5" height="21"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                     <color key="textColor" red="1" green="0.66666666666666663" blue="0.73725490196078436" alpha="1" colorSpace="calibratedRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Chx-0I-gAO">
-                                    <rect key="frame" x="148" y="95" width="110" height="40"/>
+                                    <rect key="frame" x="146.5" y="96" width="175" height="40"/>
                                     <constraints>
-                                        <constraint firstAttribute="width" constant="110" id="647-C8-qma"/>
+                                        <constraint firstAttribute="width" constant="175" id="647-C8-qma"/>
                                         <constraint firstAttribute="height" constant="40" id="yDn-se-M0u"/>
                                     </constraints>
-                                    <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
                                     <state key="normal" title="更換頭像"/>
                                     <connections>
                                         <action selector="changeBtnClicked:" destination="-1" eventType="touchUpInside" id="uM6-wj-TE0"/>
@@ -83,58 +83,74 @@
                                 <constraint firstItem="Zk4-R9-823" firstAttribute="top" secondItem="iQ5-4b-2Lo" secondAttribute="top" id="bYO-Z8-yHN"/>
                                 <constraint firstItem="Chx-0I-gAO" firstAttribute="top" secondItem="WBG-ZN-tsz" secondAttribute="bottom" constant="10" id="fhi-oP-mZm"/>
                                 <constraint firstAttribute="height" constant="165" id="qdp-zh-FJN"/>
-                                <constraint firstItem="Zk4-R9-823" firstAttribute="leading" secondItem="iQ5-4b-2Lo" secondAttribute="trailing" constant="20" id="rmo-nS-daJ"/>
+                                <constraint firstItem="Zk4-R9-823" firstAttribute="leading" secondItem="iQ5-4b-2Lo" secondAttribute="trailing" constant="18.5" id="rmo-nS-daJ"/>
                             </constraints>
                         </view>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="地址" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bag-Xt-F8R">
-                            <rect key="frame" x="15" y="342" width="35" height="21"/>
+                            <rect key="frame" x="15" y="352" width="35" height="21"/>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ugc-hd-SMM" customClass="TextFieldNoMenu">
-                            <rect key="frame" x="15" y="373" width="345" height="30"/>
+                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ugc-hd-SMM" customClass="TextFieldNoMenu">
+                            <rect key="frame" x="15" y="383" width="345" height="40"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="40" id="28t-4c-W9c"/>
+                            </constraints>
                             <nil key="textColor"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <textInputTraits key="textInputTraits"/>
                         </textField>
-                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="nxg-7j-hcK" customClass="TextFieldNoMenu">
-                            <rect key="frame" x="15" y="413" width="345" height="30"/>
+                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="nxg-7j-hcK" customClass="TextFieldNoMenu">
+                            <rect key="frame" x="15" y="433" width="345" height="40"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="40" id="BWx-th-aZP"/>
+                            </constraints>
                             <nil key="textColor"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <textInputTraits key="textInputTraits"/>
                         </textField>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="手機電話" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lDb-W9-cOU">
-                            <rect key="frame" x="15" y="463" width="70" height="21"/>
+                            <rect key="frame" x="15" y="493" width="70" height="21"/>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Hde-0B-06u" customClass="TextFieldNoMenu">
-                            <rect key="frame" x="15" y="494" width="345" height="30"/>
+                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Hde-0B-06u" customClass="TextFieldNoMenu">
+                            <rect key="frame" x="15" y="524" width="345" height="40"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="40" id="54K-I6-8IN"/>
+                            </constraints>
                             <nil key="textColor"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <textInputTraits key="textInputTraits"/>
                         </textField>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="電子信箱" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZQR-56-7Zu">
-                            <rect key="frame" x="15" y="544" width="69.5" height="21"/>
+                            <rect key="frame" x="15" y="584" width="69.5" height="21"/>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="rmk-gz-aDg" customClass="TextFieldNoMenu">
-                            <rect key="frame" x="15" y="585" width="345" height="30"/>
+                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="rmk-gz-aDg" customClass="TextFieldNoMenu">
+                            <rect key="frame" x="15" y="625" width="345" height="40"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="40" id="ZIE-5y-tqn"/>
+                            </constraints>
                             <nil key="textColor"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <textInputTraits key="textInputTraits"/>
                         </textField>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Els-tE-B0n">
-                            <rect key="frame" x="132" y="645" width="110" height="40"/>
+                            <rect key="frame" x="110" y="695" width="154.5" height="40"/>
                             <constraints>
-                                <constraint firstAttribute="width" constant="110" id="kyD-k4-jlV"/>
+                                <constraint firstAttribute="width" constant="154.5" id="kyD-k4-jlV"/>
                                 <constraint firstAttribute="height" constant="40" id="zqC-zu-Mga"/>
                             </constraints>
-                            <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                            <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
                             <state key="normal" title="確認修改"/>
                             <connections>
                                 <action selector="confirmBtnClicked:" destination="-1" eventType="touchUpInside" id="jbs-0K-yDC"/>
@@ -180,8 +196,12 @@
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="f0C-YQ-iQY" customClass="TextFieldNoMenu">
-                            <rect key="frame" x="15" y="292" width="345" height="30"/>
+                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="f0C-YQ-iQY" customClass="TextFieldNoMenu">
+                            <rect key="frame" x="15" y="292" width="345" height="40"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="40" id="WQb-5k-dIW"/>
+                            </constraints>
                             <nil key="textColor"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <textInputTraits key="textInputTraits"/>

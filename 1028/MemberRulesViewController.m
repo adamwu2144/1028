@@ -27,15 +27,40 @@
     return self;
 }
 
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+}
+
+-(void)viewDidAppear:(BOOL)animated{
+    [self initNavi];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     [self.webView setRequestWithURL:[ApiBuilder getContract]];
+    [self.cancelBtn.layer setCornerRadius:20.0f];
+    [self.cancelBtn.layer setBorderColor:DEFAULT_COLOR.CGColor];
+    [self.cancelBtn.layer setBorderWidth:1.0f];
+    
+    [self.confirmBtn.layer setCornerRadius:20.0f];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+-(void)initNavi{
+    UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:nil];
+    [self.navigationItem setBackBarButtonItem:backButtonItem];
+    
+    UIImage *logoImage = [UIImage imageNamed:@"logo_s"];
+    UIImageView *logoImageView = [[UIImageView alloc] initWithImage:logoImage];
+    [logoImageView setFrame:CGRectMake(0, 0, 120, 33)];
+    logoImageView.contentMode = UIViewContentModeScaleAspectFit;
+    
+    [self.navigationItem setTitleView:logoImageView];
 }
 
 /*

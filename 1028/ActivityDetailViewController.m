@@ -197,7 +197,9 @@
 //            
 //        }
         
+        //更新
         myTaskClass.taskStatus = self.activityDetailClass.task_status;
+
         if ([self.activityDetailClass.task_status intValue] == 2) {
             myTaskClass.taskStatusText = @"已完成";
         }
@@ -243,7 +245,7 @@
     switch ([self.activityDetailClass.task_type intValue]) {
         case ActivityTypeForBeacon:{
 //            MCBeaconViewController *mcBeaconViewController = [[MCBeaconViewController alloc] initWithNibName:@"MCBeaconViewController" bundle:nil];
-            ShakeViewController *mcBeaconViewController = [[ShakeViewController alloc] initWithNibName:@"ShakeViewController" bundle:nil withTaskID:self.activityDetailClass.task_id];
+            ShakeViewController *mcBeaconViewController = [[ShakeViewController alloc] initWithNibName:@"ShakeViewController" bundle:nil withTask:self.activityDetailClass withBeacon:YES];
             mcBeaconViewController.delegate = self;
             ICSNavigationController *navi = [[ICSNavigationController alloc] initWithRootViewController:mcBeaconViewController];
             [self presentViewController:navi animated:YES completion:^{
@@ -256,6 +258,19 @@
             mcScannerViewController.delegate = self;
             ICSNavigationController *navi = [[ICSNavigationController alloc] initWithRootViewController:mcScannerViewController];
             [self presentViewController:navi animated:YES completion:nil];
+        }
+            break;
+        case ActivityTypeForUnBeacon:{
+            ShakeViewController *mcBeaconViewController = [[ShakeViewController alloc] initWithNibName:@"ShakeViewController" bundle:nil withTask:self.activityDetailClass withBeacon:NO];
+            mcBeaconViewController.delegate = self;
+            ICSNavigationController *navi = [[ICSNavigationController alloc] initWithRootViewController:mcBeaconViewController];
+            [self presentViewController:navi animated:YES completion:^{
+                
+            }];
+        }
+            break;
+        case ActivityTypeForOpenURL:{
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:self.activityDetailClass.result_url]];
         }
             break;
         default:
@@ -291,7 +306,7 @@
                                           message:message
                                           preferredStyle:UIAlertControllerStyleAlert];
     
-    alertController.view.tintColor = [UIColor redColor];
+    alertController.view.tintColor = DEFAULT_COLOR;
     
     UIAlertAction *confirmAction = [UIAlertAction actionWithTitle:@"確定" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
     }];

@@ -33,8 +33,19 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    [self initNavi];
     [self initCusView];
     [self initData];
+}
+
+-(void)initNavi{
+    UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:nil];
+    [self.navigationItem setBackBarButtonItem:backButtonItem];
+    UIImageView *logoImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"logo_s"]];
+    [logoImage setFrame:CGRectMake(0, 0, 120, 33)];
+    logoImage.contentMode = UIViewContentModeScaleAspectFit;
+    
+    [self.navigationItem setTitleView:logoImage];
 }
 
 -(void)initCusView{

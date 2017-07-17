@@ -11,6 +11,8 @@
 typedef enum ActivityType {
     ActivityTypeForBeacon = 1,
     ActivityTypeForQRCode = 2,
+    ActivityTypeForUnBeacon = 3,
+    ActivityTypeForOpenURL = 4
 }ActivityType;
 
 
@@ -25,6 +27,8 @@ typedef enum ActivityType {
 @property(nonatomic, strong)NSString *task_ended;
 @property(nonatomic, strong)NSNumber *task_status;
 @property(nonatomic, strong)NSString *task_status_text;
+@property(nonatomic, strong)NSString *result_url;
+
 
 +(ActivityDetailClass *)initWithDictionary:(NSDictionary *)dict;
 

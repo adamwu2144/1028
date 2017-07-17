@@ -19,6 +19,7 @@
 
 @interface MemberSettingViewController ()<UIImagePickerControllerDelegate,UINavigationControllerDelegate>{
     int gender;
+    BOOL updateUserData;
 }
 
 @end
@@ -41,6 +42,9 @@
 
 }
 
+-(void)dealloc{
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"UserDataDidChangeNotification" object:nil];
+}
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
@@ -50,6 +54,11 @@
         logoImage.contentMode = UIViewContentModeScaleAspectFit;
         
         [self.navigationItem setTitleView:logoImage];
+    }
+    
+    if(updateUserData){
+        updateUserData = NO;
+        [self updateUserDataBlock];
     }
 }
 
@@ -61,10 +70,6 @@
 -(void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardDidShowNotification object:nil];
-}
-
--(void)viewDidDisappear:(BOOL)animated{
-    [super viewDidDisappear:animated];
 }
 
 -(void)keyboardOnScreen:(NSNotification *)notification
@@ -90,7 +95,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userDataDidChange:) name:@"UserDataDidChangeNotification" object:nil];
     [self initCusView];
     [self getCity];
 }
@@ -102,6 +107,7 @@
 
 -(void)initCusView{
     
+    updateUserData = NO;
     citySelectNum = -1;
     regionSelectNum = -1;
     regionArray = [[NSMutableArray alloc] init];
@@ -140,6 +146,7 @@
     NSMutableAttributedString *completeText= [[NSMutableAttributedString alloc] initWithString:@" "];
     [completeText appendAttributedString:attachmentString];
     NSMutableAttributedString *textAfterIcon= [[NSMutableAttributedString alloc] initWithString:[[MyManager shareManager] memberData].title];
+    [textAfterIcon addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:16.0f] range:NSMakeRange(0, [[MyManager shareManager] memberData].title.length)];
     [completeText appendAttributedString:textAfterIcon];
     self.memberLevel.textAlignment=NSTextAlignmentLeft;
     self.memberLevel.attributedText=completeText;
@@ -170,10 +177,10 @@
     [_datePicker addTarget:self action:@selector(datePickerChange:) forControlEvents:UIControlEventValueChanged];
     
     self.toolBar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 30)];
-    self.toolBar.backgroundColor = [UIColor grayColor];
+    self.toolBar.backgroundColor = DEFAULT_LIGHT_GARY_COLOR;
     
     UIButton *doneBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 40, 20)];
-    [doneBtn setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
+    [doneBtn setTitleColor:DEFAULT_COLOR forState:UIControlStateNormal];
     [doneBtn setTitle:@"完成" forState:UIControlStateNormal];
     [doneBtn.titleLabel setFont:[UIFont boldSystemFontOfSize:17.0f]];
     [doneBtn addTarget:self action:@selector(doneBtn:) forControlEvents:UIControlEventTouchUpInside];
@@ -317,117 +324,6 @@
     }];
 }
 
-#pragma mark UITextFieldDelegate
-
--(BOOL)textFieldShouldBeginEditing:(UITextField *)textField
-{
-//    NSLog(@"gestureRecoginizers count = %lu",[self.view.gestureRecognizers count]);
-    
-    if (!isChange) {
-        citySelectNum = [[[MyManager shareManager] memberData].city_id integerValue]-1;
-    }
-
-    targetField = textField;
-    if(textField.tag == 1){
-        pickerArray = cityArray;
-        [_pickerView reloadAllComponents];
-        [_pickerView selectRow:citySelectNum inComponent:0 animated:NO];
-        [_pickerView selectRow:regionSelectNum inComponent:1 animated:NO];
-        AddressClass *addressClass = [pickerArray objectAtIndex:citySelectNum];
-        if([regionArray count] == 0){
-            textField.text = addressClass.name;
-        }
-    }
-    else if([textField isEqual:_birthdayField]){
-        [_pickerView selectRow:0 inComponent:0 animated:NO];
-    }
-
-    return YES;
-}
-
-
--(void)textFieldDidChanged:(UITextField *)textField
-{
-
-}
-
--(BOOL)textFieldShouldReturn:(UITextField *)textField
-{
-    
-    [textField resignFirstResponder];
-    return YES;
-}
-
-#pragma mark UIPickerViewDelegate
-- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
-{
-    return 2;
-}
-
--(NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
-{
-    if(component == 0){
-        return [pickerArray count];
-    }
-    return [regionArray count];
-}
-
--(NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
-{
-    if(component == 0){
-        if(targetField.tag == 1){
-            AddressClass *addressClass = [pickerArray objectAtIndex:row];
-            return addressClass.name;
-        }
-        return [pickerArray objectAtIndex:row];
-    }
-    if(row <[regionArray count]) {
-        RegionClass *regionClass = [regionArray objectAtIndex:row];
-        return regionClass.name;
-    }
-    return @"";
-}
-
--(void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
-{
-    if(component == 0){
-        if(targetField.tag == 1){
-            citySelectNum = row;
-            AddressClass *addressClass = [pickerArray objectAtIndex:row];
-            regionSelectNum = 0;//變成預設
-            [self getRegion:[NSString stringWithFormat:@"%@",addressClass.cityID] setIndex:0];
-        }
-        else{
-            targetField.text = [pickerArray objectAtIndex:row];
-        }
-    }
-    else{
-        regionSelectNum = row;
-        RegionClass *regionClass ;
-        AddressClass *addressClass = [pickerArray objectAtIndex:citySelectNum];
-        if(row < [regionArray count]) {
-            regionClass = [regionArray objectAtIndex:row];
-        }
-        targetField.text = [NSString stringWithFormat:@"%@ %@ %@", addressClass.name, regionClass.name == nil? @"" : regionClass.name, regionClass.zip == nil ? @"" : regionClass.zip];
-//        memberData.code = [NSString stringWithFormat:@"%@", regionClass.zip];
-    }
-}
-
--(void)datePickerChange:(UIDatePicker *)datePicker
-{
-    NSDate *selectDate = [datePicker date];
-    NSDateFormatter *selectDateFormatter = [[NSDateFormatter alloc] init];
-    selectDateFormatter.dateFormat = @"yyyy-MM-dd";
-    NSString *dateStr = [selectDateFormatter stringFromDate:selectDate];
-    
-    self.birthdayField.text = dateStr;
-}
-
--(void)syncData
-{
-
-}
-
 -(void)doneBtn:(UIBarButtonItem *)sender
 {
     NSLog(@"citySelectNum = %ld,regionSelectNum %ld",(long)citySelectNum,(long)regionSelectNum);
@@ -568,7 +464,7 @@
                 NSDictionary *serializedData = [NSJSONSerialization JSONObjectWithData:errorData options:kNilOptions error:nil];
                 NSString *message = [serializedData objectForKey:@"message"];
                 NSLog(@"message = %@",message);
-//                [self showVaildMessageWithTitle:@"錯誤訊息" content:message action:0];
+                [self showVaildMessageWithTitle:@"錯誤訊息" content:message action:0];
             }];
         }
     }
@@ -597,7 +493,7 @@
                                           message:message
                                           preferredStyle:UIAlertControllerStyleAlert];
     
-    alertController.view.tintColor = [UIColor redColor];
+    alertController.view.tintColor = DEFAULT_COLOR;
     
     UIAlertAction *confirmAction = [UIAlertAction actionWithTitle:@"確定" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         
@@ -623,6 +519,43 @@
     [alertController addAction:confirmAction];
     
     [self presentViewController:alertController animated:YES completion:nil];
+}
+
+-(void)updateUserDataBlock{
+    
+    NSTextAttachment *imageAttachment = [[NSTextAttachment alloc] init];
+    
+    switch ([[[MyManager shareManager] memberData].titleKey intValue]) {
+        case 1:
+            imageAttachment.image = [UIImage imageNamed:@"iconBabe"];
+            self.memberLevel.textColor = TITLE_KEY_ONE_COLOR;
+            self.memberLevel.layer.borderColor = TITLE_KEY_ONE_COLOR.CGColor;
+            
+            break;
+        case 2:
+            imageAttachment.image = [UIImage imageNamed:@"iconGirl"];
+            self.memberLevel.textColor = TITLE_KEY_TWO_COLOR;
+            self.memberLevel.layer.borderColor = TITLE_KEY_TWO_COLOR.CGColor;
+            break;
+        case 3:
+            imageAttachment.image = [UIImage imageNamed:@"iconLady"];
+            self.memberLevel.textColor = TITLE_KEY_THREE_COLOR;
+            self.memberLevel.layer.borderColor = TITLE_KEY_THREE_COLOR.CGColor;
+            break;
+        default:
+            break;
+    }
+    
+    CGFloat imageOffsetY = 0.0;
+    imageAttachment.bounds = CGRectMake(-5, imageOffsetY, imageAttachment.image.size.width, imageAttachment.image.size.height);
+    NSAttributedString *attachmentString = [NSAttributedString attributedStringWithAttachment:imageAttachment];
+    NSMutableAttributedString *completeText= [[NSMutableAttributedString alloc] initWithString:@" "];
+    [completeText appendAttributedString:attachmentString];
+    NSMutableAttributedString *textAfterIcon= [[NSMutableAttributedString alloc] initWithString:[[MyManager shareManager] memberData].title];
+    [textAfterIcon addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:16.0f] range:NSMakeRange(0, [[MyManager shareManager] memberData].title.length)];
+    [completeText appendAttributedString:textAfterIcon];
+    self.memberLevel.textAlignment=NSTextAlignmentLeft;
+    self.memberLevel.attributedText=completeText;
 }
 
 #pragma mark - UIImagePickerDelegate
@@ -767,5 +700,118 @@
         NSLog(@"error");
     }];
 //    [self.memberPicture setImage:img];
+}
+
+#pragma mark UITextFieldDelegate
+
+-(BOOL)textFieldShouldBeginEditing:(UITextField *)textField
+{
+    //    NSLog(@"gestureRecoginizers count = %lu",[self.view.gestureRecognizers count]);
+    
+    if (!isChange) {
+        citySelectNum = [[[MyManager shareManager] memberData].city_id integerValue]-1;
+    }
+    
+    targetField = textField;
+    if(textField.tag == 1){
+        pickerArray = cityArray;
+        [_pickerView reloadAllComponents];
+        [_pickerView selectRow:citySelectNum inComponent:0 animated:NO];
+        [_pickerView selectRow:regionSelectNum inComponent:1 animated:NO];
+        AddressClass *addressClass = [pickerArray objectAtIndex:citySelectNum];
+        if([regionArray count] == 0){
+            textField.text = addressClass.name;
+        }
+    }
+    else if([textField isEqual:_birthdayField]){
+        [_pickerView selectRow:0 inComponent:0 animated:NO];
+    }
+    
+    return YES;
+}
+
+
+-(void)textFieldDidChanged:(UITextField *)textField
+{
+    
+}
+
+-(BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    
+    [textField resignFirstResponder];
+    return YES;
+}
+
+#pragma mark UIPickerViewDelegate
+- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
+{
+    return 2;
+}
+
+-(NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
+{
+    if(component == 0){
+        return [pickerArray count];
+    }
+    return [regionArray count];
+}
+
+-(NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
+{
+    if(component == 0){
+        if(targetField.tag == 1){
+            AddressClass *addressClass = [pickerArray objectAtIndex:row];
+            return addressClass.name;
+        }
+        return [pickerArray objectAtIndex:row];
+    }
+    if(row <[regionArray count]) {
+        RegionClass *regionClass = [regionArray objectAtIndex:row];
+        return regionClass.name;
+    }
+    return @"";
+}
+
+-(void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
+{
+    if(component == 0){
+        if(targetField.tag == 1){
+            citySelectNum = row;
+            AddressClass *addressClass = [pickerArray objectAtIndex:row];
+            regionSelectNum = 0;//變成預設
+            [self getRegion:[NSString stringWithFormat:@"%@",addressClass.cityID] setIndex:0];
+        }
+        else{
+            targetField.text = [pickerArray objectAtIndex:row];
+        }
+    }
+    else{
+        regionSelectNum = row;
+        RegionClass *regionClass ;
+        AddressClass *addressClass = [pickerArray objectAtIndex:citySelectNum];
+        if(row < [regionArray count]) {
+            regionClass = [regionArray objectAtIndex:row];
+        }
+        targetField.text = [NSString stringWithFormat:@"%@ %@ %@", addressClass.name, regionClass.name == nil? @"" : regionClass.name, regionClass.zip == nil ? @"" : regionClass.zip];
+        //        memberData.code = [NSString stringWithFormat:@"%@", regionClass.zip];
+    }
+}
+
+-(void)datePickerChange:(UIDatePicker *)datePicker
+{
+    NSDate *selectDate = [datePicker date];
+    NSDateFormatter *selectDateFormatter = [[NSDateFormatter alloc] init];
+    selectDateFormatter.dateFormat = @"yyyy-MM-dd";
+    NSString *dateStr = [selectDateFormatter stringFromDate:selectDate];
+    
+    self.birthdayField.text = dateStr;
+}
+
+#pragma mark UserDataDidChangeNotification
+
+-(void)userDataDidChange:(NSNotification *)notificaion{
+    updateUserData = YES;
+    
 }
 @end

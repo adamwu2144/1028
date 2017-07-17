@@ -255,11 +255,22 @@
 //                myWebViewController.delegate = self;
 //                [self.navigationController pushViewController:myWebViewController animated:YES];
 //                    [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:detectionString]]];
-                [self.webView setRequestWithURL:detectionString];
-                self.title = @"";
-//                }
-                [self.view bringSubviewToFront:self.webView];
-                [self.webView setHidden:NO];
+                
+                [[MyManager shareManager] requestWithMethod:GET WithPath:[ApiBuilder getOneTimeKey] WithParams:nil WithSuccessBlock:^(NSDictionary *dic) {
+                    NSString *key = [[dic objectForKey:@"items"] objectForKey:@"key"];
+                    NSString *urlWithKey = [NSString stringWithFormat:@"%@?key=%@",detectionString,key];
+                    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:urlWithKey]];
+
+                } WithFailurBlock:^(NSError *error, int statusCode) {
+                    
+                }];
+                
+//                
+//                [self.webView setRequestWithURL:detectionString];
+//                self.title = @"";
+////                }
+//                [self.view bringSubviewToFront:self.webView];
+//                [self.webView setHidden:NO];
 
             }
     

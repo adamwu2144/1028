@@ -36,6 +36,7 @@
 #define DEBUG 1
 #define DEFAULT_COLOR [UIColor colorWithRed:240.0/255.0 green:145.0/255.0 blue:146.0/255.0 alpha:1.0f]
 #define DEFAULT_GARY_COLOR [UIColor colorWithRed:153.0/255.0 green:153.0/255.0 blue:153.0/255.0 alpha:1.0f]
+#define DEFAULT_LIGHT_GARY_COLOR [UIColor colorWithRed:239.0/255.0 green:239.0/255.0 blue:239.0/255.0 alpha:1.0f]
 #define TITLE_KEY_ONE_COLOR [UIColor colorWithRed:255.0/255.0 green:170.0/255.0 blue:188.0/255.0 alpha:1.0f]
 #define TITLE_KEY_TWO_COLOR [UIColor colorWithRed:240.0/255.0 green:42.0/255.0 blue:113.0/255.0 alpha:1.0f]
 #define TITLE_KEY_THREE_COLOR [UIColor colorWithRed:255.0/255.0 green:119.0/255.0 blue:119.0/255.0 alpha:1.0f]

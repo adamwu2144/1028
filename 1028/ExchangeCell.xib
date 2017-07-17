@@ -17,7 +17,7 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="175"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="174.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="320" height="175"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="iZk-fH-RzZ">
@@ -29,26 +29,26 @@
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="W3F-F9-sQG">
-                        <rect key="frame" x="165" y="12" width="147" height="41"/>
+                        <rect key="frame" x="165" y="12" width="122.5" height="43"/>
                         <string key="text">雪紡柔光粉蕊
 (兩色任選)</string>
-                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
+                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="18"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="兌換點數 200" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hd4-Bj-cPD">
-                        <rect key="frame" x="164.5" y="68" width="147.5" height="21"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <rect key="frame" x="164.5" y="70" width="123" height="17"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="S9G-fx-Ts4">
-                        <rect key="frame" x="164.5" y="121.5" width="147.5" height="40"/>
+                        <rect key="frame" x="164.5" y="121.5" width="130" height="40"/>
                         <color key="backgroundColor" red="0.94117647058823528" green="0.56862745098039214" blue="0.5725490196078431" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="40" id="rlw-9a-guT"/>
                         </constraints>
-                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
+                        <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
                         <state key="normal" title="立即兌換">
                             <color key="titleColor" red="0.96078431369999995" green="0.96078431369999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
                         </state>
@@ -70,13 +70,13 @@
                     <constraint firstItem="W3F-F9-sQG" firstAttribute="top" secondItem="iZk-fH-RzZ" secondAttribute="top" id="NuE-dS-j8Q"/>
                     <constraint firstItem="nan-j0-Ska" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="Q92-9e-HYv"/>
                     <constraint firstItem="hd4-Bj-cPD" firstAttribute="leading" secondItem="W3F-F9-sQG" secondAttribute="leading" id="Z3s-k2-x91"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="S9G-fx-Ts4" secondAttribute="trailing" constant="17.5" id="eUa-dy-PP8"/>
                     <constraint firstItem="nan-j0-Ska" firstAttribute="top" secondItem="S9G-fx-Ts4" secondAttribute="bottom" constant="10" id="mQs-ww-5dq"/>
                     <constraint firstItem="iZk-fH-RzZ" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="pQp-Oh-wKo"/>
-                    <constraint firstAttribute="trailingMargin" secondItem="W3F-F9-sQG" secondAttribute="trailing" id="pT1-gZ-rRJ"/>
-                    <constraint firstAttribute="trailingMargin" secondItem="hd4-Bj-cPD" secondAttribute="trailing" id="qoB-II-1EJ"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="W3F-F9-sQG" secondAttribute="trailing" constant="24.5" id="pT1-gZ-rRJ"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="hd4-Bj-cPD" secondAttribute="trailing" constant="24.5" id="qoB-II-1EJ"/>
                     <constraint firstItem="S9G-fx-Ts4" firstAttribute="leading" secondItem="hd4-Bj-cPD" secondAttribute="leading" id="qpm-8D-nRO"/>
                     <constraint firstItem="nan-j0-Ska" firstAttribute="top" secondItem="iZk-fH-RzZ" secondAttribute="bottom" constant="14.5" id="rWc-ag-9N2"/>
-                    <constraint firstItem="S9G-fx-Ts4" firstAttribute="trailing" secondItem="hd4-Bj-cPD" secondAttribute="trailing" id="sha-oF-e9f"/>
                     <constraint firstItem="hd4-Bj-cPD" firstAttribute="top" secondItem="W3F-F9-sQG" secondAttribute="bottom" constant="15" id="wKJ-YC-ynV"/>
                 </constraints>
             </tableViewCellContentView>

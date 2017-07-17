@@ -49,6 +49,8 @@
     
 #ifdef DEBUG
     [[AFNetworkActivityLogger sharedLogger] startLogging];
+    NSLog(@"%@", [[NSUserDefaults standardUserDefaults] dictionaryRepresentation]);
+
 #endif
         
     UIDevice *device = [UIDevice currentDevice];
@@ -77,7 +79,8 @@
                         [UIColor colorWithRed:237.0f/255.0f green:147.0f/255.0f blue:0.0f/255.0f alpha:1.0f],
                         [UIColor colorWithRed:237.0f/255.0f green:9.0f/255.0f blue:0.0f/255.0f alpha:1.0f]
                         ];
-    
+//    [[MyManager shareManager] logOut];
+
     ICSColorsViewController *colorsVC = [[ICSColorsViewController alloc] initWithColors:colors];
     MenuViewController *menuVC = [[MenuViewController alloc] initWithNibName:@"MenuViewController" bundle:nil];
     
@@ -90,7 +93,13 @@
 
     
     self.drawer = [[ICSDrawerController alloc] initWithLeftViewController:menuVC  centerViewController:self.mainTabBarController];
+    
+    _attestationCheckViewController = [[AttestationCheckViewController alloc] initWithNibName:@"AttestationCheckViewController" bundle:nil];
+    
+    
+//    [self.window setRootViewController:_attestationCheckViewController];
     [self.window setRootViewController:self.drawer];
+
 //    [self.window setRootViewController:self.mainTabBarController];
     [self.window makeKeyAndVisible];
     
@@ -106,6 +115,7 @@
 //            [self application:application didReceiveRemoteNotification:userInfo];
 //        }
 //    }
+    
 
     return YES;
 }

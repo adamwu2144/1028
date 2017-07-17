@@ -11,6 +11,8 @@
 
 @interface MemberRulesViewController : UIViewController
 @property (strong, nonatomic) IBOutlet MyWebView *webView;
+@property (strong, nonatomic) IBOutlet UIButton *cancelBtn;
+@property (strong, nonatomic) IBOutlet UIButton *confirmBtn;
 
 -(instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil fbid:(NSString *)fbid;
 - (IBAction)BtnClicked:(id)sender;

@@ -13,6 +13,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ExchangeResultViewController">
             <connections>
+                <outlet property="closeBtn" destination="AXo-3P-6e3" id="HIb-WS-a74"/>
                 <outlet property="exchangePointsLabel" destination="kaX-V7-tbG" id="WZv-bI-Gsr"/>
                 <outlet property="exchangeStatusImage" destination="oQm-Jc-Zar" id="edt-7Z-LTy"/>
                 <outlet property="exchangeStatusLabel" destination="o4P-rG-hn0" id="3tg-9e-FDy"/>
@@ -50,9 +51,9 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lab-jZ-BPx">
                     <rect key="frame" x="18.5" y="58" width="337.5" height="40"/>
                     <subviews>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="o4P-rG-hn0">
-                            <rect key="frame" x="103" y="20" width="204.5" height="0.0"/>
-                            <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="o4P-rG-hn0">
+                            <rect key="frame" x="96" y="20" width="211.5" height="0.0"/>
+                            <fontDescription key="fontDescription" type="system" weight="medium" pointSize="18"/>
                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <nil key="highlightedColor"/>
                         </label>
@@ -68,7 +69,7 @@
                         <constraint firstAttribute="trailing" secondItem="o4P-rG-hn0" secondAttribute="trailing" constant="30" id="Hfw-kN-Bec"/>
                         <constraint firstItem="o4P-rG-hn0" firstAttribute="top" secondItem="lab-jZ-BPx" secondAttribute="top" constant="20" id="LGB-Yz-hEy"/>
                         <constraint firstItem="oQm-Jc-Zar" firstAttribute="leading" secondItem="lab-jZ-BPx" secondAttribute="leading" constant="30" id="OLS-80-888"/>
-                        <constraint firstItem="o4P-rG-hn0" firstAttribute="leading" secondItem="oQm-Jc-Zar" secondAttribute="trailing" constant="30" id="Rqv-XR-m8y"/>
+                        <constraint firstItem="o4P-rG-hn0" firstAttribute="leading" secondItem="oQm-Jc-Zar" secondAttribute="trailing" constant="23" id="Rqv-XR-m8y"/>
                         <constraint firstItem="oQm-Jc-Zar" firstAttribute="centerY" secondItem="lab-jZ-BPx" secondAttribute="centerY" id="VIt-eZ-XAr"/>
                         <constraint firstAttribute="bottom" secondItem="o4P-rG-hn0" secondAttribute="bottom" constant="20" id="aR9-tg-ONg"/>
                     </constraints>
@@ -81,23 +82,38 @@
                     </constraints>
                 </imageView>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xmL-Cn-mwy">
-                    <rect key="frame" x="183.5" y="118" width="181.5" height="41"/>
+                    <rect key="frame" x="183.5" y="118" width="181.5" height="43"/>
                     <string key="text">雪紡柔光粉蕊
 (兩色任選)</string>
-                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="18"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="兌換點數" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kaX-V7-tbG">
-                    <rect key="frame" x="183.5" y="189" width="181.5" height="21"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <rect key="frame" x="183.5" y="191" width="181.5" height="17"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AXo-3P-6e3">
+                    <rect key="frame" x="18.5" y="303" width="337.5" height="40"/>
+                    <color key="backgroundColor" red="0.94117647058823528" green="0.56862745098039214" blue="0.5725490196078431" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="40" id="RiR-ep-vAe"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                    <state key="normal" title="關閉">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="closeBtnClicked:" destination="-1" eventType="touchUpInside" id="RkP-ti-aeZ"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="ydt-db-bne" secondAttribute="trailing" id="362-rd-piI"/>
+                <constraint firstItem="AXo-3P-6e3" firstAttribute="top" secondItem="ING-Bg-j0u" secondAttribute="bottom" constant="30" id="3DR-Qg-Yfr"/>
                 <constraint firstItem="kaX-V7-tbG" firstAttribute="leading" secondItem="xmL-Cn-mwy" secondAttribute="leading" id="AOx-6j-du5"/>
                 <constraint firstItem="76g-Gd-Z6I" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="BEb-a1-oNu"/>
                 <constraint firstItem="lab-jZ-BPx" firstAttribute="top" secondItem="76g-Gd-Z6I" secondAttribute="bottom" constant="8" id="BUe-8S-qkd"/>
@@ -109,9 +125,11 @@
                 <constraint firstAttribute="trailing" secondItem="xmL-Cn-mwy" secondAttribute="trailing" constant="10" id="W7M-CG-9nJ"/>
                 <constraint firstItem="xmL-Cn-mwy" firstAttribute="top" secondItem="ING-Bg-j0u" secondAttribute="top" id="WDN-OB-BrU"/>
                 <constraint firstItem="ydt-db-bne" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="WXX-J8-cZ2"/>
+                <constraint firstItem="AXo-3P-6e3" firstAttribute="trailing" secondItem="lab-jZ-BPx" secondAttribute="trailing" id="X48-Jq-9ry"/>
                 <constraint firstItem="xmL-Cn-mwy" firstAttribute="leading" secondItem="ING-Bg-j0u" secondAttribute="trailing" constant="10" id="ZOU-R1-EM4"/>
                 <constraint firstItem="lab-jZ-BPx" firstAttribute="width" secondItem="i5M-Pr-FkT" secondAttribute="width" multiplier="0.9" id="cjE-3u-VGu"/>
                 <constraint firstItem="lab-jZ-BPx" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="gpJ-ip-NVJ"/>
+                <constraint firstItem="AXo-3P-6e3" firstAttribute="leading" secondItem="lab-jZ-BPx" secondAttribute="leading" id="h10-3k-tkH"/>
                 <constraint firstItem="76g-Gd-Z6I" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="ihD-Fc-8lm"/>
                 <constraint firstItem="ING-Bg-j0u" firstAttribute="top" secondItem="lab-jZ-BPx" secondAttribute="bottom" constant="20" id="ljU-Tg-h9K"/>
                 <constraint firstItem="kaX-V7-tbG" firstAttribute="top" secondItem="xmL-Cn-mwy" secondAttribute="bottom" constant="30" id="wzk-gq-zOz"/>

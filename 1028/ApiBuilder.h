@@ -55,6 +55,8 @@
 +(NSString *)getNotificationByID:(int)notificationID;
 +(NSString *)getUpdateNotificationByID:(int)notificationID;
 
++(NSString *)getOneTimeKey;
+
 +(NSString *)getContract;
 +(NSString *)getContractMember;
 +(NSString *)getContractPerson;

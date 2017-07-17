@@ -161,6 +161,11 @@
     return api;
 }
 
++(NSString *)getOneTimeKey{
+    NSString *api = [self apiBuilder:API_URL isSecure:true  ,@"/", VERSION_CODE , @"/onetimeKey/",nil];
+    return api;
+}
+
 +(NSString *)getContract{
     NSString *api = @"https://app.1028.tw/webview/contract";
     return api;

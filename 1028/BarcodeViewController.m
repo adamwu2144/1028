@@ -136,15 +136,20 @@
             switch ([Mytask.taskStatus intValue]) {
                 case 1:
                     taskCell.taskStatus.textColor = DEFAULT_COLOR;
+                    taskCell.taskTitle.textColor = [UIColor blackColor];
                     break;
                 case 2:
                     taskCell.taskStatus.textColor = DEFAULT_GARY_COLOR;
+                    taskCell.taskTitle.textColor = DEFAULT_GARY_COLOR;
+                    [taskCell.completeMark setHidden:NO];
                     break;
                 case 3:
                     taskCell.taskStatus.textColor = DEFAULT_GARY_COLOR;
+                    taskCell.taskTitle.textColor = DEFAULT_GARY_COLOR;
                     break;
                 case 4:
                     taskCell.taskStatus.textColor = DEFAULT_COLOR;
+                    taskCell.taskTitle.textColor = [UIColor blackColor];
                     break;
                 default:
                     break;
@@ -259,7 +264,7 @@
                                           message:message
                                           preferredStyle:UIAlertControllerStyleAlert];
     
-    alertController.view.tintColor = [UIColor redColor];
+    alertController.view.tintColor = DEFAULT_COLOR;
     
     UIAlertAction *confirmAction = [UIAlertAction actionWithTitle:@"確定" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
     }];

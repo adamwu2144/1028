@@ -14,6 +14,7 @@
 #import "LoginViewController.h"
 #import "../Framework/ICSDrawerController/ICSDrawerController.h"
 #import "RegisterViewController.h"
+#import "AttestationCheckViewController.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
@@ -24,7 +25,7 @@
 //@property (strong, nonatomic) JPCollectionViewController *mainTabBarController;
 //@property (strong, nonatomic) UserRegisterViewController *mainTabBarController;
 //@property (strong, nonatomic) LoginViewController *mainTabBarController;
-//@property (strong, nonatomic) RegisterViewController *mainTabBarController;
+@property (strong, nonatomic) AttestationCheckViewController *attestationCheckViewController;
 
 
 

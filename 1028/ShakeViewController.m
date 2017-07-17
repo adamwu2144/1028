@@ -24,6 +24,8 @@
     BeaconClass *beaconClass;
     NSNumber *taskID;
     BOOL shakeStatus;
+    BOOL withBeacon;
+    NSString *resultURL;
 }
 
 @property (strong, nonatomic) CLBeaconRegion *beaconRegion;
@@ -39,11 +41,12 @@
     int currentMode;
 }
 
--(instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil withTaskID:(NSNumber *)aTaskID{
+-(instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil withTask:(ActivityDetailClass *)aTask withBeacon:(BOOL)aBeacon{
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        taskID = aTaskID;
-        NSLog(@"taskID = %@",[aTaskID stringValue]);
+        taskID = aTask.task_id;
+        resultURL = aTask.result_url;
+        withBeacon = aBeacon;
     }
     return self;
 };
@@ -62,28 +65,20 @@
     
         AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
 
-        self.title = @"尋找好康";
+//        self.title = @"尋找好康";
         self.messageLabel.text = @"尋找好康";
         [MBProgressHUD showHUDAddedTo:self.view animated:YES];
 #if TARGET_IPHONE_SIMULATOR
         NSLog(@"模擬器不支援Beaocn");
 #else
-        [[MyManager shareManager] requestWithMethod:GET WithPath:[ApiBuilder getCurrentMode] WithParams:nil WithSuccessBlock:^(NSDictionary *dic) {
-            
-            currentMode = [[[dic objectForKey:@"items"] objectForKey:@"current_mode"] intValue];
-            
-//            if(currentMode == 2){
-//                [MBProgressHUD hideHUDForView:self.view animated:YES];
-//
-//                [self.myWebView setRequestWithURL:@"http://www.fashionguide.com.tw"];
-//            }
-//            else{
-                [self.locationManager startRangingBeaconsInRegion:self.beaconRegion];
-//            }
+        if (withBeacon) {
+            [self.locationManager startRangingBeaconsInRegion:self.beaconRegion];
+        }
+        else{
+            [self.myWebView setHidden:NO];
+            [self.myWebView setRequestWithURL:resultURL];
+        }
 
-        } WithFailurBlock:^(NSError *error, int statusCode) {
-            
-        }];
 #endif
     }
 }
@@ -96,7 +91,7 @@
     [self.myWebView setHidden:YES];
     [self initMyNavi];
     [self checkLocationPremission];
-    self.title = [taskID stringValue];
+//    self.title = [taskID stringValue];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -116,6 +111,12 @@
     [self.navigationItem setLeftBarButtonItems:@[negativeSpacer, cancelItem]];
     
     self.navigationItem.titleView.tintColor = [UIColor whiteColor];
+    
+    UIImageView *logoImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"logo_s"]];
+    [logoImage setFrame:CGRectMake(0, 0, 120, 33)];
+    logoImage.contentMode = UIViewContentModeScaleAspectFit;
+    
+    [self.navigationItem setTitleView:logoImage];
 }
 
 -(void)checkLocationPremission{
@@ -183,14 +184,14 @@
     if (central.state == CBCentralManagerStatePoweredOn) {
         if([self.locationPermissionStatus isEqualToString:@"when in use"]){
             BTStatus = YES;
-            self.title = @"請搖一搖";
+//            self.title = @"請搖一搖";
             self.messageLabel.text = @"請搖一搖";
             [self setBeacon];
         }
     } else if(central.state == CBCentralManagerStatePoweredOff) {
         //        [self openBlueTooth];
         BTStatus = NO;
-        self.title = @"請開啟藍芽";
+//        self.title = @"請開啟藍芽";
         self.messageLabel.text = @"請開啟藍芽";
 
 //        if (_engine) {
@@ -239,7 +240,7 @@
 
 -(void)checkSetting:(NSString *)title message:(NSString *)aMessage{
     
-    self.title = @"請允許使用您的位置";
+//    self.title = @"請允許使用您的位置";
     self.messageLabel.text = @"請允許使用您的位置";
     
     UIAlertController *alertController = [UIAlertController
@@ -312,7 +313,7 @@
                                           message:message
                                           preferredStyle:UIAlertControllerStyleAlert];
     
-    alertController.view.tintColor = [UIColor colorWithRed:240.0/255.0 green:145.0/255.0 blue:146.0/255.0 alpha:1.0f];
+    alertController.view.tintColor = DEFAULT_COLOR;
     
     UIAlertAction *confirmAction = [UIAlertAction actionWithTitle:@"確定" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         

@@ -13,5 +13,6 @@
 @property (strong, nonatomic) IBOutlet UILabel *taskTitle;
 @property (strong, nonatomic) IBOutlet UILabel *taskStatus;
 @property (strong, nonatomic) IBOutlet UIView *titleBGView;
+@property (strong, nonatomic) IBOutlet UIImageView *completeMark;
 
 @end
