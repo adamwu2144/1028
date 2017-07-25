@@ -46,5 +46,6 @@
 - (IBAction)handleBtnClick:(id)sender;
 
 -(id)initWithActivityTaskClass:(TaskClass *)taskClass;
+-(void)doRefreshContent;
 
 @end

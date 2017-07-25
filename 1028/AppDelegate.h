@@ -26,6 +26,7 @@
 //@property (strong, nonatomic) UserRegisterViewController *mainTabBarController;
 //@property (strong, nonatomic) LoginViewController *mainTabBarController;
 @property (strong, nonatomic) AttestationCheckViewController *attestationCheckViewController;
+@property (assign, nonatomic) BOOL openOutSideWeb;
 
 
 

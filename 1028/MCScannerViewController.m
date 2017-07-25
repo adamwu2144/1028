@@ -206,7 +206,7 @@
 
 -(void)initMyNavi{
     UIButton *cancelBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [cancelBtn setFrame:CGRectMake(0, 20, 25, 25)];
+    [cancelBtn setFrame:CGRectMake(0, 0, 35, 35)];
     [cancelBtn addTarget:self action:@selector(cancelHandler:) forControlEvents:UIControlEventTouchUpInside];
     [cancelBtn setBackgroundImage:[UIImage imageNamed:@"ic_arrow_white"] forState:UIControlStateNormal];
     UIBarButtonItem *cancelItem = [[UIBarButtonItem alloc] initWithCustomView:cancelBtn];
@@ -240,7 +240,7 @@
         
         if (detectionString != nil)
         {
-            _resultLabel.text = detectionString;
+//            _resultLabel.text = detectionString;
             
             if ([detectionString rangeOfString:@"http://"].location != NSNotFound ||[detectionString rangeOfString:@"https://"].location != NSNotFound) {
 
@@ -287,10 +287,14 @@
     [self viewDidLoad];
 }
 
+-(void)dissmissScannerView{
+    [self cancelHandler:nil];
+}
+
 -(void)stopReading{
     // Stop video capture and make the capture session object nil.
     [_session stopRunning];
-    _session = nil;
+//    _session = nil;
     
     [_timer invalidate];
     // Remove the video preview layer from the viewPreview view's layer.

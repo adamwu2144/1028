@@ -14,6 +14,8 @@
 #import <CoreLocation/CoreLocation.h>
 #import "ICSColorsViewController.h"
 #import "ShakeViewController.h"
+#import "MCScannerViewController.h"
+#import "ActivityDetailViewController.h"
 
 //#import "RtlsEngine.h"
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
@@ -201,8 +203,19 @@
             ShakeViewController *viewController = (ShakeViewController *)[currentNavi visibleViewController];
             [viewController checkLocationPremission];
             //            [viewController checkBlueToothPowerState];
-            
         }
+        else if([[currentNavi visibleViewController] isKindOfClass:[MCScannerViewController class]]){
+            MCScannerViewController *viewController = (MCScannerViewController *)[currentNavi visibleViewController];
+            [viewController dissmissScannerView];
+        }
+        else if([[currentNavi visibleViewController] isKindOfClass:[ActivityDetailViewController class]]){
+            if (self.openOutSideWeb) {
+                self.openOutSideWeb = NO;
+                ActivityDetailViewController *viewController = (ActivityDetailViewController *)[currentNavi visibleViewController];
+                [viewController doRefreshContent];
+            }
+        }
+        
     }
 }
 

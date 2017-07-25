@@ -71,7 +71,7 @@
         [self.exchangeStatusView.layer setBorderColor:DEFAULT_COLOR.CGColor];
         [self.exchangeStatusView.layer setBorderWidth:1.0f];
         self.exchangeStatusLabel.textColor = DEFAULT_COLOR;
-        [self.exchangeStatusView.layer setCornerRadius:32];
+        [self.exchangeStatusView.layer setCornerRadius:40];
         [self.exchangeStatusView setHidden:NO];
         self.exchangeStatusLabel.text = message;
     }
@@ -99,7 +99,7 @@
         NSLog(@"dic = %@",dic);
         if (dic) {
             status = YES;
-            [self initCusView:@"兌換成功"];
+            [self initCusView:[dic objectForKey:@"message"]];
             [[MyManager shareManager] getUserDataWithJWT:nil WithComplete:^(BOOL status, int statusCode) {
                 
             }];

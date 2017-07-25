@@ -26,7 +26,6 @@
     int myTask_id;
     TaskClass *myTaskClass;
     BOOL isRefreshParaentContent;
-    
 }
 
 @end
@@ -98,19 +97,19 @@
 
 -(void)initCustomerView{
     
-//    self.activityButton.backgroundColor = [UIColor whiteColor];
-    self.activityButton.layer.shadowColor =[UIColor blackColor].CGColor;
-    self.activityButton.layer.shadowOffset = CGSizeMake(0, 4.0f);
-
-    self.activityButton.layer.shadowOpacity = 0.4f;
-
-    self.activityButton.layer.shadowRadius = 1.0f;
-    self.activityButton.layer.masksToBounds = NO;
+////    self.activityButton.backgroundColor = [UIColor whiteColor];
+//    self.activityButton.layer.shadowColor =[UIColor blackColor].CGColor;
+//    self.activityButton.layer.shadowOffset = CGSizeMake(0, 4.0f);
+//
+//    self.activityButton.layer.shadowOpacity = 0.4f;
+//
+//    self.activityButton.layer.shadowRadius = 1.0f;
+//    self.activityButton.layer.masksToBounds = NO;
     self.activityButton.layer.cornerRadius =  self.activityButton.frame.size.height/2;
     self.activityButton.titleLabel.numberOfLines = 0;
-    
-//    [[self.activityButton layer] setBorderWidth:1.0f];
-//    [[self.activityButton layer] setBorderColor:[AppDelegate colorWithHexString:@"FF8A82"].CGColor];
+//    
+////    [[self.activityButton layer] setBorderWidth:1.0f];
+////    [[self.activityButton layer] setBorderColor:[AppDelegate colorWithHexString:@"FF8A82"].CGColor];
     [[self.activityButton layer] setBorderColor:[UIColor redColor].CGColor];
 
     [self.activityButton setContentHorizontalAlignment:UIControlContentHorizontalAlignmentCenter];
@@ -257,6 +256,7 @@
             MCScannerViewController *mcScannerViewController = [[MCScannerViewController alloc] initWithNibName:@"MCScannerViewController" bundle:nil];
             mcScannerViewController.delegate = self;
             ICSNavigationController *navi = [[ICSNavigationController alloc] initWithRootViewController:mcScannerViewController];
+            PublicAppDelegate.openOutSideWeb = YES;
             [self presentViewController:navi animated:YES completion:nil];
         }
             break;
@@ -270,7 +270,17 @@
         }
             break;
         case ActivityTypeForOpenURL:{
-            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:self.activityDetailClass.result_url]];
+            
+            [[MyManager shareManager] requestWithMethod:GET WithPath:[ApiBuilder getOneTimeKey] WithParams:nil WithSuccessBlock:^(NSDictionary *dic) {
+                NSString *key = [[dic objectForKey:@"items"] objectForKey:@"key"];
+                NSString *urlWithKey = [NSString stringWithFormat:@"%@?key=%@",self.activityDetailClass.result_url,key];
+                PublicAppDelegate.openOutSideWeb = YES;
+                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:urlWithKey]];
+                
+            } WithFailurBlock:^(NSError *error, int statusCode) {
+                
+            }];
+            
         }
             break;
         default:
@@ -328,9 +338,15 @@
     }];
 }
 
+-(void)doRefreshContent{
+    isRefreshParaentContent = YES;
+    [self initData];
+    [self refreshMemberData];
+}
+
 #pragma mark - ShakeViewControllerDelegate
 
--(void)doRefreshContent{
+-(void)doRefreshContentFromBeacon{
     isRefreshParaentContent = YES;
     [self initData];
     [self refreshMemberData];
@@ -343,4 +359,5 @@
     [self initData];
     [self refreshMemberData];
 }
+
 @end

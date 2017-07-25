@@ -22,6 +22,7 @@
 #import "ICSNavigationController.h"
 #import "ActivityDetailClass.h"
 #import "AttestationCheckViewController.h"
+#import "NoDataCell.h"
 
 @interface TaskViewController ()<MyManagerDelegate,ActivityDetailViewControllerDelegate>{
     MemberData *myMemberData;
@@ -37,7 +38,6 @@
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    self.navigationItem.rightBarButtonItem.badgeValue = [[[MyManager shareManager] memberData].notification stringValue];
     if (updateUserData) {
         updateUserData = NO;
         [self setDataWithoutTask];
@@ -53,7 +53,6 @@
 
 -(void)viewDidLayoutSubviews{
     [super viewDidLayoutSubviews];
-//    
 //    NSLog(@"float3  =  %f",self.memberLevel.intrinsicContentSize.width);
 //    
 //    self.memberLevelWidth.constant = self.memberLevel.intrinsicContentSize.width;
@@ -351,7 +350,7 @@
         
         [self.activityArray removeAllObjects];
         self.activityArray = [TaskClass initWithArray:[dic objectForKey:@"items"]];
-        
+
         [self.taskTableView reloadData];
         [self hideRefreshControl];
         [MBProgressHUD hideHUDForView:PublicAppDelegate.window.rootViewController.view animated:YES];
@@ -366,7 +365,7 @@
         
         [self.activityArray removeAllObjects];
         self.activityArray = [TaskClass initWithArray:[dic objectForKey:@"items"]];
-        
+
         [self.taskTableView reloadData];
         [self hideRefreshControl];
         [MBProgressHUD hideHUDForView:PublicAppDelegate.window.rootViewController.view animated:YES];
@@ -391,93 +390,116 @@
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return [self.activityArray count];
+    if ([self.activityArray count] == 0) {
+        return 1;
+    }
+    else{
+        return [self.activityArray count];
+    }
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
     NSString *cellIdentifier;
     
-    TaskClass *taskClass = [self.activityArray objectAtIndex:indexPath.row];
-    
-    if ([taskClass.taskType intValue] == 1) {
-        cellIdentifier = @"TaskCell";
-    }
-    else if([taskClass.taskType intValue] == 2){
-        cellIdentifier = @"TaskMsgCell";
-    }
-    
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-    
-    if(cell == nil){
-        if ([taskClass.taskType intValue] == 1) {
-            NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"TaskCell" owner:self options:nil];
+    if ([self.activityArray count] == 0) {
+        cellIdentifier = @"NoDataCell";
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+        
+        if(cell == nil){
+            NSArray *nib = [[NSBundle mainBundle] loadNibNamed:cellIdentifier owner:self options:nil];
+            cell = (NoDataCell *)[nib objectAtIndex:0];
             
-            cell = (TaskCell *)[nib objectAtIndex:0];
-            [cell setSelectionStyle:UITableViewCellSelectionStyleNone];        }
-        else if([taskClass.taskType intValue] == 2){
-            NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"TaskMsgCell" owner:self options:nil];
-            
-            cell = (TaskMsgCell *)[nib objectAtIndex:0];
             [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
+            [cell setBackgroundColor:[UIColor clearColor]];
         }
-    }
-    
-    
-    if ([taskClass.taskType intValue] == 1) {
-        TaskCell *taskCell = (TaskCell *)cell;
-        [taskCell.taskImageView sd_setImageWithURL:[NSURL URLWithString:taskClass.image]];
-        taskCell.taskTitle.text = taskClass.title;
+        NoDataCell *noDataCell = (NoDataCell *)cell;
+        noDataCell.messageLabel.text = @"您已完成全部活動嘍";
         
-        if (taskClass.taskStatus == nil) {
-            taskCell.taskStatus.text = @"";
+        return cell;
+    }
+    else{
+        TaskClass *taskClass = [self.activityArray objectAtIndex:indexPath.row];
+        
+        if ([taskClass.taskType intValue] == 1) {
+            cellIdentifier = @"TaskCell";
         }
-        else{
-            taskCell.taskStatus.text = taskClass.taskStatusText;
-            switch ([taskClass.taskStatus intValue]) {
-                case 1:
-                    taskCell.taskStatus.textColor = DEFAULT_COLOR;
-                    taskCell.taskTitle.textColor = [UIColor blackColor];
-                    break;
-                case 2:
-                    taskCell.taskStatus.textColor = DEFAULT_GARY_COLOR;
-                    taskCell.taskTitle.textColor = DEFAULT_GARY_COLOR;
-                    [taskCell.completeMark setHidden:NO];
-                    break;
-                case 3:
-                    taskCell.taskStatus.textColor = DEFAULT_GARY_COLOR;
-                    taskCell.taskTitle.textColor = DEFAULT_GARY_COLOR;
-                    break;
-                case 4:
-                    taskCell.taskStatus.textColor = DEFAULT_COLOR;
-                    taskCell.taskTitle.textColor = [UIColor blackColor];
-                    break;
-                default:
-                    break;
+        else if([taskClass.taskType intValue] == 2){
+            cellIdentifier = @"TaskMsgCell";
+        }
+        
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+        
+        if(cell == nil){
+            if ([taskClass.taskType intValue] == 1) {
+                NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"TaskCell" owner:self options:nil];
+                
+                cell = (TaskCell *)[nib objectAtIndex:0];
+                [cell setSelectionStyle:UITableViewCellSelectionStyleNone];        }
+            else if([taskClass.taskType intValue] == 2){
+                NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"TaskMsgCell" owner:self options:nil];
+                
+                cell = (TaskMsgCell *)[nib objectAtIndex:0];
+                [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
             }
-//            taskCell.taskStatus.text = [taskClass.taskCompleted boolValue] ? @"已完成":@"未完成" ;
-//            taskCell.taskStatus.textColor = [taskClass.taskCompleted boolValue] ? DEFAULT_GARY_COLOR:DEFAULT_COLOR;
         }
         
+        
+        if ([taskClass.taskType intValue] == 1) {
+            TaskCell *taskCell = (TaskCell *)cell;
+            [taskCell.taskImageView sd_setImageWithURL:[NSURL URLWithString:taskClass.image]];
+            taskCell.taskTitle.text = taskClass.title;
+            
+            if (taskClass.taskStatus == nil) {
+                taskCell.taskStatus.text = @"";
+            }
+            else{
+                taskCell.taskStatus.text = taskClass.taskStatusText;
+                switch ([taskClass.taskStatus intValue]) {
+                    case 1:
+                        taskCell.taskStatus.textColor = DEFAULT_COLOR;
+                        taskCell.taskTitle.textColor = [UIColor blackColor];
+                        break;
+                    case 2:
+                        taskCell.taskStatus.textColor = DEFAULT_GARY_COLOR;
+                        taskCell.taskTitle.textColor = DEFAULT_GARY_COLOR;
+                        [taskCell.completeMark setHidden:NO];
+                        break;
+                    case 3:
+                        taskCell.taskStatus.textColor = DEFAULT_GARY_COLOR;
+                        taskCell.taskTitle.textColor = DEFAULT_GARY_COLOR;
+                        break;
+                    case 4:
+                        taskCell.taskStatus.textColor = DEFAULT_COLOR;
+                        taskCell.taskTitle.textColor = [UIColor blackColor];
+                        break;
+                    default:
+                        break;
+                }
+                //            taskCell.taskStatus.text = [taskClass.taskCompleted boolValue] ? @"已完成":@"未完成" ;
+                //            taskCell.taskStatus.textColor = [taskClass.taskCompleted boolValue] ? DEFAULT_GARY_COLOR:DEFAULT_COLOR;
+            }
+            
+        }
+        else if([taskClass.taskType intValue] == 2){
+            TaskMsgCell *taskMsgCell = (TaskMsgCell *)cell;
+            taskMsgCell.title.text = taskClass.title;
+            taskMsgCell.content.text = taskClass.content;
+            NSLog(@"[MyManager colorWithHexString:taskClass.backgroundColor] = %@",taskClass.backgroundColor);
+            [taskMsgCell.taskMsgBGView setBackgroundColor:[MyManager colorWithHexString:taskClass.backgroundColor]];
+        }
+        
+        //
+        //    CGFloat hue = ( arc4random() % 256 / 256.0 );  //  0.0 to 1.0
+        //    CGFloat saturation = ( arc4random() % 128 / 256.0 ) + 0.5;  //  0.5 to 1.0, away from white
+        //    CGFloat brightness = ( arc4random() % 128 / 256.0 ) + 0.5;  //  0.5 to 1.0, away from black
+        //    UIColor *color = [UIColor colorWithHue:hue saturation:saturation brightness:brightness alpha:1];
+        //    taskCell.taskImageView.backgroundColor = color;
+        //    taskCell.taskTitle.text = @"小海馬活動";
+        //    taskCell.taskStatus.text = @"未完成";
+        
+        return cell;
     }
-    else if([taskClass.taskType intValue] == 2){
-        TaskMsgCell *taskMsgCell = (TaskMsgCell *)cell;
-        taskMsgCell.title.text = taskClass.title;
-        taskMsgCell.content.text = taskClass.content;
-        NSLog(@"[MyManager colorWithHexString:taskClass.backgroundColor] = %@",taskClass.backgroundColor);
-        [taskMsgCell.taskMsgBGView setBackgroundColor:[MyManager colorWithHexString:taskClass.backgroundColor]];
-    }
-    
-//    
-//    CGFloat hue = ( arc4random() % 256 / 256.0 );  //  0.0 to 1.0
-//    CGFloat saturation = ( arc4random() % 128 / 256.0 ) + 0.5;  //  0.5 to 1.0, away from white
-//    CGFloat brightness = ( arc4random() % 128 / 256.0 ) + 0.5;  //  0.5 to 1.0, away from black
-//    UIColor *color = [UIColor colorWithHue:hue saturation:saturation brightness:brightness alpha:1];
-//    taskCell.taskImageView.backgroundColor = color;
-//    taskCell.taskTitle.text = @"小海馬活動";
-//    taskCell.taskStatus.text = @"未完成";
-    
-    return cell;
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -584,12 +606,31 @@
         
     for (TaskClass *tmp in self.activityArray) {
         if (tmp.taskid == notiTaskClass.taskid) {
-//            //更新自己
-//            tmp.taskStatus = notiTaskClass.taskStatus;
-//            
-//            if ([notiTaskClass.taskStatus intValue] == 2) {
-//                tmp.taskStatusText = @"已完成";
-//            }
+            //更新自己
+            tmp.taskStatus = notiTaskClass.taskStatus;
+            
+            if ([notiTaskClass.taskStatus intValue] == 2) {
+                tmp.taskStatusText = @"已完成";
+            }
+            
+            //更新自己的次頁
+            long taskNaviCount = (unsigned long)[PublicAppDelegate.mainTabBarController.taskNavi.viewControllers count];
+
+            UINavigationController *taskNavi = PublicAppDelegate.mainTabBarController.taskNavi;
+
+            if(taskNaviCount == 2){
+                //叫他更新
+                if ([[taskNavi.viewControllers objectAtIndex:2-1] isKindOfClass:[ActivityDetailViewController class]]) {
+                    ActivityDetailViewController *activityDetailViewController = (ActivityDetailViewController *)[taskNavi.viewControllers objectAtIndex:2-1];
+                    if ([activityDetailViewController isViewLoaded]) {
+                        activityDetailViewController.activityDetailClass.task_status = notiTaskClass.taskStatus;
+                        if ([notiTaskClass.taskStatus intValue] == 2) {
+                            activityDetailViewController.activityDetailClass.task_status_text = @"已經完成活動";
+                            activityDetailViewController.activityButton.titleLabel.text = @"已經完成活動";
+                        }
+                    }
+                }
+            }
             
             //更新BeaconView
             long beaconNaviCount = (unsigned long)[PublicAppDelegate.mainTabBarController.beaconNavi.viewControllers count];
@@ -627,6 +668,7 @@
                         activityDetailViewController.activityDetailClass.task_status = notiTaskClass.taskStatus;
                         if ([notiTaskClass.taskStatus intValue] == 2) {
                             activityDetailViewController.activityDetailClass.task_status_text = @"已經完成活動";
+                            activityDetailViewController.activityButton.titleLabel.text = @"已經完成活動";
                         }
                     }
                 }
@@ -650,8 +692,32 @@
     
     for (TaskClass *tmp in self.activityArray) {
         if (tmp.taskid == notiTaskClass.taskid) {
-//            //更新自己
-//            tmp.taskStatus = notiTaskClass.taskStatus;
+            
+            //更新自己
+            tmp.taskStatus = notiTaskClass.taskStatus;
+            
+            if ([notiTaskClass.taskStatus intValue] == 2) {
+                tmp.taskStatusText = @"已完成";
+            }
+            
+            //更新自己的次頁
+            long taskNaviCount = (unsigned long)[PublicAppDelegate.mainTabBarController.taskNavi.viewControllers count];
+            
+            UINavigationController *taskNavi = PublicAppDelegate.mainTabBarController.taskNavi;
+            
+            if(taskNaviCount == 2){
+                //叫他更新
+                if ([[taskNavi.viewControllers objectAtIndex:2-1] isKindOfClass:[ActivityDetailViewController class]]) {
+                    ActivityDetailViewController *activityDetailViewController = (ActivityDetailViewController *)[taskNavi.viewControllers objectAtIndex:2-1];
+                    if ([activityDetailViewController isViewLoaded]) {
+                        activityDetailViewController.activityDetailClass.task_status = notiTaskClass.taskStatus;
+                        if ([notiTaskClass.taskStatus intValue] == 2) {
+                            activityDetailViewController.activityDetailClass.task_status_text = @"已經完成活動";
+                            activityDetailViewController.activityButton.titleLabel.text = @"已經完成活動";
+                        }
+                    }
+                }
+            }
             
             //更新BarcodeView
             long barcodeNaviCount = (unsigned long)[PublicAppDelegate.mainTabBarController.barcodeNavi.viewControllers count];
@@ -665,6 +731,10 @@
                         for (TaskClass *tmp in barcodeViewController.activityArray) {
                             if (tmp.taskid == notiTaskClass.taskid) {
                                 tmp.taskStatus = notiTaskClass.taskStatus;
+                                
+                                if ([notiTaskClass.taskStatus intValue] == 2) {
+                                    tmp.taskStatusText = @"已完成";
+                                }
                                 
                                 NSInteger objIndex = [barcodeViewController.activityArray indexOfObject:tmp];
                                 
@@ -684,6 +754,10 @@
                     ActivityDetailViewController *activityDetailViewController = (ActivityDetailViewController *)[currentNavi.viewControllers objectAtIndex:2-1];
                     if ([activityDetailViewController isViewLoaded]) {
                         activityDetailViewController.activityDetailClass.task_status = notiTaskClass.taskStatus;
+                        if ([notiTaskClass.taskStatus intValue] == 2) {
+                            activityDetailViewController.activityDetailClass.task_status_text = @"已經完成活動";
+                            activityDetailViewController.activityButton.titleLabel.text = @"已經完成活動";
+                        }
                     }
                 }
             }

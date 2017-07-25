@@ -20,6 +20,7 @@
 #import "ActivityDetailViewController.h"
 #import "../Framework/MJRefresh/MJRefresh.h"
 #import "ActivityDetailClass.h"
+#import "NoDataCell.h"
 
 #define DETECT_FREQUENCY 3
 
@@ -42,7 +43,6 @@
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    self.navigationItem.rightBarButtonItem.badgeValue = [[[MyManager shareManager] memberData].notification stringValue];
 }
 
 - (void)viewDidLoad {
@@ -151,6 +151,10 @@
     _tableView.footer = footer;
     [_tableView.footer endRefreshing];
     
+    self.refreshControl = [[UIRefreshControl alloc] init];
+    [self.tableView addSubview:self.refreshControl];
+    [self.tableView sendSubviewToBack:self.refreshControl];
+    
 }
 
 #pragma mark - UITableViewDelegate
@@ -159,109 +163,94 @@
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return [self.activityArray count];
+    if ([self.activityArray count] == 0) {
+        return 1;
+    }
+    else{
+        return [self.activityArray count];
+    }
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
     NSString *cellIdentifier;
     
-    //    if(indexPath.section == 0){
-    //        cellIdentifier = @"DFPADBannerTableViewCell";
-    //    }
-    //    else{
-    //        EditorCellClass *tmpClass = [editorsCellArray objectAtIndex:indexPath.row];
-    //        if([tmpClass.type isEqualToString:@"YAPAY"]){
-    //            cellIdentifier = @"DFPMainYaPayViewCell";
-    //        }
-    //        else{
-    //            cellIdentifier = @"EditorsViewCell";
-    //        }
-    //    }
-    
-    cellIdentifier = @"TaskCell";
-    
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-    
-    if(cell == nil){
-        //        if(indexPath.section == 0){
-        //            NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"DFPADBannerTableViewCell" owner:self options:nil];
-        //
-        //            cell = (DFPADBannerTableViewCell *)[nib objectAtIndex:0];
-        //            [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
-        //
-        //            DFPADBannerTableViewCell *tmp = (DFPADBannerTableViewCell *)cell;
-        //
-        //            [tmp setBannerStartWithViewController:self];
-        //        }
-        //        else{
-        //            EditorCellClass *tmpClass = [editorsCellArray objectAtIndex:indexPath.row];
-        //
-        //            if([tmpClass.type isEqualToString:@"YAPAY"]){
-        //                NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"DFPMainYaPayViewCell" owner:self options:nil];
-        //                cell = (DFPYaPayViewCell *)[nib objectAtIndex:0];
-        //                [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
-        //
-        //            }
-        //            else{
-        //                NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"EditorsViewCell" owner:self options:nil];
-        //                cell = (EditorsViewCell *)[nib objectAtIndex:0];
-        //                [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
-        //            }
-        //        }
-        NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"TaskCell" owner:self options:nil];
+    if ([self.activityArray count] == 0) {
+        cellIdentifier = @"NoDataCell";
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
         
-        cell = (TaskCell *)[nib objectAtIndex:0];
-        [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
-
-    }
-    
-    
-    TaskCell *taskCell = (TaskCell *)cell;
-    if (self.activityArray != nil) {
-        TaskClass *Mytask = [self.activityArray objectAtIndex:indexPath.row];
-        taskCell.taskTitle.text = Mytask.title;
-        if (Mytask.taskStatus == nil) {
-            taskCell.taskStatus.text = @"";
+        if(cell == nil){
+            NSArray *nib = [[NSBundle mainBundle] loadNibNamed:cellIdentifier owner:self options:nil];
+            cell = (NoDataCell *)[nib objectAtIndex:0];
+            
+            [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
+            [cell setBackgroundColor:[UIColor clearColor]];
         }
-        else{
-            taskCell.taskStatus.text = Mytask.taskStatusText;
-            switch ([Mytask.taskStatus intValue]) {
-                case 1:
-                    taskCell.taskStatus.textColor = DEFAULT_COLOR;
-                    taskCell.taskTitle.textColor = [UIColor blackColor];
-                    break;
-                case 2:
-                    taskCell.taskStatus.textColor = DEFAULT_GARY_COLOR;
-                    taskCell.taskTitle.textColor = DEFAULT_GARY_COLOR;
-                    [taskCell.completeMark setHidden:NO];
-                    break;
-                case 3:
-                    taskCell.taskStatus.textColor = DEFAULT_GARY_COLOR;
-                    taskCell.taskTitle.textColor = DEFAULT_GARY_COLOR;
-                    break;
-                case 4:
-                    taskCell.taskStatus.textColor = DEFAULT_COLOR;
-                    taskCell.taskTitle.textColor = [UIColor blackColor];
-
-                    break;
-                default:
-                    break;
-            }
-//            taskCell.taskStatus.text = [Mytask.taskCompleted boolValue] ? @"已完成":@"未完成" ;
-//            taskCell.taskStatus.textColor = [Mytask.taskCompleted boolValue] ? DEFAULT_GARY_COLOR:DEFAULT_COLOR;
-        }
-        [taskCell.taskImageView sd_setImageWithURL:[NSURL URLWithString:Mytask.image]];
+        NoDataCell *noDataCell = (NoDataCell *)cell;
+        noDataCell.messageLabel.text = @"coming soon";
+        
+        return cell;
     }
     else{
-        CGFloat hue = ( arc4random() % 256 / 256.0 );  //  0.0 to 1.0
-        CGFloat saturation = ( arc4random() % 128 / 256.0 ) + 0.5;  //  0.5 to 1.0, away from white
-        CGFloat brightness = ( arc4random() % 128 / 256.0 ) + 0.5;  //  0.5 to 1.0, away from black
-        UIColor *color = [UIColor colorWithHue:hue saturation:saturation brightness:brightness alpha:1];
-        taskCell.taskImageView.backgroundColor = color;
+        cellIdentifier = @"TaskCell";
+        
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+        
+        if(cell == nil){
+            
+            NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"TaskCell" owner:self options:nil];
+            
+            cell = (TaskCell *)[nib objectAtIndex:0];
+            [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
+            
+        }
+        
+        TaskCell *taskCell = (TaskCell *)cell;
+        if (self.activityArray != nil) {
+            TaskClass *Mytask = [self.activityArray objectAtIndex:indexPath.row];
+            taskCell.taskTitle.text = Mytask.title;
+            if (Mytask.taskStatus == nil) {
+                taskCell.taskStatus.text = @"";
+            }
+            else{
+                taskCell.taskStatus.text = Mytask.taskStatusText;
+                switch ([Mytask.taskStatus intValue]) {
+                    case 1:
+                        taskCell.taskStatus.textColor = DEFAULT_COLOR;
+                        taskCell.taskTitle.textColor = [UIColor blackColor];
+                        break;
+                    case 2:
+                        taskCell.taskStatus.textColor = DEFAULT_GARY_COLOR;
+                        taskCell.taskTitle.textColor = DEFAULT_GARY_COLOR;
+                        [taskCell.completeMark setHidden:NO];
+                        break;
+                    case 3:
+                        taskCell.taskStatus.textColor = DEFAULT_GARY_COLOR;
+                        taskCell.taskTitle.textColor = DEFAULT_GARY_COLOR;
+                        break;
+                    case 4:
+                        taskCell.taskStatus.textColor = DEFAULT_COLOR;
+                        taskCell.taskTitle.textColor = [UIColor blackColor];
+                        
+                        break;
+                    default:
+                        break;
+                }
+                //            taskCell.taskStatus.text = [Mytask.taskCompleted boolValue] ? @"已完成":@"未完成" ;
+                //            taskCell.taskStatus.textColor = [Mytask.taskCompleted boolValue] ? DEFAULT_GARY_COLOR:DEFAULT_COLOR;
+            }
+            [taskCell.taskImageView sd_setImageWithURL:[NSURL URLWithString:Mytask.image]];
+        }
+        else{
+            CGFloat hue = ( arc4random() % 256 / 256.0 );  //  0.0 to 1.0
+            CGFloat saturation = ( arc4random() % 128 / 256.0 ) + 0.5;  //  0.5 to 1.0, away from white
+            CGFloat brightness = ( arc4random() % 128 / 256.0 ) + 0.5;  //  0.5 to 1.0, away from black
+            UIColor *color = [UIColor colorWithHue:hue saturation:saturation brightness:brightness alpha:1];
+            taskCell.taskImageView.backgroundColor = color;
+        }
+        
+        return cell;
     }
-    
-    return cell;
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -302,7 +291,18 @@
     if([self.cellHeights[key]doubleValue] != cell.frame.size.height){
         self.cellHeights[key] = @(cell.frame.size.height);
     }
-    
+}
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView{
+    if(self.refreshControl.isRefreshing){
+        [self refresh];
+    }
+}
+
+-(void)refresh{
+    //設定重來
+    [self.activityArray removeAllObjects];
+    [self refreshActivityData];
 }
 
 -(void)refreshActivityData{
@@ -313,6 +313,13 @@
     [self getActivity];
 }
 
+-(void)hideRefreshControl{
+    if(self.refreshControl.refreshing){
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.refreshControl endRefreshing];
+        });
+    }
+}
 
 -(void)getActivity{
     
@@ -345,6 +352,9 @@
         else{
             [self.tableView.footer noticeNoMoreData];
         }
+        
+        [self hideRefreshControl];
+        
         [MBProgressHUD hideHUDForView:self.view animated:YES];
         
     } WithFailurBlock:^(NSError *error, int statusCode) {

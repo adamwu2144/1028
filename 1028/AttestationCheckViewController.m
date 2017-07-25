@@ -244,11 +244,15 @@
         
         NSParameterAssert(changeParam);
         
+        [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+
         [[MyManager shareManager] requestWithMethod:PATCH WithPath:[ApiBuilder getUpdateUserData] WithParams:changeParam WithSuccessBlock:^(NSDictionary *dic) {
+            [MBProgressHUD hideHUDForView:self.view animated:YES];
             [[MyManager shareManager] setAttestationTime:cellPhoneTextField.text];
             [self cancelBtnClicked:nil];
             [self showVaildMessageWithTitle:@"成功" content:@"請填入新的簡訊認證碼" action:0];
         } WithFailurBlock:^(NSError *error, int statusCode) {
+            [MBProgressHUD hideHUDForView:self.view animated:YES];
             NSData *errorData = error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey];
             NSDictionary *serializedData = [NSJSONSerialization JSONObjectWithData:errorData options:kNilOptions error:nil];
             NSString *message = [serializedData objectForKey:@"message"];

@@ -31,6 +31,9 @@
     
     UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:nil];
     [self.navigationItem setBackBarButtonItem:backButtonItem];
+    
+    self.navigationItem.rightBarButtonItem.badgeValue = [[[MyManager shareManager] memberData].notification stringValue];
+
 //    UIImageView *logoImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"logo_s"]];
 //    [logoImage setFrame:CGRectMake(0, 0, 120, 33)];
 //    logoImage.contentMode = UIViewContentModeScaleAspectFit;
@@ -139,7 +142,6 @@
     
     ICSDrawerController *tmp = ((AppDelegate *)[[UIApplication sharedApplication] delegate]).drawer;
     
-    
     if (tmp.drawerState == ICSDrawerControllerStateOpen) {
         [((AppDelegate *)[[UIApplication sharedApplication] delegate]).drawer close];
     }
@@ -159,6 +161,7 @@
     
     NotificationViewController *notificationViewController = [[NotificationViewController alloc] initWithNibName:@"NotificationViewController" bundle:nil];
     notificationViewController.delegate = self;
+
     [self.navigationController pushViewController:notificationViewController animated:YES];
     
 }

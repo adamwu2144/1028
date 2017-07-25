@@ -131,6 +131,7 @@
             [self.tableView reloadData];
         }
         else{
+            [self.tableView reloadData];
             [self.tableView.footer noticeNoMoreData];
         }
         

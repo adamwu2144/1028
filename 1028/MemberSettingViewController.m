@@ -320,7 +320,8 @@
         
         [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
     } WithFailurBlock:^(NSError *error, int statusCode) {
-        
+        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+
     }];
 }
 
@@ -441,13 +442,16 @@
 
             NSParameterAssert(changeParam);
             
+            [MBProgressHUD showHUDAddedTo:self.view animated:YES];
             
             NSLog(@"mobile = %@,  update = %@",[[MyManager shareManager] memberData].mobile ,[changeParam objectForKey:@"mobile"]);
             
             [[MyManager shareManager] requestWithMethod:PATCH WithPath:[ApiBuilder getUpdateUserData] WithParams:changeParam WithSuccessBlock:^(NSDictionary *dic) {
                 
                 NSLog(@"address = %@, mobile = %@, city_id = %@,dis_id = %@",[[MyManager shareManager] memberData].address,[[MyManager shareManager] memberData].mobile,[[MyManager shareManager] memberData].city_id,[[MyManager shareManager] memberData].district_id);
-                
+
+                [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+
                 if ([[[MyManager shareManager] memberData].mobile isEqualToString:self.mobileTextField.text]) {
                     //不用手機驗證
                     [[MyManager shareManager] changeMemberData:[[MemberData alloc] initWithDictionary:[dic objectForKey:@"items"]]];
@@ -458,8 +462,8 @@
                     [self showVaildMessageWithTitle:@"成功" content:@"請重新驗證手機號碼" action:2];
                 }
                 
-                
             } WithFailurBlock:^(NSError *error, int statusCode) {
+                [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
                 NSData *errorData = error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey];
                 NSDictionary *serializedData = [NSJSONSerialization JSONObjectWithData:errorData options:kNilOptions error:nil];
                 NSString *message = [serializedData objectForKey:@"message"];

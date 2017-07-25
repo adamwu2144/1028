@@ -13,6 +13,7 @@
 #import "NotificationDetailCell.h"
 #import "NotificationClass.h"
 #import "../Framework/MJRefresh/MJRefresh.h"
+#import "NoDataCell.h"
 
 @interface NotificationViewController (){
     int Page;
@@ -22,6 +23,11 @@
 @end
 
 @implementation NotificationViewController
+
+-(BOOL)hidesBottomBarWhenPushed
+{
+    return YES;
+}
 
 -(void)willMoveToParentViewController:(UIViewController *)parent{
     if (parent == NULL) {
@@ -33,6 +39,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     // Do any additional setup after loading the view from its nib.
     Page = 1;
     [self initNavi];
@@ -113,19 +120,30 @@
 
 #pragma mark - UITableViewDelegate
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    return [notificationArray count];
+    if ([notificationArray count] == 0) {
+        return 1;
+    }
+    else{
+        return [notificationArray count];
+    }
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     
-    NotificationClass *tmp = [notificationArray objectAtIndex:section];
-    
-    if (tmp.status) {
-        return 2;
-    }
-    else{
+    if ([notificationArray count] == 0) {
         return 1;
     }
+    else{
+        NotificationClass *tmp = [notificationArray objectAtIndex:section];
+        
+        if (tmp.status) {
+            return 2;
+        }
+        else{
+            return 1;
+        }
+    }
+
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -133,53 +151,73 @@
     
     NSString *cellIdentifier = @"";
 
-    if (indexPath.row == 0) {
-        cellIdentifier = @"NotificationCell";
-    }
-    else{
-        cellIdentifier = @"NotificationDetailCell";
-    }
     
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-    
-    if(cell == nil){
-        NSArray *nib = [[NSBundle mainBundle] loadNibNamed:cellIdentifier owner:self options:nil];
-        if (indexPath.row == 0) {
-            cell = (NotificationCell *)[nib objectAtIndex:0];
-        }
-        else{
-            cell = (NotificationDetailCell *)[nib objectAtIndex:0];
-        }
-        [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
-        [cell setBackgroundColor:[UIColor clearColor]];
-    }
-    
-    NotificationClass *tmp = [notificationArray objectAtIndex:indexPath.section];
+    if ([notificationArray count] == 0) {
+        cellIdentifier = @"NoDataCell";
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+        
+        if(cell == nil){
+            NSArray *nib = [[NSBundle mainBundle] loadNibNamed:cellIdentifier owner:self options:nil];
+            cell = (NoDataCell *)[nib objectAtIndex:0];
 
-    if (indexPath.row == 0) {
-        NotificationCell *notificationCell = (NotificationCell *)cell;
-        notificationCell.messageTitleLabel.text = tmp.title;
+            [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
+            [cell setBackgroundColor:[UIColor clearColor]];
+        }
+        NoDataCell *noDataCell = (NoDataCell *)cell;
+        noDataCell.messageLabel.text = @"目前沒有任何訊息哦";
         
-        if (tmp.status) {
-            notificationCell.comBinddShape.image = [UIImage imageNamed:@"combinedShape"];
-        }
-        else{
-            notificationCell.comBinddShape.image = [UIImage imageNamed:@"upsidecombinedShape"];
-        }
-        
-        if ([tmp.isRead boolValue]) {
-            [notificationCell.readStatusLabel setHidden:YES];
-        }
-        else{
-            [notificationCell.readStatusLabel setHidden:NO];
-        }
+        return cell;
     }
     else{
-        NotificationDetailCell *notificationDetailCell = (NotificationDetailCell *)cell;
-        notificationDetailCell.detailContentLabel.text = tmp.content;
+        if (indexPath.row == 0) {
+            cellIdentifier = @"NotificationCell";
+        }
+        else{
+            cellIdentifier = @"NotificationDetailCell";
+        }
+        
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+        
+        if(cell == nil){
+            NSArray *nib = [[NSBundle mainBundle] loadNibNamed:cellIdentifier owner:self options:nil];
+            if (indexPath.row == 0) {
+                cell = (NotificationCell *)[nib objectAtIndex:0];
+            }
+            else{
+                cell = (NotificationDetailCell *)[nib objectAtIndex:0];
+            }
+            [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
+            [cell setBackgroundColor:[UIColor clearColor]];
+        }
+        
+        NotificationClass *tmp = [notificationArray objectAtIndex:indexPath.section];
+        
+        if (indexPath.row == 0) {
+            NotificationCell *notificationCell = (NotificationCell *)cell;
+            notificationCell.messageTitleLabel.text = tmp.title;
+            
+            if (tmp.status) {
+                notificationCell.comBinddShape.image = [UIImage imageNamed:@"combinedShape"];
+            }
+            else{
+                notificationCell.comBinddShape.image = [UIImage imageNamed:@"upsidecombinedShape"];
+            }
+            
+            if ([tmp.isRead boolValue]) {
+                [notificationCell.readStatusLabel setHidden:YES];
+            }
+            else{
+                [notificationCell.readStatusLabel setHidden:NO];
+            }
+        }
+        else{
+            NotificationDetailCell *notificationDetailCell = (NotificationDetailCell *)cell;
+            notificationDetailCell.detailContentLabel.text = tmp.content;
+        }
+        
+        return cell;
     }
     
-    return cell;
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath

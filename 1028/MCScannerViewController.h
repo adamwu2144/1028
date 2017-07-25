@@ -19,5 +19,6 @@
 
 @property (nonatomic,weak) id <MCScannerViewControllerDelegate> delegate;
 
+-(void)dissmissScannerView;
 
 @end

@@ -12,6 +12,7 @@
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic, strong) NSMutableDictionary *cellHeights;
 @property (nonatomic, strong) NSMutableArray *activityArray;
+@property (nonatomic, strong) UIRefreshControl *refreshControl;
 -(void)refreshActivityData;
 -(void)getActivity;
 @end

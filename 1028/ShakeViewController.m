@@ -101,7 +101,7 @@
 
 -(void)initMyNavi{
     UIButton *cancelBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [cancelBtn setFrame:CGRectMake(0, 20, 25, 25)];
+    [cancelBtn setFrame:CGRectMake(0, 0, 35, 35)];
     [cancelBtn addTarget:self action:@selector(cancelHandler:) forControlEvents:UIControlEventTouchUpInside];
     [cancelBtn setBackgroundImage:[UIImage imageNamed:@"ic_arrow_white"] forState:UIControlStateNormal];
     UIBarButtonItem *cancelItem = [[UIBarButtonItem alloc] initWithCustomView:cancelBtn];
@@ -270,8 +270,8 @@
 
 -(void)cancelHandler:(UIButton *)sender
 {
-    if ([self.delegate respondsToSelector:@selector(doRefreshContent)]) {
-        [self.delegate doRefreshContent];
+    if ([self.delegate respondsToSelector:@selector(doRefreshContentFromBeacon)]) {
+        [self.delegate doRefreshContentFromBeacon];
     }
     [self dismissViewControllerAnimated:YES completion:nil];
 }

@@ -12,7 +12,7 @@
 
 @protocol ShakeViewControllerDelegate <NSObject>
 
--(void)doRefreshContent;
+-(void)doRefreshContentFromBeacon;
 
 @end
 
