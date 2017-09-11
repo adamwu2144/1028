@@ -8,12 +8,21 @@
 
 #import "ProductViewController.h"
 #import "ProductCollectionViewCell.h"
+#import "MyManager.h"
+#import "ApiBuilder.h"
+#import "ProductItem.h"
+#import "../Framework/SDWebImage/UIImageView+WebCache.h"
+#import "ProductDetailCollectionView.h"
+#import "ProductDetailViewController.h"
 
 @interface ProductViewController ()<UICollectionViewDelegate, UICollectionViewDataSource>
 
 @end
 
 @implementation ProductViewController
+
+
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -24,10 +33,20 @@
     UINib *nib = [UINib nibWithNibName:@"ProductCollectionViewCell" bundle: nil];
     [self.mainCollectionView registerNib:nib forCellWithReuseIdentifier:@"ProductCellIdentifier"];
     
-    
     self.mainCollectionView.delegate = self;
     self.mainCollectionView.dataSource = self;
+    [self.mainCollectionView setBackgroundColor:[UIColor blackColor]];
     
+    self.productItems = [[NSMutableArray alloc] init];
+    
+    [[MyManager shareManager] requestWithMethod:GET WithPath:[ApiBuilder getProductsByCategory:1] WithParams:nil WithSuccessBlock:^(NSDictionary *dic) {
+        self.productItems = [ProductItem initWithArray:[dic objectForKey:@"items"]];
+    
+        [self.mainCollectionView reloadData];
+        NSLog(@"self.productItems = %lu",(unsigned long)[self.productItems count]);
+    } WithFailurBlock:^(NSError *error, int statusCode) {
+        
+    }];
     
 }
 
@@ -53,21 +72,24 @@
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    return 9;
+    return _productItems.count;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     
     ProductCollectionViewCell *cell = (ProductCollectionViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"ProductCellIdentifier" forIndexPath:indexPath];
-    
+    [cell.contentView setBackgroundColor:[UIColor redColor]];
     cell.productInfoLabel.text = [NSString stringWithFormat:@"{%ld,%ld}",(long)indexPath.section,(long)indexPath.row];
     CGFloat red = arc4random() % 255;
     CGFloat green = arc4random() % 255;
     CGFloat blue = arc4random() % 255;
     UIColor *color = [UIColor colorWithRed:red/255.0 green:green/255.0 blue:blue/255.0 alpha:1.0f];
     
-    cell.productImageView.backgroundColor = color;
+//    cell.productImageView.backgroundColor = color;
+    ProductItem *procuctItem = [_productItems objectAtIndex:indexPath.row];
+    [cell.productImageView sd_setImageWithURL:[NSURL URLWithString:procuctItem.productImage]];
+    cell.uiimageviewRightDistance.constant = 0;
     NSString *msg = cell.productInfoLabel.text;
     NSLog(@"%@",msg);
     
@@ -100,8 +122,42 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
+    
+    self.currentIndexPath = indexPath;
+    
+    
     ProductCollectionViewCell *cell = (ProductCollectionViewCell *)[collectionView cellForItemAtIndexPath:indexPath];
-    NSString *msg = cell.productInfoLabel.text;
-    NSLog(@"%@",msg);
+    
+    
+    ProductDetailViewController *productDetailViewController = [[ProductDetailViewController alloc] initWithNibName:@"ProductDetailViewController" bundle:nil];
+    
+    productDetailViewController.productItem = [self.productItems objectAtIndex:indexPath.row];
+    
+    [self presentViewController:productDetailViewController animated:YES completion:^{
+
+    }];
+    
+    
+//    ProductCollectionViewCell *cell = (ProductCollectionViewCell *)[collectionView cellForItemAtIndexPath:indexPath];
+//    NSString *msg = cell.productInfoLabel.text;
+//    NSLog(@"%@",msg);
+//    
+//    ProductDetailCollectionView *productDetailCollectionView = [[ProductDetailCollectionView alloc] initWithNibName:@"ProductDetailCollectionView" bundle:nil];
+//    productDetailCollectionView.productItems = self.productItems;
+//    productDetailCollectionView.productIndexPath = indexPath;
+//
+//    [self presentViewController:productDetailCollectionView animated:YES completion:^{
+////        [productDetailCollectionView.mainCollectionView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionLeft animated:NO];
+//
+//    }];
+    
 }
+
+
+//- (id<UIViewControllerAnimatedTransitioning>)animationControllerForDismissedController:(UIViewController *)dismissed{
+//    //这里我们初始化dismissType
+//    return ;
+//}
+
+
 @end

@@ -66,6 +66,30 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
+    NSLog(@"开始进来了");
+    dispatch_group_t group = dispatch_group_create();
+    dispatch_group_async(group, dispatch_get_global_queue(0, 0), ^{
+        //并行执行的线程一
+        for (int i = 0; i < 10; i++) {
+            NSLog(@"11111111111");
+        }
+    });
+    dispatch_group_async(group, dispatch_get_global_queue(0, 0), ^{
+        //并行执行的线程二
+        for (int i = 0; i < 10; i++) {
+            NSLog(@"22222222222");
+        }
+    });
+    dispatch_group_notify(group, dispatch_get_global_queue(0, 0), ^{
+        //汇总结果
+        for (int i = 0; i < 10; i++) {
+            NSLog(@"33333333333");
+        }
+    });
+    
+    NSLog(@"结束了,....");
+
+    
     [MBProgressHUD showHUDAddedTo:PublicAppDelegate.window.rootViewController.view animated:YES];
 
     updateUserData = NO;
@@ -138,8 +162,6 @@
                     [self presentViewController:loginNavi animated:YES completion:nil];
                 }
             }];
-
-
         }
         else{
             self.loginViewController = [[LoginViewController alloc] initWithNibName:@"LoginViewController" bundle:nil];
@@ -516,7 +538,7 @@
         }
     }
     else{
-        [self showVaildMessageWithTitle:@"尚未登入" content:@"請登入"];
+        [self showVaildMessageWithTitle:@"尚未登入" content:@"Girls~要登入成為會員才能參與時尚任務噢！"];
     }
     
 }

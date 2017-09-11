@@ -215,7 +215,7 @@
         [self.navigationController pushViewController:activityDetailViewController animated:YES];
     }
     else{
-        [self showVaildMessageWithTitle:@"尚未登入" content:@"請登入"];
+        [self showVaildMessageWithTitle:@"尚未登入" content:@"Girls~要登入成為會員才能參與時尚任務噢！"];
     }
 
 }

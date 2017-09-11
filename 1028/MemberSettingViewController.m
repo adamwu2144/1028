@@ -671,7 +671,7 @@
     
     CGFloat compression = 0.9f;
     CGFloat maxCompression = 0.1f;
-    int maxFileSize = 900*1024;
+    int maxFileSize = 700*1024;
     
     NSData *imageData = UIImageJPEGRepresentation(img, compression);
     

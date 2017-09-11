@@ -57,9 +57,8 @@
     
 }
 
--(void)viewDidAppear:(BOOL)animated{
-    [super viewDidAppear:animated];
-    
+-(void)viewWillLayoutSubviews{
+    [super viewWillLayoutSubviews];
     UITabBar *tabBar = self.tabBar;
     CGSize imgSize = CGSizeMake(tabBar.frame.size.width/tabBar.items.count,tabBar.frame.size.height);
     
@@ -70,8 +69,25 @@
     [p fill];
     UIImage* finalImg = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
- 
+    
     [tabBar setSelectionIndicatorImage:finalImg];
+}
+
+-(void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
+    
+//    UITabBar *tabBar = self.tabBar;
+//    CGSize imgSize = CGSizeMake(tabBar.frame.size.width/tabBar.items.count,tabBar.frame.size.height);
+//    
+//    UIGraphicsBeginImageContextWithOptions(imgSize, NO, 0);
+//    UIBezierPath* p =
+//    [UIBezierPath bezierPathWithRect:CGRectMake(0,0,imgSize.width,imgSize.height)];
+//    [[UIColor colorWithRed:240.0/255.0 green:145.0/255.0 blue:146.0/255.0 alpha:1.0f] setFill];
+//    [p fill];
+//    UIImage* finalImg = UIGraphicsGetImageFromCurrentImageContext();
+//    UIGraphicsEndImageContext();
+// 
+//    [tabBar setSelectionIndicatorImage:finalImg];
 
 }
 

@@ -12,5 +12,6 @@
 @property (strong, nonatomic) IBOutlet UIImageView *productImageView;
 @property (strong, nonatomic) IBOutlet UILabel *productInfoLabel;
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *hight;
+@property (strong, nonatomic) IBOutlet NSLayoutConstraint *uiimageviewRightDistance;
 
 @end

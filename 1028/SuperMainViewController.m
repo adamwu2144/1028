@@ -33,7 +33,8 @@
     [self.navigationItem setBackBarButtonItem:backButtonItem];
     
     self.navigationItem.rightBarButtonItem.badgeValue = [[[MyManager shareManager] memberData].notification stringValue];
-
+    [UIApplication sharedApplication].applicationIconBadgeNumber = [[[MyManager shareManager] memberData].notification integerValue];
+    
 //    UIImageView *logoImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"logo_s"]];
 //    [logoImage setFrame:CGRectMake(0, 0, 120, 33)];
 //    logoImage.contentMode = UIViewContentModeScaleAspectFit;
@@ -156,7 +157,7 @@
 //    [self.navigationController pushViewController:messageCenterViewController animated:YES];
     
     if (![[MyManager shareManager] loginStatus]) {
-        [self showVaildMessageWithTitle:@"尚未登入" content:@"請登入"];
+        [self showVaildMessageWithTitle:@"尚未登入" content:@"Girls~要登入成為會員才能參與時尚任務噢！"];
     }
     
     NotificationViewController *notificationViewController = [[NotificationViewController alloc] initWithNibName:@"NotificationViewController" bundle:nil];

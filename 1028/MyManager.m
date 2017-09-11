@@ -16,7 +16,7 @@
 #import "LoginViewController.h"
 #import "AttestationCheckViewController.h"
 
-#define TIMEOUT 10
+#define TIMEOUT 30
 
 #define SCREEN_WIDTH ([UIScreen mainScreen].bounds.size.width)
 #define SCREEN_HEIGHT ([UIScreen mainScreen].bounds.size.height)
@@ -90,14 +90,10 @@
     [self.manager POST:[ApiBuilder getLogin] parameters:parameters progress:nil success:^(NSURLSessionTask *task, NSDictionary * responseObject) {
         if (responseObject) {
             [[MyManager shareManager] saveUserInfoToKeyChain:responseObject];
-            [[MyManager shareManager] addJWT];
+            [self addJWT];
             
             [self requestWithMethod:method WithPath:path WithParams:params WithSuccessBlock:success WithFailurBlock:failure];
-//            [self requestWithMethod:method WithPath:path WithParams:params WithSuccessBlock:^(NSDictionary *dic) {
-//                success(dic);
-//            } WithFailurBlock:^(NSError *error, int statusCode) {
-//                failure(error, statusCode);
-//            }];
+
         }
     } failure:^(NSURLSessionTask *operation, NSError *error) {
         //TODO: facebook token error;
@@ -119,19 +115,11 @@
                 NSLog(@"JSON: %@", responseObject);
                 success(responseObject);
             } failure:^(NSURLSessionTask *operation, NSError *error) {
-//                NSLog(@"Error: %@", error);
-//                NSInteger statusCode = 0;
-//                NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)operation.response;
-//                
-//                if ([httpResponse isKindOfClass:[NSHTTPURLResponse class]]) {
-//                    statusCode = httpResponse.statusCode;
-//                }
-//                failure(error, (int)statusCode);
                 
                 NSInteger internetStatusCode = error.code;
                 
                 if (internetStatusCode == -1009) {
-                    [self showVaildMessageWithTitle:@"網路連線有問題" content:@"請檢察網路連線狀態"];
+                    [self showVaildMessageWithTitle:@"網路連線有問題" content:@"請檢查網路連線狀態"];
                 }
                 else{
                     NSData *errorData = error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey];
@@ -140,18 +128,13 @@
                         NSString *code = [serializedData objectForKey:@"code"];
                         if ([code intValue] == 102) {
                             [self requestWithoutAutoRetryWithMethod:method WithPath:path WithParams:params WithSuccessBlock:success WithFailurBlock:failure];
-//                            [self requestWithoutAutoRetryWithMethod:method WithPath:path WithParams:params WithSuccessBlock:^(NSDictionary *dic) {
-//                                success(dic);
-//                            } WithFailurBlock:^(NSError *error, int statusCode) {
-//                                failure(error, statusCode);
-//                            }];
                         }
                         else{
                             failure(error, 422);
                         }
                     }
                     else{
-                        [self showVaildMessageWithTitle:@"網路連線不佳" content:@"請檢察網路狀態，再重新進入"];
+                        [self showVaildMessageWithTitle:@"網路連線不佳" content:@"請檢查網路狀態，再重新進入"];
                     }
 
                 }
@@ -166,7 +149,7 @@
                 NSInteger internetStatusCode = error.code;
                 
                 if (internetStatusCode == -1009) {
-                    [self showVaildMessageWithTitle:@"網路連線有問題" content:@"請檢察網路連線狀態"];
+                    [self showVaildMessageWithTitle:@"網路連線有問題" content:@"請檢查網路連線狀態"];
                 }
                 else{
                     NSData *errorData = error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey];
@@ -175,11 +158,6 @@
                         NSString *code = [serializedData objectForKey:@"code"];
                         if ([code intValue] == 102) {
                             [self requestWithoutAutoRetryWithMethod:method WithPath:path WithParams:params WithSuccessBlock:success WithFailurBlock:failure];
-//                            [self requestWithoutAutoRetryWithMethod:method WithPath:path WithParams:params WithSuccessBlock:^(NSDictionary *dic) {
-//                                success(dic);
-//                            } WithFailurBlock:^(NSError *error, int statusCode) {
-//                                failure(error, statusCode);
-//                            }];
                         }
                         else{
                             failure(error, 422);
@@ -200,7 +178,7 @@
                 NSInteger internetStatusCode = error.code;
                 
                 if (internetStatusCode == -1009) {
-                    [self showVaildMessageWithTitle:@"網路連線有問題" content:@"請檢察網路連線狀態"];
+                    [self showVaildMessageWithTitle:@"網路連線有問題" content:@"請檢查網路連線狀態"];
                 }
                 else{
                     NSData *errorData = error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey];
@@ -209,11 +187,6 @@
                         NSString *code = [serializedData objectForKey:@"code"];
                         if ([code intValue] == 102) {
                             [self requestWithoutAutoRetryWithMethod:method WithPath:path WithParams:params WithSuccessBlock:success WithFailurBlock:failure];
-//                            [self requestWithoutAutoRetryWithMethod:method WithPath:path WithParams:params WithSuccessBlock:^(NSDictionary *dic) {
-//                                success(dic);
-//                            } WithFailurBlock:^(NSError *error, int statusCode) {
-//                                failure(error, statusCode);
-//                            }];
                         }
                         else{
                             failure(error, 422);
@@ -234,7 +207,7 @@
                 NSInteger internetStatusCode = error.code;
                 
                 if (internetStatusCode == -1009) {
-                    [self showVaildMessageWithTitle:@"網路連線有問題" content:@"請檢察網路連線狀態"];
+                    [self showVaildMessageWithTitle:@"網路連線有問題" content:@"請檢查網路連線狀態"];
                 }
                 else{
                     NSData *errorData = error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey];
@@ -243,11 +216,6 @@
                         NSString *code = [serializedData objectForKey:@"code"];
                         if ([code intValue] == 102) {
                             [self requestWithoutAutoRetryWithMethod:method WithPath:path WithParams:params WithSuccessBlock:success WithFailurBlock:failure];
-//                            [self requestWithoutAutoRetryWithMethod:method WithPath:path WithParams:params WithSuccessBlock:^(NSDictionary *dic) {
-//                                success(dic);
-//                            } WithFailurBlock:^(NSError *error, int statusCode) {
-//                                failure(error, statusCode);
-//                            }];
                         }
                         else{
                             failure(error, 422);
@@ -363,7 +331,7 @@
         NSInteger internetStatusCode = error.code;
         
         if (internetStatusCode == -1009) {
-            [self showVaildMessageWithTitle:@"網路連線有問題" content:@"請檢察網路連線狀態"];
+            [self showVaildMessageWithTitle:@"網路連線有問題" content:@"請檢查網路連線狀態"];
         }
         else{
             
@@ -384,7 +352,7 @@
                         NSInteger internetStatusCode2 = error.code;
                         
                         if (internetStatusCode2 == -1009) {
-                            [self showVaildMessageWithTitle:@"網路連線有問題" content:@"請檢察網路連線狀態"];
+                            [self showVaildMessageWithTitle:@"網路連線有問題" content:@"請檢查網路連線狀態"];
                         }
                         else{
                             //fb token login error

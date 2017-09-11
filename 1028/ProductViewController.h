@@ -9,6 +9,9 @@
 #import <UIKit/UIKit.h>
 
 @interface ProductViewController : UIViewController
+
 @property (strong, nonatomic) IBOutlet UICollectionView *mainCollectionView;
+@property(strong, nonatomic) NSMutableArray *productItems;
+@property (strong, nonatomic) NSIndexPath *currentIndexPath;
 
 @end

@@ -278,33 +278,41 @@
 
 -(void)getResult{
     
-    NSMutableDictionary *beaconParam = [[NSMutableDictionary alloc] init];
-
-    [beaconParam setValue:taskID forKey:@"event_id"];
-    [beaconParam setValue:beaconArray forKey:@"beacons"];
     
-    [self.myWebView setHidden:NO];
+    if ([beaconArray count] < 1) {
+        [self showVaildMessageWithTitle:@"訊息" content:@"附近沒有活動喔！"];
+    }
+    else{
+        NSMutableDictionary *beaconParam = [[NSMutableDictionary alloc] init];
+        
+        [beaconParam setValue:taskID forKey:@"event_id"];
+        [beaconParam setValue:beaconArray forKey:@"beacons"];
+        
+        [self.myWebView setHidden:NO];
+        
+        [[MyManager shareManager] addJWT];
+        
+        [[MyManager shareManager] requestWithMethod:PUT WithPath:[ApiBuilder getEventsResultFromBeacon] WithParams:beaconParam WithSuccessBlock:^(NSDictionary *dic) {
+            
+            NSDictionary *tmp = [dic objectForKey:@"items"];
+            
+            beaconClass = [BeaconClass initWithDic:tmp];
+            
+            [MBProgressHUD hideHUDForView:self.view animated:YES];
+            
+            [self.myWebView setRequestWithURL:beaconClass.url];
+            
+        } WithFailurBlock:^(NSError *error, int statusCode) {
+            NSData *errorData = error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey];
+            NSDictionary *serializedData = [NSJSONSerialization JSONObjectWithData:errorData options:kNilOptions error:nil];
+            NSString *message = [serializedData objectForKey:@"message"];
+            NSLog(@"message = %@",message);
+            
+            [self showVaildMessageWithTitle:@"訊息" content:message];
+        }];
+    }
     
-    [[MyManager shareManager] addJWT];
     
-    [[MyManager shareManager] requestWithMethod:PUT WithPath:[ApiBuilder getEventsResultFromBeacon] WithParams:beaconParam WithSuccessBlock:^(NSDictionary *dic) {
-        
-        NSDictionary *tmp = [dic objectForKey:@"items"];
-        
-        beaconClass = [BeaconClass initWithDic:tmp];
-        
-        [MBProgressHUD hideHUDForView:self.view animated:YES];
-        
-        [self.myWebView setRequestWithURL:beaconClass.url];
-        
-    } WithFailurBlock:^(NSError *error, int statusCode) {
-        NSData *errorData = error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey];
-        NSDictionary *serializedData = [NSJSONSerialization JSONObjectWithData:errorData options:kNilOptions error:nil];
-        NSString *message = [serializedData objectForKey:@"message"];
-        NSLog(@"message = %@",message);
-        
-        [self showVaildMessageWithTitle:@"訊息" content:message];
-    }];
 }
 
 -(void)showVaildMessageWithTitle:(NSString *)title content:(NSString *)message{

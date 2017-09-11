@@ -67,7 +67,7 @@
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     
     FBSDKLoginManager *login = [[FBSDKLoginManager alloc] init];
-    
+
 //    login.loginBehavior = FBSDKLoginBehaviorWeb;
     [login logOut];
 

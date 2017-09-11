@@ -16,6 +16,11 @@
 
 }
 
+-(void)prepareForReuse{
+    [super prepareForReuse];
+    NSLog(@"reuse");
+}
+
 -(void)applyLayoutAttributes:(UICollectionViewLayoutAttributes *)layoutAttributes{
 }
 

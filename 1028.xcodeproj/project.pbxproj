@@ -23,6 +23,7 @@
 		C54538861EEA62AE007AA06B /* ShakeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C54538841EEA62AE007AA06B /* ShakeViewController.m */; };
 		C54538871EEA62AE007AA06B /* ShakeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C54538851EEA62AE007AA06B /* ShakeViewController.xib */; };
 		C545388A1EEA73F6007AA06B /* BeaconClass.m in Sources */ = {isa = PBXBuildFile; fileRef = C54538891EEA73F6007AA06B /* BeaconClass.m */; };
+		C54714AB1F39B01800E80767 /* ResendRequestClass.m in Sources */ = {isa = PBXBuildFile; fileRef = C54714AA1F39B01800E80767 /* ResendRequestClass.m */; };
 		C54851B11EE10A3F0031E644 /* MemberSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C54851AF1EE10A3F0031E644 /* MemberSettingViewController.m */; };
 		C54851B21EE10A3F0031E644 /* MemberSettingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C54851B01EE10A3F0031E644 /* MemberSettingViewController.xib */; };
 		C54923651EE8EC5F006B3637 /* MCBeaconViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C54923631EE8EC5F006B3637 /* MCBeaconViewController.m */; };
@@ -103,12 +104,20 @@
 		C55E52FB1EA4A83800F4937E /* BeaconViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C55E52F91EA4A83800F4937E /* BeaconViewController.xib */; };
 		C55E52FF1EA4A85300F4937E /* BarcodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C55E52FD1EA4A85300F4937E /* BarcodeViewController.m */; };
 		C55E53001EA4A85300F4937E /* BarcodeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C55E52FE1EA4A85300F4937E /* BarcodeViewController.xib */; };
+		C566386C1F4FCA09003A49C6 /* ProductDetailCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = C566386A1F4FCA09003A49C6 /* ProductDetailCollectionView.m */; };
+		C566386D1F4FCA09003A49C6 /* ProductDetailCollectionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C566386B1F4FCA09003A49C6 /* ProductDetailCollectionView.xib */; };
+		C56638701F4FD8A7003A49C6 /* ProductTransitionAnimtor.m in Sources */ = {isa = PBXBuildFile; fileRef = C566386F1F4FD8A7003A49C6 /* ProductTransitionAnimtor.m */; };
+		C56638741F5016DC003A49C6 /* ProductDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C56638721F5016DC003A49C6 /* ProductDetailViewController.m */; };
+		C56638751F5016DC003A49C6 /* ProductDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C56638731F5016DC003A49C6 /* ProductDetailViewController.xib */; };
+		C56638781F501B5D003A49C6 /* ProducAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = C56638771F501B5D003A49C6 /* ProducAnimation.m */; };
 		C567A0521ED7CD98007E2759 /* TaskViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C567A0501ED7CD98007E2759 /* TaskViewController.m */; };
 		C567A0531ED7CD98007E2759 /* TaskViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C567A0511ED7CD98007E2759 /* TaskViewController.xib */; };
 		C567D42E1ECD9AD100EE66E4 /* MyManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C567D42D1ECD9AD100EE66E4 /* MyManager.m */; };
 		C56A8B071EA5A7A00075E946 /* ICSColorsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C56A8B061EA5A7A00075E946 /* ICSColorsViewController.m */; };
 		C56DA2861EFD0900006AE4D1 /* ExchangeResultViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C56DA2841EFD0900006AE4D1 /* ExchangeResultViewController.m */; };
 		C56DA2871EFD0900006AE4D1 /* ExchangeResultViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C56DA2851EFD0900006AE4D1 /* ExchangeResultViewController.xib */; };
+		C570F2501F4ECF2F00BC1060 /* ProductItem.m in Sources */ = {isa = PBXBuildFile; fileRef = C570F24F1F4ECF2F00BC1060 /* ProductItem.m */; };
+		C5712AE41F299398007A82F2 /* UIButton+Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = C5712AE31F299398007A82F2 /* UIButton+Extensions.m */; };
 		C573866E1F14B464009C5EFE /* TTTAttributedLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = C573866D1F14B464009C5EFE /* TTTAttributedLabel.m */; };
 		C57B29E31EF8FB5800014835 /* MemberRulesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C57B29E11EF8FB5800014835 /* MemberRulesViewController.m */; };
 		C57B29E41EF8FB5800014835 /* MemberRulesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C57B29E21EF8FB5800014835 /* MemberRulesViewController.xib */; };
@@ -215,6 +224,8 @@
 		C54538851EEA62AE007AA06B /* ShakeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ShakeViewController.xib; sourceTree = "<group>"; };
 		C54538881EEA73F6007AA06B /* BeaconClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BeaconClass.h; sourceTree = "<group>"; };
 		C54538891EEA73F6007AA06B /* BeaconClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BeaconClass.m; sourceTree = "<group>"; };
+		C54714A91F39B01800E80767 /* ResendRequestClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResendRequestClass.h; sourceTree = "<group>"; };
+		C54714AA1F39B01800E80767 /* ResendRequestClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResendRequestClass.m; sourceTree = "<group>"; };
 		C54851AE1EE10A3F0031E644 /* MemberSettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MemberSettingViewController.h; sourceTree = "<group>"; };
 		C54851AF1EE10A3F0031E644 /* MemberSettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MemberSettingViewController.m; sourceTree = "<group>"; };
 		C54851B01EE10A3F0031E644 /* MemberSettingViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MemberSettingViewController.xib; sourceTree = "<group>"; };
@@ -352,6 +363,16 @@
 		C55E52FC1EA4A85300F4937E /* BarcodeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BarcodeViewController.h; sourceTree = "<group>"; };
 		C55E52FD1EA4A85300F4937E /* BarcodeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BarcodeViewController.m; sourceTree = "<group>"; };
 		C55E52FE1EA4A85300F4937E /* BarcodeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BarcodeViewController.xib; sourceTree = "<group>"; };
+		C56638691F4FCA09003A49C6 /* ProductDetailCollectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProductDetailCollectionView.h; sourceTree = "<group>"; };
+		C566386A1F4FCA09003A49C6 /* ProductDetailCollectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProductDetailCollectionView.m; sourceTree = "<group>"; };
+		C566386B1F4FCA09003A49C6 /* ProductDetailCollectionView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProductDetailCollectionView.xib; sourceTree = "<group>"; };
+		C566386E1F4FD8A7003A49C6 /* ProductTransitionAnimtor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProductTransitionAnimtor.h; sourceTree = "<group>"; };
+		C566386F1F4FD8A7003A49C6 /* ProductTransitionAnimtor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProductTransitionAnimtor.m; sourceTree = "<group>"; };
+		C56638711F5016DC003A49C6 /* ProductDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProductDetailViewController.h; sourceTree = "<group>"; };
+		C56638721F5016DC003A49C6 /* ProductDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProductDetailViewController.m; sourceTree = "<group>"; };
+		C56638731F5016DC003A49C6 /* ProductDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProductDetailViewController.xib; sourceTree = "<group>"; };
+		C56638761F501B5D003A49C6 /* ProducAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProducAnimation.h; sourceTree = "<group>"; };
+		C56638771F501B5D003A49C6 /* ProducAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProducAnimation.m; sourceTree = "<group>"; };
 		C567A04F1ED7CD98007E2759 /* TaskViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TaskViewController.h; sourceTree = "<group>"; };
 		C567A0501ED7CD98007E2759 /* TaskViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TaskViewController.m; sourceTree = "<group>"; };
 		C567A0511ED7CD98007E2759 /* TaskViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TaskViewController.xib; sourceTree = "<group>"; };
@@ -362,6 +383,10 @@
 		C56DA2831EFD0900006AE4D1 /* ExchangeResultViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExchangeResultViewController.h; sourceTree = "<group>"; };
 		C56DA2841EFD0900006AE4D1 /* ExchangeResultViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExchangeResultViewController.m; sourceTree = "<group>"; };
 		C56DA2851EFD0900006AE4D1 /* ExchangeResultViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ExchangeResultViewController.xib; sourceTree = "<group>"; };
+		C570F24E1F4ECF2F00BC1060 /* ProductItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProductItem.h; sourceTree = "<group>"; };
+		C570F24F1F4ECF2F00BC1060 /* ProductItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProductItem.m; sourceTree = "<group>"; };
+		C5712AE21F299398007A82F2 /* UIButton+Extensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+Extensions.h"; sourceTree = "<group>"; };
+		C5712AE31F299398007A82F2 /* UIButton+Extensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+Extensions.m"; sourceTree = "<group>"; };
 		C573866C1F14B464009C5EFE /* TTTAttributedLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TTTAttributedLabel.h; path = Framework/TTTAttributedLabel/TTTAttributedLabel.h; sourceTree = SOURCE_ROOT; };
 		C573866D1F14B464009C5EFE /* TTTAttributedLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TTTAttributedLabel.m; path = Framework/TTTAttributedLabel/TTTAttributedLabel.m; sourceTree = SOURCE_ROOT; };
 		C57B29E01EF8FB5800014835 /* MemberRulesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MemberRulesViewController.h; path = 1028/MemberRulesViewController.h; sourceTree = "<group>"; };
@@ -580,13 +605,6 @@
 			name = MainView;
 			sourceTree = "<group>";
 		};
-		C5065AFE1F1F446800BFBD74 /* Shake */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Shake;
-			sourceTree = "<group>";
-		};
 		C5065AFF1F1F44FF00BFBD74 /* Shake */ = {
 			isa = PBXGroup;
 			children = (
@@ -708,6 +726,8 @@
 				C5539B111ED6E52500D56214 /* NSMutableAttributedString+SetAsLinkSupport.m */,
 				C573866C1F14B464009C5EFE /* TTTAttributedLabel.h */,
 				C573866D1F14B464009C5EFE /* TTTAttributedLabel.m */,
+				C5712AE21F299398007A82F2 /* UIButton+Extensions.h */,
+				C5712AE31F299398007A82F2 /* UIButton+Extensions.m */,
 			);
 			name = category;
 			sourceTree = "<group>";
@@ -750,6 +770,18 @@
 				C581D9FE1EB98FF200E60FD1 /* ProductViewController.h */,
 				C581D9FF1EB98FF200E60FD1 /* ProductViewController.m */,
 				C581DA001EB98FF200E60FD1 /* ProductViewController.xib */,
+				C56638711F5016DC003A49C6 /* ProductDetailViewController.h */,
+				C56638721F5016DC003A49C6 /* ProductDetailViewController.m */,
+				C56638731F5016DC003A49C6 /* ProductDetailViewController.xib */,
+				C56638691F4FCA09003A49C6 /* ProductDetailCollectionView.h */,
+				C566386A1F4FCA09003A49C6 /* ProductDetailCollectionView.m */,
+				C566386B1F4FCA09003A49C6 /* ProductDetailCollectionView.xib */,
+				C566386E1F4FD8A7003A49C6 /* ProductTransitionAnimtor.h */,
+				C566386F1F4FD8A7003A49C6 /* ProductTransitionAnimtor.m */,
+				C56638761F501B5D003A49C6 /* ProducAnimation.h */,
+				C56638771F501B5D003A49C6 /* ProducAnimation.m */,
+				C570F24E1F4ECF2F00BC1060 /* ProductItem.h */,
+				C570F24F1F4ECF2F00BC1060 /* ProductItem.m */,
 				C55094561EBB0F8F004790A0 /* JPCollectionViewController.h */,
 				C55094571EBB0F8F004790A0 /* JPCollectionViewController.m */,
 				C55094581EBB0F8F004790A0 /* JPCollectionViewController.xib */,
@@ -855,7 +887,6 @@
 				C55E52D51EA49F3B00F4937E /* AppDelegate.m */,
 				C5065AFD1F1F432700BFBD74 /* MainView */,
 				C5F0104E1EE16D3500383593 /* Member */,
-				C5065AFE1F1F446800BFBD74 /* Shake */,
 				C5065AFC1F1F42CF00BFBD74 /* Exchange */,
 				C5065AFB1F1F42A400BFBD74 /* Notification */,
 				C5539B0F1ED6CD6400D56214 /* Product */,
@@ -866,6 +897,8 @@
 				C551A5C21EEE963A000C9C34 /* Assets.xcassets */,
 				C55E52E21EA49F3B00F4937E /* Info.plist */,
 				C55E52D11EA49F3B00F4937E /* Supporting Files */,
+				C54714A91F39B01800E80767 /* ResendRequestClass.h */,
+				C54714AA1F39B01800E80767 /* ResendRequestClass.m */,
 			);
 			path = 1028;
 			sourceTree = "<group>";
@@ -1163,6 +1196,7 @@
 				C55E53001EA4A85300F4937E /* BarcodeViewController.xib in Resources */,
 				C5A66AD21EE81564001F1473 /* ActivityDetailViewController.xib in Resources */,
 				C551A5C31EEE963A000C9C34 /* Assets.xcassets in Resources */,
+				C566386D1F4FCA09003A49C6 /* ProductDetailCollectionView.xib in Resources */,
 				C5F010531EE16D5F00383593 /* GiftDetailViewController.xib in Resources */,
 				C57B29E41EF8FB5800014835 /* MemberRulesViewController.xib in Resources */,
 				C550A1381EDFAFD400B0A812 /* MemberViewController.xib in Resources */,
@@ -1175,6 +1209,7 @@
 				C551A5BB1EEE3DA0000C9C34 /* MSAlertController.xib in Resources */,
 				C551A5B91EEE3DA0000C9C34 /* MSAlertController_ActionSheet.xib in Resources */,
 				C567A0531ED7CD98007E2759 /* TaskViewController.xib in Resources */,
+				C56638751F5016DC003A49C6 /* ProductDetailViewController.xib in Resources */,
 				C54923661EE8EC5F006B3637 /* MCBeaconViewController.xib in Resources */,
 				C54923721EE8FED0006B3637 /* MCScannerViewController.xib in Resources */,
 				C529DF151EFCF9F80091ABD0 /* ExchangeDetailViewController.xib in Resources */,
@@ -1217,6 +1252,7 @@
 				C54923691EE8ED59006B3637 /* UILabel+StringFrame.m in Sources */,
 				C515604B1EF7AEF900900C71 /* ExchangeCell.m in Sources */,
 				C549236D1EE8F94B006B3637 /* Reachability.m in Sources */,
+				C5712AE41F299398007A82F2 /* UIButton+Extensions.m in Sources */,
 				C557CDD31EE01C4500147C5D /* UIImageView+HighlightedWebCache.m in Sources */,
 				C551A5B11EEE333D000C9C34 /* CustomTextFiled.m in Sources */,
 				C5D6E4B91EA61323006A7CF1 /* AFNetworkActivityConsoleLogger.m in Sources */,
@@ -1231,17 +1267,20 @@
 				C550945D1EBB0FAA004790A0 /* JPWaterflowLayout.m in Sources */,
 				C557CDD21EE01C4500147C5D /* UIImage+WebP.m in Sources */,
 				C557CDC81EE01C4500147C5D /* SDImageCacheConfig.m in Sources */,
+				C56638701F4FD8A7003A49C6 /* ProductTransitionAnimtor.m in Sources */,
 				C5E1E3CB1EF11A7000A9860B /* MJRefreshComponent.m in Sources */,
 				C5D6E4BA1EA61323006A7CF1 /* AFNetworkActivityLogger.m in Sources */,
 				C5D6E4B11EA612F9006A7CF1 /* AFHTTPSessionManager.m in Sources */,
 				C5D6E4B21EA612F9006A7CF1 /* AFURLRequestSerialization.m in Sources */,
 				C5018AF01EDEBAD600B8C751 /* AttestationCheckViewController.m in Sources */,
+				C56638741F5016DC003A49C6 /* ProductDetailViewController.m in Sources */,
 				C557CDD41EE01C4500147C5D /* UIImageView+WebCache.m in Sources */,
 				C5E1E3D91EF11A9900A9860B /* MJRefreshConst.m in Sources */,
 				C58AAA4B1ED2E14C00843963 /* AddressClass.m in Sources */,
 				C557CDCD1EE01C4500147C5D /* SDWebImageManager.m in Sources */,
 				C54538861EEA62AE007AA06B /* ShakeViewController.m in Sources */,
 				C581DA061EB9912200E60FD1 /* ProductCollectionViewCell.m in Sources */,
+				C56638781F501B5D003A49C6 /* ProducAnimation.m in Sources */,
 				C54923841EE94CB3006B3637 /* ICSNavigationController.m in Sources */,
 				C5E1E3BC1EF11A4400A9860B /* MJRefreshNormalHeader.m in Sources */,
 				C58AAA4E1ED2E1AD00843963 /* RegionClass.m in Sources */,
@@ -1265,6 +1304,7 @@
 				C5D6E4B41EA612F9006A7CF1 /* AFURLSessionManager.m in Sources */,
 				C5A66AD11EE81564001F1473 /* ActivityDetailViewController.m in Sources */,
 				C550A1431EE0021D00B0A812 /* GradientView.m in Sources */,
+				C54714AB1F39B01800E80767 /* ResendRequestClass.m in Sources */,
 				C5E1E3DC1EF11A9900A9860B /* UIView+MJExtension.m in Sources */,
 				C5D6E4B51EA612F9006A7CF1 /* AFNetworkReachabilityManager.m in Sources */,
 				C593A4C21F1CBF030001F365 /* NoDataCell.m in Sources */,
@@ -1290,6 +1330,7 @@
 				C52F2E521EF387E200D6D286 /* GiftRceiptCell.m in Sources */,
 				C5A0369C1F00EB150061DD5D /* NotificationDetailCell.m in Sources */,
 				C5E1E3C91EF11A7000A9860B /* MJRefreshAutoFooter.m in Sources */,
+				C570F2501F4ECF2F00BC1060 /* ProductItem.m in Sources */,
 				C557CDC71EE01C4500147C5D /* SDImageCache.m in Sources */,
 				C545388A1EEA73F6007AA06B /* BeaconClass.m in Sources */,
 				C557CDD01EE01C4500147C5D /* UIImage+GIF.m in Sources */,
@@ -1323,6 +1364,7 @@
 				C550A1471EE00E8800B0A812 /* TaskCell.m in Sources */,
 				C5E1E3B21EF119F800A9860B /* MJRefreshAutoStateFooter.m in Sources */,
 				C5E1E3A61EF119BC00A9860B /* MJRefreshBackGifFooter.m in Sources */,
+				C566386C1F4FCA09003A49C6 /* ProductDetailCollectionView.m in Sources */,
 				C5E1E3B01EF119F800A9860B /* MJRefreshAutoGifFooter.m in Sources */,
 				C55E52F51EA4A81D00F4937E /* MianViewController.m in Sources */,
 				C515604F1EF7B32000900C71 /* ExchangeClass.m in Sources */,
@@ -1455,6 +1497,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.1028loveu;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
 				VALID_ARCHS = "arm64 armv7 armv7s \nShowing All Errors Only\nclang: error: linker command failed with exit code 1 (use -v to see invocation)\n\n\n\nShowing All Errors Only\nclang: error: linker command failed with exit code 1 (use -v to see invocation)\n\n\narmv7s";
 			};
 			name = Debug;
@@ -1480,6 +1523,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.1028loveu;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
 				VALID_ARCHS = "arm64 armv7 armv7s \nShowing All Errors Only\nclang: error: linker command failed with exit code 1 (use -v to see invocation)\n\n\n\nShowing All Errors Only\nclang: error: linker command failed with exit code 1 (use -v to see invocation)\n\n\narmv7s";
 			};
 			name = Release;

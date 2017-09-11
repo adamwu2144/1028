@@ -13,6 +13,7 @@
 #import "MemberRegisterData.h"
 #import "MSAlertController.h"
 #import "MBProgressHUD.h"
+#import "UIButton+Extensions.h"
 
 #define TEXTFIELD_TAG 1000
 
@@ -59,9 +60,37 @@
     [self setTimer];
 }
 
+-(void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardOnScreen:) name:UIKeyboardWillShowNotification object:nil];
+}
+
+-(void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardDidShowNotification object:nil];
+}
+
 -(void)back:(UIBarButtonItem *)sender
 {
 
+}
+
+-(void)keyboardOnScreen:(NSNotification *)notification
+{
+    NSDictionary *info  = notification.userInfo;
+    CGSize kbSize = [[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
+    
+    NSLog(@"distance = %f,%f",SCREEN_HEIGHT-64-kbSize.height,CGRectGetMaxY(superView.frame));
+    if (SCREEN_HEIGHT-64-kbSize.height < CGRectGetMaxY(superView.frame)) {
+        double animationDuration = [[[notification userInfo] objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue];
+        float distance = CGRectGetMaxY(superView.frame) - (SCREEN_HEIGHT-64-kbSize.height);
+        
+        [UIView animateWithDuration:animationDuration animations:^{
+            
+        } completion:^(BOOL finished) {
+            [superView setFrame:CGRectMake(superView.frame.origin.x, superView.frame.origin.y-distance-5, superView.frame.size.width, superView.frame.size.height)];
+        }];
+    }
 }
 
 - (void)didReceiveMemoryWarning {
@@ -182,25 +211,32 @@
 //    [self presentViewController:alertController animated:YES completion:nil];
     
     blackView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
-    blackView.layer.masksToBounds = YES;
     [blackView setBackgroundColor:[[UIColor blackColor] colorWithAlphaComponent:0.8f]];
+    
     superView = [[UIView alloc] initWithFrame:CGRectMake(15, 115, SCREEN_WIDTH-15*2, 206)];
     [superView setBackgroundColor:[UIColor whiteColor]];
     [superView.layer setCornerRadius:14.5f];
+    superView.layer.masksToBounds = YES;
+    superView.autoresizingMask =  UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleBottomMargin;
 
     UIView *cancelView = [[UIView alloc] initWithFrame:CGRectMake(0,0, superView.frame.size.width, 30)];
-//    [cancelView setClipsToBounds:YES];
-    cancelView = [self roundCornersOnView:cancelView onTopLeft:YES topRight:YES bottomLeft:NO bottomRight:NO radius:14.5f];
+//    cancelView = [self roundCornersOnView:cancelView onTopLeft:YES topRight:YES bottomLeft:NO bottomRight:NO radius:14.5f];
     [cancelView setBackgroundColor:DEFAULT_COLOR];
+    //autoresizing
+    cancelView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleBottomMargin;
     
     UIImage *image = [UIImage imageNamed:@"cancelcombinedShape"];
     UIButton *cancelBtn = [[UIButton alloc] initWithFrame:CGRectMake(cancelView.frame.size.width*0.92, (cancelView.frame.size.height-image.size.height)/2, image.size.width, image.size.height)];
     [cancelBtn addTarget:self action:@selector(cancelBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
     [cancelBtn setImage:image forState:UIControlStateNormal];
+    [cancelBtn setHitTestEdgeInsets:UIEdgeInsetsMake(-5, -10, -5, -5)];
+    cancelBtn.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleBottomMargin;
+    cancelBtn.contentMode = UIViewContentModeCenter;
     
     UILabel *cellPhoneLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, 45, 100, 16)];
     [cellPhoneLabel setText:@"手機電話"];
     [cellPhoneLabel setFont:[UIFont systemFontOfSize:16.0f]];
+    cellPhoneLabel.autoresizingMask = UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleLeftMargin;
     
     cellPhoneTextField = [[UITextField alloc] initWithFrame:CGRectMake(15, CGRectGetMaxY(cellPhoneLabel.frame)+5, superView.frame.size.width-15*2, 40)];
     [cellPhoneTextField setPlaceholder:@"請填寫正確電話（ ex.0912345678 ）"];
@@ -208,6 +244,7 @@
     [cellPhoneTextField.layer setBorderWidth:0.5f];
     cellPhoneTextField.keyboardType = UIKeyboardTypeNumberPad;
     [cellPhoneTextField becomeFirstResponder];
+    cellPhoneTextField.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleWidth;
     
     UIButton *confrimBtn = [[UIButton alloc] initWithFrame:CGRectMake(cellPhoneTextField.frame.origin.x, CGRectGetMaxY(cellPhoneTextField.frame)+30, cellPhoneTextField.frame.size.width, cellPhoneTextField.frame.size.height)];
     [confrimBtn setTitle:@"送出" forState:UIControlStateNormal];
@@ -217,6 +254,7 @@
     [confrimBtn.titleLabel setFont:font];
     [confrimBtn addTarget:self action:@selector(reconfirmBrnClicked:) forControlEvents:UIControlEventTouchUpInside];
     [confrimBtn.layer setCornerRadius:20.0f];
+    confrimBtn.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleWidth;
     
     [cancelView addSubview:cancelBtn];
     [superView addSubview:cancelView];
@@ -225,7 +263,22 @@
     [superView addSubview:confrimBtn];
     [self.view addSubview:blackView];
     [self.view addSubview:superView];
+    
+    superView.alpha = 0.3f;
+    superView.transform = CGAffineTransformMakeScale(0.01, 0.01);
+    [UIView animateWithDuration:0.5 delay:0 usingSpringWithDamping:0.7 initialSpringVelocity:1 options:UIViewAnimationOptionCurveEaseOut animations:^{
+        superView.alpha = 1.0f;
+        superView.transform = CGAffineTransformIdentity;
 
+    } completion:nil];
+    
+//    [UIView animateWithDuration:0.1 delay:0 options:UIViewAnimationOptionCurveEaseIn animations:^{
+//        // animate it to the identity transform (100% scale)
+//        superView.transform = CGAffineTransformIdentity;
+//    } completion:^(BOOL finished){
+//        // if you want to do something once the animation finishes, put it here
+//    }];
+    
 }
 
 -(void)cancelBtnClicked:(id)sender{
@@ -245,6 +298,8 @@
         NSParameterAssert(changeParam);
         
         [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+
+        [[MyManager shareManager] addJWT];
 
         [[MyManager shareManager] requestWithMethod:PATCH WithPath:[ApiBuilder getUpdateUserData] WithParams:changeParam WithSuccessBlock:^(NSDictionary *dic) {
             [MBProgressHUD hideHUDForView:self.view animated:YES];

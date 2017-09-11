@@ -77,32 +77,14 @@
     //FB init
     [[FBSDKApplicationDelegate sharedInstance] application:application didFinishLaunchingWithOptions:launchOptions];
     
-    NSArray *colors = @[[UIColor colorWithRed:237.0f/255.0f green:195.0f/255.0f blue:0.0f/255.0f alpha:1.0f],
-                        [UIColor colorWithRed:237.0f/255.0f green:147.0f/255.0f blue:0.0f/255.0f alpha:1.0f],
-                        [UIColor colorWithRed:237.0f/255.0f green:9.0f/255.0f blue:0.0f/255.0f alpha:1.0f]
-                        ];
-//    [[MyManager shareManager] logOut];
-
-    ICSColorsViewController *colorsVC = [[ICSColorsViewController alloc] initWithColors:colors];
     MenuViewController *menuVC = [[MenuViewController alloc] initWithNibName:@"MenuViewController" bundle:nil];
     
     self.mainTabBarController = [[MainTabBarController alloc] initWithNibName:@"MainTabBarController" bundle:nil];
-//    self.mainTabBarController = [[ProductViewController alloc] initWithNibName:@"ProductViewController" bundle:nil];
-//    self.mainTabBarController = [[JPCollectionViewController alloc] initWithNibName:@"JPCollectionViewController" bundle:nil];
-//    self.mainTabBarController = [[UserRegisterViewController alloc] initWithNibName:@"UserRegisterViewController" bundle:nil];
-//    self.mainTabBarController = [[LoginViewController alloc] initWithNibName:@"LoginViewController" bundle:nil];
-//    self.mainTabBarController = [[RegisterViewController alloc] initWithNibName:@"RegisterViewController" bundle:nil];
 
-    
     self.drawer = [[ICSDrawerController alloc] initWithLeftViewController:menuVC  centerViewController:self.mainTabBarController];
     
-    _attestationCheckViewController = [[AttestationCheckViewController alloc] initWithNibName:@"AttestationCheckViewController" bundle:nil];
-    
-    
-//    [self.window setRootViewController:_attestationCheckViewController];
     [self.window setRootViewController:self.drawer];
 
-//    [self.window setRootViewController:self.mainTabBarController];
     [self.window makeKeyAndVisible];
     
     //推播處理
@@ -132,49 +114,6 @@
     // Add any custom logic here.
     return handled;
 }
-//
-//-(void)checkLocationPremission{
-//    
-//    switch ([CLLocationManager authorizationStatus]) {
-//        case kCLAuthorizationStatusAuthorizedAlways:
-//            NSLog(@"Authorized Always");
-//            break;
-//        case kCLAuthorizationStatusAuthorizedWhenInUse:
-//            NSLog(@"Authorized when in use");
-//            [self setRTLS];
-//
-//            break;
-//        case kCLAuthorizationStatusDenied:
-//            NSLog(@"Denied");
-//            break;
-//        case kCLAuthorizationStatusNotDetermined:
-//            NSLog(@"Not determined");
-//            self.locationManager = [[CLLocationManager alloc] init];
-//            
-//            self.locationManager.delegate = self;
-//            
-//            //設定需要重新定位的距離差距(10m)
-//            self.locationManager.distanceFilter = 10;
-//            //設定定位時的精準度
-//            self.locationManager.desiredAccuracy = kCLLocationAccuracyBest;
-//            if(IS_OS_8_OR_LATER) {
-//                [self.locationManager requestWhenInUseAuthorization];
-//                [self.locationManager startUpdatingLocation];
-//            }
-//            break;
-//        case kCLAuthorizationStatusRestricted:
-//            NSLog(@"Restricted");
-//            break;
-//            
-//        default:
-//            break;
-//    }
-//    
-//    //    if ([self.locationPermissionStatus isEqualToString:@"Denied"]) {
-//    //        [self checkSetting:@"尚未開啟定位服務" message:@"提供權限能參與更多優惠活動唷!"];
-//    //    }
-//    
-//}
 
 - (void)applicationWillResignActive:(UIApplication *)application {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
@@ -372,24 +311,6 @@ didReceiveNotificationResponse:(UNNotificationResponse *)response
     }
     completionHandler();
 }
-
-//-(void)setRTLS{
-//#if TARGET_IPHONE_SIMULATOR
-//    NSLog(@"模擬器不支援Beacon");
-//#else
-//    
-//    NSString *url = @"http://fg-rtls.doubleservice.com/";
-//    _engine = [[RtlsEngine new] initRtlsEngineWithServerURL:url];
-//    [_engine setBeaconUUID:@"E2C56DB5-DFFB-48D2-B060-D0F5A71096E0"];
-//    [_engine initLBS];
-//    [_engine setScanTimesPerLocatePosition:3];
-//    
-//    [self addBeaconNotic];
-//    
-//    [_engine startScan];
-//
-//#endif
-//}
 
 -(void)addBeaconNotic{
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(returnPushMessageFile:) name:@"Notification_PushMessage" object:nil];

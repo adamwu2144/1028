@@ -21,14 +21,7 @@
 @property (strong, nonatomic) UIWindow *window;
 @property (strong, nonatomic) MainTabBarController *mainTabBarController;
 @property (strong, nonatomic)ICSDrawerController *drawer;
-//@property (strong, nonatomic) ProductViewController *mainTabBarController;
-//@property (strong, nonatomic) JPCollectionViewController *mainTabBarController;
-//@property (strong, nonatomic) UserRegisterViewController *mainTabBarController;
-//@property (strong, nonatomic) LoginViewController *mainTabBarController;
-@property (strong, nonatomic) AttestationCheckViewController *attestationCheckViewController;
 @property (assign, nonatomic) BOOL openOutSideWeb;
-
-
 
 @end
 

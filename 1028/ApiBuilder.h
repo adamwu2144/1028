@@ -51,6 +51,8 @@
 +(NSString *)getProductDetail:(int)productID;
 +(NSString *)getProductExchange:(int)productID;
 
++(NSString *)getProductsByCategory:(int)categoryID;
+
 +(NSString *)getNotificationsPage:(int)page;
 +(NSString *)getNotificationByID:(int)notificationID;
 +(NSString *)getUpdateNotificationByID:(int)notificationID;

@@ -1,10 +1,11 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11542" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16B2657" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -18,10 +19,10 @@
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="fCF-QX-Lb9">
-                        <rect key="frame" x="5" y="5" width="150" height="164"/>
+                        <rect key="frame" x="0.0" y="5" width="140" height="164"/>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8sN-qd-yaK">
-                        <rect key="frame" x="5" y="174" width="150" height="21"/>
+                        <rect key="frame" x="0.0" y="174" width="140" height="21"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
@@ -30,17 +31,18 @@
             </view>
             <constraints>
                 <constraint firstItem="8sN-qd-yaK" firstAttribute="top" secondItem="fCF-QX-Lb9" secondAttribute="bottom" constant="5" id="62X-y9-nTl"/>
-                <constraint firstAttribute="trailing" secondItem="fCF-QX-Lb9" secondAttribute="trailing" constant="5" id="LgF-ll-qum"/>
+                <constraint firstAttribute="trailing" secondItem="fCF-QX-Lb9" secondAttribute="trailing" constant="20" id="LgF-ll-qum"/>
                 <constraint firstAttribute="bottom" secondItem="8sN-qd-yaK" secondAttribute="bottom" constant="5" id="XZd-im-cVt"/>
                 <constraint firstItem="8sN-qd-yaK" firstAttribute="leading" secondItem="fCF-QX-Lb9" secondAttribute="leading" id="eDG-jh-fPR"/>
                 <constraint firstItem="8sN-qd-yaK" firstAttribute="trailing" secondItem="fCF-QX-Lb9" secondAttribute="trailing" id="eDb-jj-zlX"/>
-                <constraint firstItem="fCF-QX-Lb9" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="5" id="fX3-PJ-0Fh"/>
+                <constraint firstItem="fCF-QX-Lb9" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="fX3-PJ-0Fh"/>
                 <constraint firstItem="fCF-QX-Lb9" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="5" id="h59-PU-uCh"/>
             </constraints>
             <size key="customSize" width="215" height="224"/>
             <connections>
                 <outlet property="productImageView" destination="fCF-QX-Lb9" id="SiG-ae-XwP"/>
                 <outlet property="productInfoLabel" destination="8sN-qd-yaK" id="Ejh-iN-ZzJ"/>
+                <outlet property="uiimageviewRightDistance" destination="LgF-ll-qum" id="PAD-M2-kxz"/>
             </connections>
             <point key="canvasLocation" x="116.5" y="141"/>
         </collectionViewCell>

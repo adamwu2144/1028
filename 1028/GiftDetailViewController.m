@@ -73,14 +73,18 @@
 }
 
 -(void)initCusBtn{
+    UIColor *borderColor = [UIColor colorWithRed:159.0f/255.0f green:159.0f/255.0f blue:159.0f/255.0f alpha:1.0f];
+
     [self.pointsDetail.layer setCornerRadius:15.0f];
-    
+    [self.pointsDetail.layer setBorderColor:borderColor.CGColor];
+    [self.pointsDetail.layer setBorderWidth:1.0f];
+
     [self.pointsExchange.layer setCornerRadius:15.0f];
-    [self.pointsExchange.layer setBorderColor:DEFAULT_COLOR.CGColor];
+    [self.pointsExchange.layer setBorderColor:borderColor.CGColor];
     [self.pointsExchange.layer setBorderWidth:1.0f];
     
     [self.pointsRules.layer setCornerRadius:15.0f];
-    [self.pointsRules.layer setBorderColor:DEFAULT_COLOR.CGColor];
+    [self.pointsRules.layer setBorderColor:borderColor.CGColor];
     [self.pointsRules.layer setBorderWidth:1.0f];
 }
 
@@ -222,20 +226,23 @@
 }
 
 -(void)btnsetDefault{
-    [self.pointsDetail.layer setBorderColor:DEFAULT_COLOR.CGColor];
+    
+    UIColor *borderColor = [UIColor colorWithRed:159.0f/255.0f green:159.0f/255.0f blue:159.0f/255.0f alpha:1.0f];
+    
+    [self.pointsDetail.layer setBorderColor:borderColor.CGColor];
     [self.pointsDetail.layer setBorderWidth:1.0f];
     [self.pointsDetail setBackgroundColor:[UIColor whiteColor]];
-    [self.pointsDetail setTitleColor:DEFAULT_COLOR forState:UIControlStateNormal];
+    [self.pointsDetail setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     
-    [self.pointsExchange.layer setBorderColor:DEFAULT_COLOR.CGColor];
+    [self.pointsExchange.layer setBorderColor:borderColor.CGColor];
     [self.pointsExchange.layer setBorderWidth:1.0f];
     [self.pointsExchange setBackgroundColor:[UIColor whiteColor]];
-    [self.pointsExchange setTitleColor:DEFAULT_COLOR forState:UIControlStateNormal];
+    [self.pointsExchange setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     
-    [self.pointsRules.layer setBorderColor:DEFAULT_COLOR.CGColor];
+    [self.pointsRules.layer setBorderColor:borderColor.CGColor];
     [self.pointsRules.layer setBorderWidth:1.0f];
     [self.pointsRules setBackgroundColor:[UIColor whiteColor]];
-    [self.pointsRules setTitleColor:DEFAULT_COLOR forState:UIControlStateNormal];
+    [self.pointsRules setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     
     [self.webView setHidden:YES];
     
@@ -253,8 +260,9 @@
     }
     
     [self btnsetDefault];
-    [selectBtn setBackgroundColor:DEFAULT_COLOR];
-    [selectBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    UIColor *insideColor = [UIColor colorWithRed:239.0f/255.0f green:239.0f/255.0f blue:239.0f/255.0f alpha:1.0f];
+    [selectBtn setBackgroundColor:insideColor];
+    [selectBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     
     if ([selectBtn.titleLabel.text isEqualToString:@"規則"]) {
         [self.webView setHidden:NO];

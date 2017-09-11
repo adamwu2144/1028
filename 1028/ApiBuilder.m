@@ -147,6 +147,11 @@
     return api;
 }
 
++(NSString *)getProductsByCategory:(int)categoryID{
+    NSString *api = [self apiBuilder:API_URL isSecure:true  ,@"/", VERSION_CODE , @"/products/category/",[NSString stringWithFormat:@"%d",categoryID],nil];
+    return api;
+}
+
 +(NSString *)getNotificationsPage:(int)page{
     NSString *api = [self apiBuilder:API_URL isSecure:true  ,@"/", VERSION_CODE , @"/notifications/page/",[NSString stringWithFormat:@"%d",page],nil];
     return api;
